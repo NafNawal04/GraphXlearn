@@ -1,0 +1,7 @@
+[
+  {
+    "name": "Nafisa",
+    "email": "nafisanawal@iut-dhaka.edu",
+    "password": "Pass1234"
+  }
+]
