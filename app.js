@@ -9,9 +9,9 @@ app.use(bodyParser.json());
 app.use(bodyParser.urlencoded({ extended: true }));
 
 
-const signupRoutes = require('./routes/signup.routes');
-const loginRoutes = require('./routes/login.routes');
-const dashboardRoutes = require('./routes/dashboard.routes');
+const signupRoutes = require('./routes/signup.routes.js');
+const loginRoutes = require('./routes/login.routes.js');
+const dashboardRoutes = require('./routes/dashboard.routes.js');
 
 app.use(express.static('html_files'));
 app.use(express.json());

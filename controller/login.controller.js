@@ -14,6 +14,7 @@ const handleLogin = (req, res) => {
             return res.status(400).send('Invalid email or password.');
         }
 
+        req.session.email = user.email; 
         res.redirect('/dashboard');
     });
 };
