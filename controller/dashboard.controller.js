@@ -25,4 +25,5 @@ const viewProfile = (req, res) => {
     });
 };
 
-module.exports = { viewProfile };
+
+module.exports = { viewProfile};
