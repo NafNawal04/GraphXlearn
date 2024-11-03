@@ -17,6 +17,7 @@ const learningModeRoutes = require('./routes/learningMode.routes.js');
 
 
 app.use(express.static('html_files'));
+app.use('/content_html_files', express.static(path.join(__dirname, 'content_html_files')));
 app.use('/image', express.static(path.join(__dirname, 'image')));
 app.use(express.json());
 app.use(express.urlencoded({ extended: true }));
