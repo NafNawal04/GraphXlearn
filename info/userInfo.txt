@@ -3,5 +3,40 @@
     "name": "Nafisa",
     "email": "nafisanawal@iut-dhaka.edu",
     "password": "Pass1234"
+  },
+  {
+    "name": "Moumita",
+    "email": "moumita@gmail.com",
+    "password": "Qwe098sy"
+  },
+  {
+    "name": "Lorent",
+    "email": "lorent@gmail.com",
+    "password": "Pass1234"
+  },
+  {
+    "name": "Lovely",
+    "email": "lovely@gmail.com",
+    "password": "Pass1234"
+  },
+  {
+    "name": "lovely",
+    "email": "lovelyz@gmail.com",
+    "password": "Pass2321"
+  },
+  {
+    "name": "lovely",
+    "email": "loveslyz@gmail.com",
+    "password": "Pass2321qq"
+  },
+  {
+    "name": "Lorenqq",
+    "email": "dd@gmai.com",
+    "password": "werQ1234"
+  },
+  {
+    "name": "wwq",
+    "email": "qww@gmai.com",
+    "password": "!Q12334wsd"
   }
 ]

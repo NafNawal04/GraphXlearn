@@ -20,7 +20,7 @@ const handleSignup = (req, res) => {
         users.push({ name, email, password });
         fs.writeFile(usersFilePath, JSON.stringify(users, null, 2), (err) => {
             if (err) throw err;
-            res.send('Signup successful!');
+            res.redirect('/login');
         });
     });
 };
