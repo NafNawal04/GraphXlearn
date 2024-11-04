@@ -1,0 +1,91 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Basic Graph Terminologies</title>
+    <style>
+        body {
+            font-family: Arial, sans-serif;
+            font-size: 17px;
+            line-height: 1.6;
+            margin-top: 40px;
+         
+        }
+        .font-color{
+        color: rgb(83, 83, 195);
+        }
+        .image-container {
+            text-align: center;
+            margin-bottom: 20px;
+        }
+        .image-container img {
+            max-width: 30%;
+          
+            height: auto;
+        }
+        h1, h2 {
+            color: #333;
+        }
+        p, li {
+            color: #555;
+        }
+    </style>
+</head>
+<body>
+
+    <h1>What is a Graph?</h1>
+    <p>
+        A graph is a non-linear kind of data structure made up of nodes or vertices and edges. The edges connect any two nodes in the graph, and the nodes are also known as vertices.
+        We can also define a graph <b>G</b> as an ordered set (V, E), where <b>V(G)</b> represents the set of vertices and <b>E(G)</b> represents the edges that connect these vertices.
+    </p>
+    <div class="image-container">
+       
+        <img src="../image/basic_graph.png" alt="Graph illustration">
+    </div>
+    <p>The above figure shows a graph with:</p>
+    <ul>
+        <li><b>V(G) = {A, B, C, D, E}</b></li>
+        <li><b>E(G) = {(A, B), (B, C), (A, D), (B, D), (D, E), (C, E)}</b></li>
+    </ul>
+
+    <p>Note that there are <b>five vertices</b> or nodes and <b>six edges</b> in the graph.</p>
+
+    <h2>Adjacent Nodes or Neighbours</h2>
+    <p>
+        For every edge, e = (u, v) that connects nodes u and v, the nodes u and v are the end-points and are said to be the adjacent nodes or neighbours.
+    </p>
+
+    <h2>Degree of a Node</h2>
+    <p>
+        The degree of a node <b>u</b>, denoted as deg(u), is the total number of edges containing the node u. If deg(u) = 0, it means that u does not belong to any edge, and such a node is known as an isolated node.
+    </p>
+    <p>
+        The indegree of a node is the number of arriving edges to a node. The outdegree of a node is the number of departing edges from a node.
+    </p>
+    <div class="font-color"><h3 ><i>Note:</i> A self-loop is counted twice.</h3></div>
+
+    <h2>Path</h2>
+    <p>
+        A path of length ‘n’ from node ‘u’ to node ‘v’ is defined as a sequence of n+1 nodes.
+        <br>
+        <div class="font-color"><b>P(u, v) = (v<sub>0</sub>, v<sub>1</sub>, v<sub>2</sub>, v<sub>3</sub>, ……, v<sub>n</sub>)</b></div>
+    </p>
+
+    <h2>Closed Path</h2>
+    <p>
+        A path P is known as a closed path if the edge has the same end-points. That is, if v<sub>0</sub> = v<sub>n</sub>.
+    </p>
+
+    <h2>Simple Path</h2>
+    <p>
+        A path P is known as a simple path if all the nodes in the path are distinct, with an exception that v<sub>0</sub> may be equal to v<sub>n</sub>. If v<sub>0</sub> = v<sub>n</sub>, then the path is called a closed simple path.
+    </p>
+
+    <h2>Cycle</h2>
+    <p>
+        A path in which the first and the last vertices are the same. A simple cycle has no repeated edges or vertices (except the first and last vertices).
+    </p>
+
+</body>
+</html>
