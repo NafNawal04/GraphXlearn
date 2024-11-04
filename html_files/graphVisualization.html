@@ -1,14 +1,216 @@
 <!DOCTYPE html>
 <html lang="en">
 <head>
-    <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Graph Visualization</title>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Graph Visualization</title>
+  <style>
+    body {
+      font-family: Arial, sans-serif;
+      margin: 0;
+      display: flex;
+      height: 100vh;
+    }
+    /* Top Navbar */
+    .navbar {
+        width: 100%;
+        display: flex;
+        justify-content: space-between;
+        align-items: center;
+        padding: 2px 30px;
+        background-color: #1c1c3d; /* Matching the dark purple color */
+        color: #fff;
+        box-sizing: border-box;
+        position: fixed;
+        top: 0;
+        z-index: 1000;
+    }
+    .navbar button {
+      padding: 10px 20px;
+      color: #ffd700;
+      background: none;
+      border: 1px solid #ffd700;
+      border-radius: 5px;
+      cursor: pointer;
+      transition: background 0.3s;
+    }
+    .navbar button:hover {
+      background-color: #ffd700;
+      color: #1c1c3d;
+    }
+    /* Sidebar */
+    .sidebar {
+      width: 200px;
+      background-color: #f0f0f0;
+      padding: 20px;
+      margin-top: 60px;
+    }
+    .sidebar h3, .sidebar p {
+      color: #333;
+      margin-bottom: 50px;
+      margin-top: 100px;
+      
+    }
+    .sidebar button {
+      width: 100%;
+      margin: 10px 0;
+      padding: 10px;
+      background-color: #007bff;
+      color: #fff;
+      border: none;
+      border-radius: 5px;
+      cursor: pointer;
+    }
+    /* Canvas area with grid */
+    .canvas-container {
+      flex: 1;
+      display: flex;
+      justify-content: center;
+      align-items: center;
+      margin-top: 60px;
+      position: relative;
+      overflow: hidden;
+      background-color: #f9f9f9;
+    }
+    .canvas-grid {
+      width: 90%;
+      height: 90%;
+      background-size: 20px 20px;
+      background-image: linear-gradient(to right, #ccc 1px, transparent 1px), 
+                        linear-gradient(to bottom, #ccc 1px, transparent 1px);
+      position: relative;
+    }
+    /* Draggable elements */
+    .draggable {
+      width: 40px;
+      height: 40px;
+      border-radius: 50%;
+      background-color: #007bff;
+      cursor: move;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      color: #fff;
+      font-weight: bold;
+      position: absolute;
+    }
+    /* Styles sidebar */
+    .styles {
+      width: 200px;
+      background-color: #f0f0f0;
+      padding: 20px;
+      margin-top: 60px;
+    }
+    .styles input[type="color"], .styles input[type="number"] {
+      width: 100%;
+      margin-top: 10px;
+    }
+    .styles button {
+      width: 100%;
+      margin-top: 20px;
+      padding: 10px;
+      background-color: #007bff;
+      color: #fff;
+      border: none;
+      border-radius: 5px;
+      cursor: pointer;
+    }
+  </style>
 </head>
 <body>
+  <!-- Navbar -->
+  <div class="navbar">
     <h1>Graph Visualization</h1>
-    <p>This page will allow users to visualize different graphs and data structures.</p>
-    <a href="/dashboard">Back to Dashboard</a>
-    <a href="/">Logout</a>
+    <div>
+      <button onclick="window.location.href='/dashboard'">Dashboard</button>
+      <button onclick="window.location.href='/logout'">Logout</button>
+    </div>
+  </div>
+
+  <!-- Sidebar for components -->
+  <div class="sidebar">
+    <button onclick="addNode()">Node</button>
+    <button onclick="addEdge()">Edge</button>
+    <button onclick="addText()">Text</button>
+  </div>
+
+  <!-- Main Canvas area -->
+  <div class="canvas-container">
+    <div class="canvas-grid" id="canvasGrid"></div>
+  </div>
+
+  <!-- Sidebar for styles -->
+  <div class="styles">
+    <h3>Styles</h3>
+    <label for="color">Add Color:</label>
+    <input type="color" id="colorPicker" />
+    <label for="weight">Edge Weight:</label>
+    <input type="number" id="edgeWeight" value="1" />
+    <button onclick="downloadAsJPG()">Download as JPG</button>
+  </div>
+
+  <script>
+    // Function to add nodes
+    function addNode() {
+      const node = document.createElement('div');
+      node.classList.add('draggable');
+      node.textContent = 'N';
+      document.getElementById('canvasGrid').appendChild(node);
+
+      makeDraggable(node);
+    }
+
+    // Function to add edges
+    function addEdge() {
+      // Implementation placeholder for edges
+      alert('Edge functionality not fully implemented yet.');
+    }
+
+    // Function to add text
+    function addText() {
+      const text = document.createElement('div');
+      text.classList.add('draggable');
+      text.textContent = 'T';
+      document.getElementById('canvasGrid').appendChild(text);
+
+      makeDraggable(text);
+    }
+
+    // Make elements draggable
+    function makeDraggable(element) {
+      element.onmousedown = function(event) {
+        let shiftX = event.clientX - element.getBoundingClientRect().left;
+        let shiftY = event.clientY - element.getBoundingClientRect().top;
+
+        element.style.position = 'absolute';
+        element.style.zIndex = 1000;
+        document.body.append(element);
+
+        function moveAt(pageX, pageY) {
+          element.style.left = pageX - shiftX + 'px';
+          element.style.top = pageY - shiftY + 'px';
+        }
+
+        function onMouseMove(event) {
+          moveAt(event.pageX, event.pageY);
+        }
+
+        document.addEventListener('mousemove', onMouseMove);
+
+        element.onmouseup = function() {
+          document.removeEventListener('mousemove', onMouseMove);
+          element.onmouseup = null;
+        };
+      };
+      element.ondragstart = function() {
+        return false;
+      };
+    }
+
+    // Download as JPG placeholder function
+    function downloadAsJPG() {
+      alert('Download as JPG functionality to be implemented.');
+    }
+  </script>
 </body>
 </html>
