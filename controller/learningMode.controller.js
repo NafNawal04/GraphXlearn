@@ -23,3 +23,4 @@ function getContentByGraphType(graphType) {
 }
 
 module.exports = { getLearningModePage, renderGraphContent };
+

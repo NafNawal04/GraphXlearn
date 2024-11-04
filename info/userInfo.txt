@@ -38,5 +38,10 @@
     "name": "wwq",
     "email": "qww@gmai.com",
     "password": "!Q12334wsd"
+  },
+  {
+    "name": "Faiza",
+    "email": "nafisa21@iut-dhaka.edu",
+    "password": "Pass1234"
   }
 ]
