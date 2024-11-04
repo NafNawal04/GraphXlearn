@@ -1,3 +1,60 @@
-<h2>Cyclic Graph</h2>
-<p>A cyclic graph contains at least one cycle. A cycle is a path that starts and ends at the same vertex without traversing any edge more than once.</p>
-<p>Cyclic graphs can be used in applications such as network routing where loops may be present.</p>
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Connected Graph</title>
+    <style>
+        body {
+            font-family: Arial, sans-serif;
+            margin-top: 40px;
+            line-height: 1.6;
+            color: #555;
+        }
+        h1, h2 {
+            color: #333;
+        }
+        ul {
+            list-style-type: disc;
+            padding-left: 20px;
+        }
+        .applications {
+            margin-top: 20px;
+        }
+        .image-container {
+            text-align: center;
+            margin-bottom: 20px;
+        }
+        .image-container img {
+            max-width: 30%;
+          
+            height: auto;
+        }
+    </style>
+</head>
+<body>
+
+    <h1>Cyclic Graph</h1>
+    <p>
+        A graph containing at least one cycle is known as a Cyclic graph.
+
+    </p>
+    <div class="image-container">
+       
+        <img src="../image/Cyclic.png" alt="Graph illustration">
+    </div>
+    <p>
+        There are four vertices labeled
+        𝐴,𝐵,𝐸 and 𝐹.This graph contains a cycle. The cycle here is 
+        𝐴 → 𝐵 → 𝐹 → 𝐸 → 𝐴,forming a closed loop.
+    </p>
+    <h2>Applications</h2>
+    <div class="applications">
+        <ul>
+            <li><b>Supply Chain Loops</b>: Used to represent cyclic dependencies, such as feedback loops in inventory and demand.</li>
+            <li><b>Control Systems</b>: Models feedback loops where outputs influence inputs in systems like robotics or automatic controls.</li>
+        </ul>
+    </div>
+
+</body>
+</html>

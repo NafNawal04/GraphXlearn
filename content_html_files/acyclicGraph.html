@@ -1,3 +1,76 @@
-<h2>Acyclic Graph</h2>
-<p>An acyclic graph is a graph that has no cycles. In other words, it’s a graph in which there is no way to start at a node and traverse a sequence of edges that eventually loops back to the same node.</p>
-<p>Examples of acyclic graphs include trees and directed acyclic graphs (DAGs), which are used in various applications such as scheduling and data processing workflows.</p>
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Connected Graph</title>
+    <style>
+        body {
+            font-family: Arial, sans-serif;
+            margin-top: 40px;
+            line-height: 1.6;
+            color: #555;
+        }
+        h1, h2 {
+            color: #333;
+        }
+        ul {
+            list-style-type: disc;
+            padding-left: 20px;
+        }
+        .applications {
+            margin-top: 20px;
+        }
+        .image-container {
+            text-align: center;
+            margin-bottom: 20px;
+        }
+        .image-container img {
+            max-width: 30%;
+          
+            height: auto;
+        }
+    </style>
+</head>
+<body>
+
+    <h1>Directed Acyclic Graph (DAG)</h1>
+    <p>
+        A directed graph that does not contain any cycles.
+
+
+    </p>
+    <div class="image-container">
+       
+        <img src="../image/DirectedAcyclic.png" alt="Graph illustration">
+    </div>
+    <li>
+        There are four vertices labeled
+        𝐴,𝐵,𝐸 and 𝐹.This graph contains a cycle.
+        The The edges have directions, indicated by arrows. The connections are as follows:
+ 𝐴
+        →
+        𝐵,
+    
+        𝐴
+        →
+        𝐸,
+     𝐵
+        →
+        𝐹,
+       
+        𝐹
+        →
+        𝐸
+    </li>
+    <li>This graph has no cycles. There is no path that starts and ends at the same vertex while following the directed edges. This acyclic property is a key feature of a DAG.</li>
+    <h2>Applications</h2>
+    <div class="applications">
+        <ul>
+            <li><b>Task Scheduling</b>:Directed Acyclic Graphs (DAGs) model dependencies in workflows, such as in project management (e.g., PERT, Gantt charts).</li>
+            <li><b>Version Control Systems</b>: Used to track revisions and branches, ensuring no circular dependencies. </li>
+        </ul>
+    </div>
+
+</body>
+</html>
