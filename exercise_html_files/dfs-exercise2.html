@@ -1,0 +1,152 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Exercise 1: Simple Graph Traversal</title>
+    <style>
+        body {
+            font-family: Arial, sans-serif;
+            background-color: #f4f4f9;
+            color: #333;
+            margin: 0;
+            padding: 0;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            min-height: 100vh;
+        }
+        .exercise-container {
+            background-color: #1c1c3d;
+            color: #fff;
+            max-width: 600px;
+            width: 100%;
+            padding: 20px;
+            border-radius: 10px;
+            box-shadow: 0 4px 8px rgba(0, 0, 0, 0.2);
+            text-align: center;
+        }
+        h2 {
+            color: #ffd700;
+            font-size: 1.5em;
+            margin-bottom: 10px;
+        }
+        p {
+            font-size: 1em;
+            line-height: 1.6;
+        }
+        img {
+            width: 100%;
+            max-width: 400px;
+            margin-top: 10px;
+            margin-bottom: 20px;
+        }
+        input[type="text"] {
+            padding: 10px;
+            font-size: 1em;
+            width: 80%;
+            margin-top: 10px;
+            border: 1px solid #ccc;
+            border-radius: 5px;
+        }
+        button {
+            background-color: #ffd700;
+            color: #1c1c3d;
+            font-weight: bold;
+            padding: 10px 20px;
+            margin-top: 15px;
+            border: none;
+            border-radius: 5px;
+            cursor: pointer;
+            transition: background-color 0.3s;
+        }
+        button:hover {
+            background-color: #e0c200;
+        }
+        #solutionMessage {
+            margin-top: 15px;
+            font-weight: bold;
+            text-align: left;
+        }
+        .navigation-buttons {
+            display: flex;
+            justify-content: space-between;
+            margin-top: 20px;
+        }
+        .navigation-buttons button {
+            width: 48%;
+        }
+    </style>
+</head>
+<body>
+
+    <div class="exercise-container">
+        <h2>Exercise 2: Detecting a Cycle in a Graph</h2>
+        <p>Given the following undirected graph:</p>
+    
+        <!-- Graph Image -->
+        <img src="/image/bfs_dfs_2.PNG" alt="Graph Image">
+    
+        <!-- Question -->
+        <p>Check if there is a cycle using DFS.</p>
+    
+        <!-- User Answer Input -->
+        <input type="text" id="userAnswer" placeholder="Enter Answer">
+        <button onclick="checkAnswer()">Submit Answer</button>
+    
+        <!-- Feedback Message -->
+        <div id="solutionMessage"></div>
+    
+        <!-- Navigation Buttons -->
+        <div class="navigation-buttons">
+            <button onclick="window.location.href='/learning-mode'">Back to Learning Mode</button>
+            <button onclick="window.location.href='/dfs-exercise1.html'">Previous Exercise </button>
+            
+        </div>
+    </div>    
+
+    <script>
+        const correctAnswer = "Cycle detected";
+    
+        // Step-by-step solution for detecting a cycle using DFS
+        const stepByStepSolution = [
+            "Start DFS from node 1.",
+            "Visit node 1; mark it as visited and add to the recursion stack.",
+            "Move to node 2 from node 1.",
+            "Visit node 2; mark it as visited and add to the recursion stack.",
+            "Node 2 has no outgoing edges; backtrack to node 1.",
+            "From node 1, move to node 4.",
+            "Visit node 4; mark it as visited and add to the recursion stack.",
+            "From node 4, move to node 3.",
+            "Visit node 3; mark it as visited and add to the recursion stack.",
+            "From node 3, move to node 0.",
+            "Visit node 0; mark it as visited and add to the recursion stack.",
+            "From node 0, there is a back edge to node 1 which is already in the recursion stack.",
+            "Cycle detected: 1 → 4 → 3 → 0 → 1 forms a cycle."
+        ];
+    
+        function checkAnswer() {
+            const userAnswer = document.getElementById("userAnswer").value.trim();
+            const solutionMessage = document.getElementById("solutionMessage");
+    
+            solutionMessage.innerHTML = ""; // Clear previous message
+    
+            if (userAnswer.toLowerCase() === correctAnswer.toLowerCase()) {
+                solutionMessage.textContent = "Correct!";
+                solutionMessage.style.color = "green";
+            } else {
+                solutionMessage.style.color = "white";
+                solutionMessage.innerHTML = "<p>Incorrect. Here is the step-by-step solution:</p>";
+                // Display step-by-step solution
+                stepByStepSolution.forEach(step => {
+                    const stepElement = document.createElement("p");
+                    stepElement.textContent = step;
+                    solutionMessage.appendChild(stepElement);
+                });
+            }
+        }
+    </script>
+    
+    
+</body>
+</html>

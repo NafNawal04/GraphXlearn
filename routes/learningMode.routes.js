@@ -9,13 +9,23 @@ const learningModeController = require('../controller/learningMode.controller.js
 router.get('/learning-mode', learningModeController.getLearningModePage);
 
 
+
 router.get('/learning-mode/:graphType', (req, res, next) => {
     const { graphType } = req.params;
     
     
     if (graphType === 'bfs-exercise') {
         res.sendFile(path.join(__dirname, '../exercise_html_files/bfs-exercise.html'));
-    } else {
+    }
+    else if(graphType === 'dfs-exercise1')
+    {
+        res.sendFile(path.join(__dirname, '../exercise_html_files/dfs-exercise1.html'));
+    }
+    else if(graphType === 'kruskals-exercise1')
+    {
+        res.sendFile(path.join(__dirname, '../exercise_html_files/kruskals-exercise1.html'));
+    }
+    else {
         
         learningModeController.renderGraphContent(req, res);
     }
