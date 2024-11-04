@@ -1,3 +1,77 @@
-<h2>Directed Graph</h2>
-<p>A directed graph (or digraph) is a graph in which edges have directions. This means that traversal from one node to another is possible only in the specified direction of each edge.</p>
-<p>Directed graphs are useful in applications such as flowcharts, data processing pipelines, and dependency structures.</p>
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Directed Graph</title>
+    <style>
+        body {
+            font-family: Arial, sans-serif;
+            margin-top: 40px;
+            line-height: 1.6;
+            color: #555;
+        }
+        h1, h2 {
+            color: #333;
+        }
+        ul {
+            list-style-type: disc;
+            padding-left: 20px;
+        }
+        .applications {
+            margin-top: 20px;
+        }
+        .image-container {
+            text-align: center;
+            margin-bottom: 20px;
+        }
+        .image-container img {
+            max-width: 30%;
+          
+            height: auto;
+        }
+    </style>
+</head>
+<body>
+
+    <h1>Directed Graph</h1>
+    <p>
+        A directed graph, also known as a digraph, is a graph in which every edge has a direction assigned to it. This means that the nodes are ordered pairs in the definition of every edge.
+    </p>
+    <p>
+        An edge of a directed graph is given as an ordered pair <b>(u, v)</b> of nodes in <b>G</b>. For an edge <b>(u, v)</b>:
+        <ul>
+            <li>The edge begins at <b>u</b> and terminates at <b>v</b>.</li>
+            <li><b>u</b> is known as the origin or initial point of the edge, while <b>v</b> is known as the destination or terminal point.</li>
+            <li><b>u</b> is the predecessor of <b>v</b>, and <b>v</b> is the successor of <b>u</b>.</li>
+            <li>Nodes <b>u</b> and <b>v</b> are adjacent to each other.</li>
+        </ul>
+    </p>
+    <div class="image-container">
+       
+        <img src="../image/Directed.png" alt="Graph illustration">
+    </div>
+
+    <h2>Terminology of a Directed Graph</h2>
+    <ul>
+        <li><b>Out-degree of a node</b>: The out-degree of a node <b>u</b>, written as <b>outdeg(u)</b>, is the number of edges that originate at <b>u</b>.</li>
+        <li><b>In-degree of a node</b>: The in-degree of a node <b>u</b>, written as <b>indeg(u)</b>, is the number of edges that terminate at <b>u</b>.</li>
+        <li><b>Degree of a node</b>: The degree of a node, written as <b>deg(u)</b>, is equal to the sum of in-degree and out-degree of that node. Therefore, <b>deg(u) = indeg(u) + outdeg(u)</b>.</li>
+        <li><b>Isolated vertex</b>: A vertex with degree zero, meaning it is not an end-point of any edge.</li>
+        <li><b>Pendant vertex (also known as leaf vertex)</b>: A vertex with degree one.</li>
+        <li><b>Cut vertex</b>: A vertex which, when deleted, would disconnect the remaining graph.</li>
+        <li><b>Source</b>: A node <b>u</b> is known as a source if it has a positive out-degree but a zero in-degree.</li>
+        <li><b>Sink</b>: A node <b>u</b> is known as a sink if it has a positive in-degree but a zero out-degree.</li>
+        <li><b>Reachability</b>: A node <b>v</b> is said to be reachable from node <b>u</b> if there exists a directed path from node <b>u</b> to node <b>v</b>.</li>
+    </ul>
+
+    <h2>Applications</h2>
+    <div class="applications">
+        <ul>
+            <li><b>Social Networks</b>: Social networks are often modeled as directed graphs, where each person is a vertex and relationships such as friendships or following are represented as edges.</li>
+            <li><b>Transportation Networks</b>: Transportation systems such as roads, airports, or subway systems can be modeled as directed graphs, with vertices representing locations and edges representing connections between them.</li>
+        </ul>
+    </div>
+
+</body>
+</html>

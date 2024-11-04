@@ -1,3 +1,65 @@
-<h2>Undirected Graph</h2>
-<p>An undirected graph is a graph in which edges have no direction. This means each edge can be traversed in both directions.</p>
-<p>Undirected graphs are used in modeling symmetrical relationships, such as friendships in social networks.</p>
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Undirected Graph</title>
+    <style>
+        body {
+            font-family: Arial, sans-serif;
+            margin-top: 40px;
+            line-height: 1.6;
+            color: #555;
+        }
+        h1, h2 {
+            color: #333;
+        }
+        ul {
+            list-style-type: disc;
+            padding-left: 20px;
+        }
+        .applications {
+            margin-top: 20px;
+        }
+        .image-container {
+            text-align: center;
+            margin-bottom: 20px;
+        }
+        .image-container img {
+            max-width: 30%;
+          
+            height: auto;
+        }
+    </style>
+</head>
+<body>
+
+    <h1>Undirected Graph</h1>
+    <p>
+        An undirected graph is a graph in which edges do not have any direction. That is, the nodes are unordered pairs in the definition of every edge.
+    </p>
+
+    <div class="image-container">
+       
+        <img src="../image/Undirected.png" alt="Graph illustration">
+    </div>
+
+    <h2>Characteristics of an Undirected Graph</h2>
+    <ul>
+        <li>Edges in an undirected graph are bidirectional in nature.</li>
+        <li>In an undirected graph, there is no concept of a “parent” or “child” vertex as there is no direction to the edges.</li>
+        <li>An undirected graph may contain loops, which are edges that connect a vertex to itself.</li>
+        <li>Degree of each vertex is the same as the total number of edges connected to it.</li>
+    </ul>
+
+    <h2>Applications</h2>
+    <div class="applications">
+        <ul>
+            <li><b>Peer-to-Peer Networks</b>: In file-sharing or communication networks where any peer can communicate with any other without directionality.</li>
+            <li><b>Social Networks (Friendships)</b>: When friendships are mutual, they are best represented as undirected edges between nodes (individuals).</li>
+            <li><b>Collaborative Filtering in Recommendations</b>: Represents users and items with edges indicating associations, with no directed flow needed.</li>
+        </ul>
+    </div>
+
+</body>
+</html>
