@@ -1,3 +1,103 @@
-<h2>Prim's Algorithm</h2>
-<p>Prim’s algorithm is a minimum spanning tree algorithm that starts with a single node and adds the cheapest possible connections until all nodes are connected.</p>
-<p>This algorithm is commonly used in network design and connectivity optimization.</p>
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Minimum Spanning Tree (Prim's Algorithm)</title>
+    <style>
+        body {
+            font-family: Arial, sans-serif;
+            margin-top: 40px;
+            line-height: 1.6;
+            color: #555;
+        }
+        table {
+            width: 60%;
+            margin: 20px auto;
+            border-collapse: collapse;
+            text-align: left;
+        }
+        th, td {
+            padding: 12px;
+            border-bottom: 1px solid #ddd;
+        }
+        th {
+            background-color: #ccd0ba;
+            font-weight: bold;
+        }
+        tr:hover {
+            background-color: #f9f9f9;
+        }
+        .image-container, .video-container {
+            text-align: center;
+            margin-bottom: 20px;
+        }
+        .image-container img, .video-container video {
+            max-width: 80%;
+            height: auto;
+        }
+        video {
+            display: block;
+            margin: 20px auto;
+        }
+    </style>
+</head>
+<body>
+
+    <h1>Minimum Spanning Tree (Prim's Algorithm)</h1>
+    <p>Prim’s algorithm for finding the minimum spanning tree starts with an empty spanning tree. The idea is to maintain two sets of vertices. The first set contains the vertices already included in the MST, and the other set contains the vertices not yet included.</p>
+    <p>At every step, it considers all the edges that connect the two sets and picks the minimum weight edge from these edges. After picking the edge, it moves the other endpoint of the edge to the set containing MST.</p>
+
+    <h2>How does Prim’s Algorithm Work?</h2>
+    <p>The working of Prim’s algorithm can be described by the following steps:</p>
+    <ol>
+        <li>Determine an arbitrary vertex as the starting vertex of the MST.</li>
+        <li>Follow steps 3 to 5 until there are vertices that are not included in the MST (known as fringe vertices).</li>
+        <li>Find edges connecting any tree vertex with the fringe vertices.</li>
+        <li>Find the minimum among these edges.</li>
+        <li>Add the chosen edge to the MST if it does not form any cycle.</li>
+        <li>Return the MST and exit.</li>
+    </ol>
+
+    <h3>Example</h3>
+    <p>Consider the following graph as an example for which we need to find the Minimum Spanning Tree (MST).</p>
+
+    <div class="image-container">
+        <img src="../image/mst_PRIMS.png" alt="Graph example for Prim's algorithm">
+    </div>
+
+    <p>Firstly, we select an arbitrary vertex that acts as the starting vertex of the Minimum Spanning Tree. Here, we have selected <b>vertex 0</b> as the starting vertex.</p>
+
+    <p>We can see the illustration below to understand better:</p>
+    <div class="video-container">
+        <video width="600" controls>
+            <source src="../videos/MST_PRIMS.mp4" type="video/mp4">
+            Your browser does not support the video tag.
+        </video>
+    </div>
+
+    <h3>Output</h3>
+    <p>The total weight of the Minimum Spanning Tree is: <strong>110</strong></p>
+
+    <h2>Complexity Analysis of Prim’s Algorithm</h2>
+    <ul>
+        <li><strong>Time Complexity:</strong> O(E * log(E)) where E is the number of edges.</li>
+        <li><strong>Auxiliary Space:</strong> O(V²) where V is the number of vertices.</li>
+    </ul>
+
+    <h2>Advantages of Prim’s Algorithm</h2>
+    <ul>
+        <li>Prim’s algorithm is guaranteed to find the MST in a connected, weighted graph.</li>
+        <li>It has a time complexity of O(E log V) using a binary heap or Fibonacci heap, where E is the number of edges and V is the number of vertices.</li>
+        <li>It is relatively simple to understand and implement compared to some other MST algorithms.</li>
+    </ul>
+
+    <h2>Disadvantages of Prim’s Algorithm</h2>
+    <ul>
+        <li>Prim’s algorithm can be slow on dense graphs with many edges, as it requires iterating over all edges at least once.</li>
+        <li>It relies on a priority queue, which can take up extra memory and slow down the algorithm on very large graphs.</li>
+        <li>The choice of the starting node can affect the MST output, which may not be desirable in some applications.</li>
+    </ul>
+
+</body>
+</html>

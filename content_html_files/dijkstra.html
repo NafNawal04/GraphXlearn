@@ -1,3 +1,122 @@
-<h2>Dijkstra's Algorithm</h2>
-<p>Dijkstra’s algorithm finds the shortest path from a source node to all other nodes in a graph with non-negative edge weights. It’s widely used in network routing algorithms.</p>
-<p>Applications include GPS navigation, network routing, and circuit design.</p>
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Dijkstra's Algorithm</title>
+    <style>
+        body {
+            font-family: Arial, sans-serif;
+            margin-top: 40px;
+            line-height: 1.6;
+            color: #555;
+        }
+        table {
+            width: 60%;
+            margin: 20px auto;
+            border-collapse: collapse;
+            text-align: left;
+        }
+        th, td {
+            padding: 12px;
+            border-bottom: 1px solid #ddd;
+        }
+        th {
+            background-color: #ccd0ba;
+            font-weight: bold;
+        }
+        tr:hover {
+            background-color: #f9f9f9;
+        }
+        .image-container, .video-container {
+            text-align: center;
+            margin-bottom: 20px;
+        }
+        .image-container img, .video-container video {
+            max-width: 100%;
+            height: auto;
+        }
+        video {
+            display: block;
+            margin: 20px auto;
+        }
+    </style>
+</head>
+<body>
+
+    <h1>Dijkstra’s Algorithm</h1>
+    <p>Dijkstra’s algorithm solves the single-source shortest path problem and is very similar to Prim’s algorithm. This algorithm assumes that all the weights are positive.</p>
+
+    <h2>How Dijkstra’s Algorithm Works</h2>
+    <p>Like Prim’s algorithm, Dijkstra’s algorithm works by initially setting the distance to every vertex as infinity, except for the source vertex, which is set to 0.</p>
+    <p>The algorithm requires:</p>
+    <ul>
+        <li>An array of distances, all initialized to infinity except for the source vertex, which is initialized to 0.</li>
+        <li>A Boolean table to track visited vertices, with a size equal to |V| (number of vertices).</li>
+        <li>An array of previous vertices, all initialized to null to keep track of the shortest path.</li>
+    </ul>
+
+    <p>The algorithm iterates<b> |V| times</b>, performing the following steps:</p>
+    <ul>
+        <li>Find the unvisited vertex <em>v</em> with the minimum distance to it.</li>
+        <li>Mark <em>v</em> as visited.</li>
+        <li>Consider every adjacent unvisited vertex <em>w</em>:</li>
+        <ul>
+            <li>Check if the distance to <em>v</em> plus the weight of edge (<em>v, w</em>) is less than the currently known shortest distance to <em>w</em>.</li>
+            <li>If so, update the shortest distance to <em>w</em> and set <em>v</em> as the previous vertex.</li>
+        </ul>
+        <li>Continue until all vertices are visited or all remaining vertices have a distance of infinity.</li>
+    </ul>
+
+    <p>The goal of Dijkstra's algorithm is to find the shortest paths from the source to all other vertices in a weighted graph without negative edges.</p>
+
+    <h3>Example</h3>
+    <p>To understand Dijkstra’s algorithm better, let’s take a graph and find the shortest path from the source vertex (0) to all other vertices.</p>
+
+    <div class="image-container">
+        <img src="../image/Dijkstra.png" alt="Graph example for Dijkstra's algorithm">
+    </div>
+
+    <p>Below is an illustration of Dijkstra's algorithm in action:</p>
+    <div class="video-container">
+        <video width="600" controls>
+            <source src="../videos/Dijkstra.mp4" type="video/mp4">
+            Your browser does not support the video tag.
+        </video>
+    </div>
+
+    <h3>Output</h3>
+    <p>The table below shows the distance from the source vertex (0) to each vertex:</p>
+
+    <table>
+        <tr>
+            <th>Vertex</th>
+            <th>Distance from Source</th>
+        </tr>
+        <tr><td>0</td><td>0</td></tr>
+        <tr><td>1</td><td>1</td></tr>
+        <tr><td>2</td><td>3</td></tr>
+        <tr><td>3</td><td>2</td></tr>
+        <tr><td>4</td><td>3</td></tr>
+        <tr><td>5</td><td>4</td></tr>
+        <tr><td>6</td><td>6</td></tr>
+        <tr><td>7</td><td>5</td></tr>
+    </table>
+
+    <h2>Complexity Analysis of Dijkstra’s Algorithm</h2>
+    <ul>
+        <li><strong>Time Complexity:</strong> O((V + E) log V), where V is the number of vertices and E is the number of edges.</li>
+        <li><strong>Auxiliary Space:</strong> O(V + E).</li>
+    </ul>
+
+    <h2>Applications of Dijkstra’s Algorithm</h2>
+    <ul>
+        <li><strong>Google Maps:</strong> Uses Dijkstra’s algorithm to find the shortest distance between source and destination.</li>
+        <li><strong>Computer Networking:</strong> Forms the basis for routing protocols such as OSPF (Open Shortest Path First) and IS-IS (Intermediate System to Intermediate System).</li>
+        <li><strong>Transportation and Traffic Management:</strong> Optimizes traffic flow, minimizes congestion, and finds the most efficient routes for vehicles.</li>
+        <li><strong>Airlines:</strong> Plans flight paths that minimize fuel consumption and travel time.</li>
+        <li><strong>Electronic Design Automation:</strong> Routes connections on integrated circuits and very-large-scale integration (VLSI) chips.</li>
+    </ul>
+
+</body>
+</html>

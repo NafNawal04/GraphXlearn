@@ -1,3 +1,160 @@
-<h2>Kruskal's Algorithm</h2>
-<p>Kruskal’s algorithm is a minimum spanning tree algorithm that finds an edge of the least possible weight that connects any two trees in a forest. It’s widely used in network design.</p>
-<p>Applications include designing telecommunications networks and road networks.</p>
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Spanning Trees and MST</title>
+    <style>
+        body {
+            font-family: Arial, sans-serif;
+            margin-top: 40px;
+            line-height: 1.6;
+            color: #555;
+        }
+        table {
+            width: 60%;
+            margin: 20px auto;
+            border-collapse: collapse;
+            text-align: left;
+        }
+
+        th, td {
+            padding: 12px;
+            border-bottom: 1px solid #ddd;
+        }
+        th {
+            background-color: #ccd0ba;
+            font-weight: bold;
+        }
+        tr:hover {
+            background-color: #f9f9f9;
+        }
+        .image-container {
+            text-align: center;
+            margin-bottom: 20px;
+        }
+        .image-container img {
+            max-width: 100%;
+          
+            height: auto;
+        }
+        .video-container {
+        text-align: center;
+        margin: 20px 0; 
+    }
+    </style>
+</head>
+<body>
+
+    <h1>Spanning Trees</h1>
+    <p>Given a connected graph with |V| = n vertices, a spanning tree is defined as a collection of n – 1 edges which connect all n vertices.</p>
+    <ul>
+        <li>The n vertices and n – 1 edges define a connected sub-graph.</li>
+        <li>A spanning tree is not necessarily unique.</li>
+    </ul>
+    <p>This graph has <b>16 vertices</b> and <b>35 edges</b>.</p>
+    <div class="image-container">
+       
+        <img src="../image/spanning tree.png" alt="Graph illustration">
+    </div>
+
+    <h2>Spanning Trees on Weighted Graphs</h2>
+    <p>The weight of a spanning tree is the sum of the weights on all the edges which comprise the spanning tree.</p>
+    <ul>
+        <li>The weight of this spanning tree is 20.</li>
+    </ul>
+    <div class="image-container">
+       
+        <img src="../image/spanning1.png" alt="Graph illustration">
+    </div>
+
+    <h2>Minimum Spanning Trees</h2>
+    <p>Which spanning tree minimizes the weight?</p>
+    <ul>
+        <li>Such a tree is termed a <strong>minimum spanning tree</strong>.</li>
+        <li>The weight of this spanning tree is 14.</li>
+    </ul>
+    <div class="image-container">
+       
+        <img src="../image/spanning 2.png" alt="Graph illustration">
+    </div>
+
+    <h3>Application</h3>
+    <p>Consider supplying power to:</p>
+    <ul>
+        <li>All circuit elements on a board</li>
+        <li>A number of loads within a building</li>
+    </ul>
+    <p>A minimum spanning tree will give the lowest-cost solution.</p>
+    <p>Consider attempting to find the best means of connecting a number of LANs:</p>
+    <ul>
+        <li>Minimize the number of bridges</li>
+        <li>Costs not strictly dependent on distances</li>
+    </ul>
+
+    <h2>Minimum Spanning Tree (Kruskal's)</h2>
+    <p>Kruskal’s algorithm sorts the edges by weight and goes through the edges from least weight to greatest weight, adding the edges to an empty graph as long as the addition does not create a cycle.</p>
+
+    <h3>How to find MST using Kruskal’s algorithm?</h3>
+    <p>Below are the steps for finding MST using Kruskal’s algorithm:</p>
+    <div class="image-container">
+       
+        <img src="../image/MST_KRUSKAL.png" alt="Graph illustration">
+    </div>
+    <ol>
+        <li>Sort all the edges in non-decreasing order of their weight.</li>
+        <li>Pick the smallest edge. Check if it forms a cycle with the spanning tree formed so far. If the cycle is not formed, include this edge. Else, discard it.</li>
+        <li>Repeat step #2 until there are (V-1) edges in the spanning tree.</li>
+    </ol>
+
+    <h3>Illustration of the algorithm:</h3>
+    <p>The graph contains 5 vertices and 10 edges. So, the minimum spanning tree formed will have (5 – 1) = 4 edges.</p>
+
+    <h4>After sorting:</h4>
+    <table>
+        <tr>
+            <th>Weight</th>
+            <th>Source</th>
+            <th>Destination</th>
+        </tr>
+        <tr><td>13</td><td>0</td><td>2</td></tr>
+        <tr><td>13</td><td>1</td><td>4</td></tr>
+        <tr><td>13</td><td>3</td><td>1</td></tr>
+        <tr><td>13</td><td>0</td><td>3</td></tr>
+        <tr><td>14</td><td>2</td><td>4</td></tr>
+        <tr><td>19</td><td>2</td><td>3</td></tr>
+        <tr><td>19</td><td>3</td><td>4</td></tr>
+        <tr><td>22</td><td>0</td><td>4</td></tr>
+        <tr><td>27</td><td>1</td><td>2</td></tr>
+        <tr><td>28</td><td>0</td><td>1</td></tr>
+    </table>
+
+    <p>Now pick all edges one by one from the sorted list of edges. Its illustration is shown below:</p>
+    <div class="video-container">
+        <video width="600" controls>
+            <source src="../videos/Kruskal.mp4" type="video/mp4">
+            Your browser does not support the video tag.
+        </video>
+    </div>
+    <p>Following are the edges in the constructed MST:</p>
+    <ul>
+        <li>0 -- 2 == 13</li>
+        <li>0 -- 3 == 13</li>
+        <li>3 -- 1 == 13</li>
+        <li>1 -- 4 == 13</li>
+    </ul>
+
+    <p><strong>Minimum Cost Spanning Tree:</strong> 52</p>
+
+    <h3>Time Complexity</h3>
+    <p><strong>O(E * logE) or O(E * logV)</strong></p>
+    <ul>
+        <li>Sorting of edges takes O(E * logE) time.</li>
+        <li>After sorting, we iterate through all edges and apply the find-union algorithm. The find and union operations can take at most O(logV) time.</li>
+    </ul>
+    <p>So overall complexity is <strong>O(E * logE + E * logV)</strong> time.</p>
+    <p>The value of E can be at most O(V²), so O(logV) and O(logE) are the same. Therefore, the overall time complexity is <strong>O(E * logE) or O(E * logV)</strong>.</p>
+    <p><strong>Auxiliary Space:</strong> O(V + E), where V is the number of vertices and E is the number of edges in the graph.</p>
+
+</body>
+</html>
