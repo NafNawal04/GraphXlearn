@@ -1,3 +1,129 @@
-<h2>Bellman-Ford Algorithm</h2>
-<p>The Bellman-Ford algorithm is used to find the shortest paths from a single source vertex to all other vertices in a weighted graph. Unlike Dijkstra’s algorithm, Bellman-Ford can handle graphs with negative edge weights.</p>
-<p>Applications include network routing, where costs may include penalties or negative values.</p>
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Bellman-Ford Algorithm</title>
+    <style>
+        body {
+            font-family: Arial, sans-serif;
+            margin-top: 40px;
+            line-height: 1.6;
+            color: #555;
+        }
+        h1, h2, h3 {
+            color: #333;
+        }
+        table {
+            width: 60%;
+            margin: 20px auto;
+            border-collapse: collapse;
+            text-align: left;
+        }
+        th, td {
+            padding: 12px;
+            border-bottom: 1px solid #ddd;
+        }
+        th {
+            background-color: #ccd0ba;
+            font-weight: bold;
+        }
+        tr:hover {
+            background-color: #f9f9f9;
+        }
+        .video-container {
+            text-align: center;
+            margin: 20px 0;
+        }
+        video {
+            display: block;
+            margin: 20px auto;
+            max-width: 100%;
+            height: auto;
+        }
+        .image-container, .video-container {
+            text-align: center;
+            margin-bottom: 20px;
+        }
+        .image-container img, .video-container video {
+            max-width: 100%;
+            height: auto;
+        }
+    </style>
+</head>
+<body>
+
+    <h1>Bellman-Ford Algorithm</h1>
+    <p>The Bellman-Ford algorithm is a single-source shortest path algorithm that finds the shortest path from a given source vertex to all other vertices in a graph. Unlike Dijkstra’s algorithm, Bellman-Ford can handle graphs with negative edge weights, making it more versatile. It can also detect negative cycles, an important feature for applications involving negative weights.</p>
+
+    <h2>Principle of Relaxation of Edges</h2>
+    <p>In the Bellman-Ford algorithm, each edge in a graph with <em>N</em> vertices should be relaxed <em>N-1</em> times to compute the single-source shortest path.</p>
+    <p>To detect negative cycles, relax all edges one additional time. If the shortest distance to any node decreases during this final relaxation, a negative cycle exists. In summary, after <em>N</em> relaxations, if any distance value changes, then a negative cycle is present; otherwise, no negative cycle exists.</p>
+    <p>Let’s suppose we have a graph which is given below and we want to find whether there exists a negative cycle or not using Bellman-Ford.</p>
+
+    <div class="image-container">
+        <img src="../image/Bellmanford.png" alt="Graph example for Dijkstra's algorithm">
+    </div>
+
+    <h3>Algorithm to Find Negative Cycle in a Directed Weighted Graph Using Bellman-Ford</h3>
+    <ol>
+        <li>Initialize the distance array <code>dist[]</code> for each vertex <em>v</em> as <code>dist[v] = INFINITY</code>.</li>
+        <li>Set the source vertex distance to 0, e.g., <code>dist[0] = 0</code>.</li>
+        <li>Relax all edges <em>N-1</em> times according to the following condition: <code>dist[v] = min(dist[v], dist[u] + weight)</code>.</li>
+        <li>For the Nth relaxation, check all edges:</li>
+        <ul>
+            <li><strong>Case 1:</strong> If <code>dist[u] + weight < dist[v]</code> for any edge (u, v), a negative cycle exists.</li>
+            <li><strong>Case 2:</strong> If Case 1 fails for all edges, no negative cycle exists.</li>|
+        </ul>
+    </ol>
+   
+
+    <div class="video-container">
+        <p>Watch the illustration below to understand better:</p>
+        <video width="600" controls>
+            <source src="../videos/Bellmanford.mp4" type="video/mp4">
+            Your browser does not support the video tag.
+        </video>
+    </div>
+
+    <h3>Example Output</h3>
+    <table>
+        <tr>
+            <th>Vertex</th>
+            <th>Distance from Source</th>
+        </tr>
+        <tr><td>0</td><td>0</td></tr>
+        <tr><td>1</td><td>9</td></tr>
+        <tr><td>2</td><td>75</td></tr>
+        <tr><td>3</td><td>28</td></tr>
+        <tr><td>4</td><td>51</td></tr>
+        <tr><td>5</td><td>4</td></tr>
+        <tr><td>6</td><td>6</td></tr>
+        <tr><td>7</td><td>51</td></tr>
+    </table>
+
+    <h2>Complexity Analysis of Bellman-Ford Algorithm</h2>
+    <ul>
+        <li><strong>Time Complexity:</strong></li>
+        <ul>
+            <li>Best Case: O(E)</li>
+            <li>Average and Worst Case: O(V*E)</li>
+            <li>For disconnected graphs: O(E*(V^2))</li>
+        </ul>
+        <li><strong>Auxiliary Space:</strong> O(V), where V is the number of vertices in the graph.</li>
+    </ul>
+
+    <h2>Applications of Bellman-Ford Algorithm</h2>
+    <ul>
+        <li><strong>Network Routing:</strong> Used in networking to compute shortest paths for routing tables, facilitating efficient data packet navigation.</li>
+        <li><strong>GPS Navigation:</strong> Calculates the shortest or fastest routes, aiding navigation systems and apps.</li>
+        <li><strong>Transportation and Logistics:</strong> Helps find optimal paths for transportation vehicles, reducing fuel consumption and travel time.</li>
+        <li><strong>Game Development:</strong> Models movement and navigation, especially when paths have varying costs or obstacles.</li>
+        <li><strong>Robotics and Autonomous Vehicles:</strong> Aids in path planning by considering terrain, obstacles, and energy costs.</li>
+    </ul>
+
+    <h2>Drawbacks of Bellman-Ford Algorithm</h2>
+    <p>The Bellman-Ford algorithm fails if the graph contains a negative edge cycle, as it cannot produce a meaningful shortest path in such cases.</p>
+
+</body>
+</html>

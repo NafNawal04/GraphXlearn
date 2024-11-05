@@ -40,6 +40,26 @@
             display: block;
             margin: 20px auto;
         }
+        button {
+            background-color: #ffd700;
+            color: #1c1c3d;
+            font-weight: bold;
+            padding: 10px 20px;
+            border: none;
+            border-radius: 5px;
+            cursor: pointer;
+            transition: background-color 0.3s;
+        }
+        button:hover {
+            background-color: #e0c200;
+        }
+        .navigation-buttons {
+            display: flex;
+            justify-content: flex-end;
+            gap: 20px;
+            margin-top: 50px;
+            margin-bottom: 20px;
+        }
     </style>
 </head>
 <body>
@@ -117,6 +137,9 @@
         <li><strong>Airlines:</strong> Plans flight paths that minimize fuel consumption and travel time.</li>
         <li><strong>Electronic Design Automation:</strong> Routes connections on integrated circuits and very-large-scale integration (VLSI) chips.</li>
     </ul>
-
+    <div class="navigation-buttons">
+        <button onclick="window.location.href='/graph-visualization'">Visualize Graphs</button>
+        <button onclick="window.location.href='/exercise_html_files/dijkstra-exercise1.html'">Practice Exercises</button>
+    </div>
 </body>
 </html>
