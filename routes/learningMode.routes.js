@@ -25,6 +25,18 @@ router.get('/learning-mode/:graphType', (req, res, next) => {
     {
         res.sendFile(path.join(__dirname, '../exercise_html_files/kruskals-exercise1.html'));
     }
+    else if(graphType === 'prims-exercise1')
+    {
+        res.sendFile(path.join(__dirname, '../exercise_html_files/prims-exercise1.html'));
+    }
+    else if(graphType === 'dijkstra-exercise1')
+    {
+        res.sendFile(path.join(__dirname, '../exercise_html_files/dijkstra-exercise1.html'));
+    }
+    else if(graphType === 'bellman-exercise1')
+    {
+        res.sendFile(path.join(__dirname, '../exercise_html_files/bellman-exercise1.html'));
+    }
     else {
         
         learningModeController.renderGraphContent(req, res);

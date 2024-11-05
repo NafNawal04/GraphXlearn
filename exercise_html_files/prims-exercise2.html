@@ -1,0 +1,149 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Exercise 1: Simple Graph Traversal</title>
+    <style>
+        body {
+            font-family: Arial, sans-serif;
+            background-color: #f4f4f9;
+            color: #333;
+            margin: 0;
+            padding: 0;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            min-height: 100vh;
+        }
+        .exercise-container {
+            background-color: #1c1c3d;
+            color: #fff;
+            max-width: 600px;
+            width: 100%;
+            padding: 20px;
+            border-radius: 10px;
+            box-shadow: 0 4px 8px rgba(0, 0, 0, 0.2);
+            text-align: center;
+        }
+        h2 {
+            color: #ffd700;
+            font-size: 1.5em;
+            margin-bottom: 10px;
+        }
+        p {
+            font-size: 1em;
+            line-height: 1.6;
+        }
+        img {
+            width: 100%;
+            max-width: 400px;
+            margin-top: 10px;
+            margin-bottom: 20px;
+        }
+        input[type="text"] {
+            padding: 10px;
+            font-size: 1em;
+            width: 80%;
+            margin-top: 10px;
+            border: 1px solid #ccc;
+            border-radius: 5px;
+        }
+        button {
+            background-color: #ffd700;
+            color: #1c1c3d;
+            font-weight: bold;
+            padding: 10px 20px;
+            margin-top: 15px;
+            border: none;
+            border-radius: 5px;
+            cursor: pointer;
+            transition: background-color 0.3s;
+        }
+        button:hover {
+            background-color: #e0c200;
+        }
+        #solutionMessage {
+            margin-top: 15px;
+            font-weight: bold;
+            text-align: left;
+        }
+        .navigation-buttons {
+            display: flex;
+            justify-content: space-between;
+            margin-top: 20px;
+        }
+        .navigation-buttons button {
+            width: 48%;
+        }
+    </style>
+</head>
+<body>
+
+<div class="exercise-container">
+    <h2>Exercise 1: Find the MST Using prim's Algorithm</h2>
+    <p>Given the following undirected, weighted graph:</p>
+
+    <!-- Graph Image -->
+    <img src="/image/Mst2.PNG" alt="Graph Image">
+
+    <!-- Question -->
+    <p>Using prim's algorithm calculate its total weight</p>
+
+    <!-- User Answer Input -->
+    <input type="text" id="userAnswer" placeholder="Enter value">
+    <button onclick="checkAnswer()">Submit Answer</button>
+
+    <!-- Feedback Message -->
+    <div id="solutionMessage"></div>
+
+    <!-- Navigation Buttons -->
+    <div class="navigation-buttons">
+        <button onclick="window.location.href='/learning-mode'">Back to Learning Mode</button>
+        <button onclick="window.location.href='/exercise_html_files/kruskals-exercise1.html'">Previous Exercise </button>
+    </div>
+    
+</div>
+
+<script>
+    const correctAnswer = "13";
+
+    // Step-by-step solution as an array of strings
+    const stepByStepSolution = [
+        "Start from node 0.",
+        "Select the edge with minimum weight from node 0: (0,1)=2.",
+        "Move to node 1 and select edge (1,4)=3.",
+        "Move to node 4 and select edge (4,2)=3.",
+        "Finally, select edge (0,3)=5.",
+        "Selected edges for MST: (0,1), (1,4), (4,2), (0,3).",
+        "Calculate the total weight of the MST: 2 + 3 + 3 + 5 = 13.",
+        "Output MST Edges: (0,1), (1,4), (4,2), (0,3). Total Weight: 13."
+    ];
+
+    function checkAnswer() {
+        const userAnswer = document.getElementById("userAnswer").value.trim();
+        const solutionMessage = document.getElementById("solutionMessage");
+
+        solutionMessage.innerHTML = ""; // Clear previous message
+
+        if (userAnswer === correctAnswer) {
+            solutionMessage.textContent = "Correct!";
+            solutionMessage.style.color = "green";
+        } else {
+            solutionMessage.style.color = "white";
+            solutionMessage.innerHTML = "<p>Incorrect. Here is the step-by-step solution:</p>";
+            // Display step-by-step solution
+            stepByStepSolution.forEach(step => {
+                const stepElement = document.createElement("p");
+                stepElement.textContent = step;
+                solutionMessage.appendChild(stepElement);
+            });
+        }
+    }
+</script>
+
+
+
+
+</body>
+</html>
