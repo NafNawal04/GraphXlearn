@@ -1,8 +1,6 @@
-const fs = require('fs');
-const path = require('path');
-const usersFilePath = path.join(__dirname, '../info/userInfo.txt');
+const db = require('../db');
 
-const handleSignup = (req, res) => {
+const handleSignup = async(req, res) => {
     const { name, email, password } = req.body;
 
     const emailRegex = /^[^\s@]+@[^\s@]+\.[^\s@]+$/;
@@ -10,19 +8,25 @@ const handleSignup = (req, res) => {
         return res.status(400).send('Invalid email or password.');
     }
 
-    fs.readFile(usersFilePath, 'utf8', (err, data) => {
-        if (err) throw err;
-        const users = data ? JSON.parse(data) : [];
-        if (users.some(user => user.email === email)) {
+    try {
+        
+        const existingUser = await db.user.findUnique({
+            where: { email },
+        });
+        if (existingUser) {
             return res.status(400).send('Email already exists.');
         }
 
-        users.push({ name, email, password });
-        fs.writeFile(usersFilePath, JSON.stringify(users, null, 2), (err) => {
-            if (err) throw err;
-            res.redirect('/login');
+       
+        await db.user.create({
+            data: { name, email, password },
         });
-    });
+
+        res.redirect('/login');
+    } catch (error) {
+        console.error(error);
+        res.status(500).send('An error occurred during signup.');
+    }
 };
 
 module.exports = { handleSignup };
