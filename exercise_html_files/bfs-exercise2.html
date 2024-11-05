@@ -102,7 +102,7 @@
         <!-- Navigation Buttons -->
         <div class="navigation-buttons">
             <button onclick="window.location.href='/learning-mode'">Back to Learning Mode</button>
-            <button onclick="window.location.href='/bfs-exercise.html'">Previous Exercise </button>
+            <button onclick="window.location.href='/exercise_html_files/bfs-exercise.html'">Previous Exercise </button>
             <button onclick="window.location.href='/exercise_html_files/bfs-exercise3.html'">Next Exercise</button>
         </div>
     </div>    
@@ -123,7 +123,10 @@
     
             solutionMessage.innerHTML = ""; // Clear previous message
     
-            if (userAnswer.toLowerCase() === correctAnswer.toLowerCase()) {
+            if (userAnswer === "") {
+                 solutionMessage.textContent = "Please enter an answer.";
+                 solutionMessage.style.color = "red";
+            } else if  (userAnswer.toLowerCase() === correctAnswer.toLowerCase()) {
                 solutionMessage.textContent = "Correct!";
                 solutionMessage.style.color = "green";
             } else {

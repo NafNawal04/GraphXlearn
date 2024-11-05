@@ -119,25 +119,29 @@
     ];
 
     function checkAnswer() {
-        const userAnswer = parseInt(document.getElementById("userAnswer").value.trim(), 10);
-        const solutionMessage = document.getElementById("solutionMessage");
+    const userAnswer = parseInt(document.getElementById("userAnswer").value.trim(), 10);
+    const solutionMessage = document.getElementById("solutionMessage");
 
-        solutionMessage.innerHTML = ""; // Clear previous message
+    solutionMessage.innerHTML = ""; // Clear previous message
 
-        if (userAnswer === correctAnswer) {
-            solutionMessage.textContent = "Correct!";
-            solutionMessage.style.color = "green";
-        } else {
-            solutionMessage.style.color = "white";
-            solutionMessage.innerHTML = "<p>Incorrect. Here is the step-by-step solution:</p>";
-            // Display step-by-step solution
-            stepByStepSolution.forEach(step => {
-                const stepElement = document.createElement("p");
-                stepElement.textContent = step;
-                solutionMessage.appendChild(stepElement);
-            });
-        }
+    if (isNaN(userAnswer)) {
+        solutionMessage.textContent = "Please enter a valid answer.";
+        solutionMessage.style.color = "red";
+    } else if (userAnswer === correctAnswer) {
+        solutionMessage.textContent = "Correct!";
+        solutionMessage.style.color = "green";
+    } else {
+        solutionMessage.style.color = "white";
+        solutionMessage.innerHTML = "<p>Incorrect. Here is the step-by-step solution:</p>";
+        // Display step-by-step solution
+        stepByStepSolution.forEach(step => {
+            const stepElement = document.createElement("p");
+            stepElement.textContent = step;
+            solutionMessage.appendChild(stepElement);
+        });
     }
+    }
+
 </script>
 
 

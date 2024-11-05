@@ -126,7 +126,10 @@
 
         solutionMessage.innerHTML = ""; // Clear previous message
 
-        if (userAnswer === correctAnswer) {
+        if (userAnswer === "") {
+        solutionMessage.textContent = "Please enter an answer.";
+        solutionMessage.style.color = "red";
+    } else if (userAnswer === correctAnswer) {
             solutionMessage.textContent = "Correct!";
             solutionMessage.style.color = "green";
         } else {

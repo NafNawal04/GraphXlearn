@@ -131,7 +131,10 @@
     
             solutionMessage.innerHTML = ""; // Clear previous message
     
-            if (userAnswer.toLowerCase() === correctAnswer.toLowerCase()) {
+            if (userAnswer === "") {
+        solutionMessage.textContent = "Please enter an answer.";
+        solutionMessage.style.color = "red";
+        } else if  (userAnswer.toLowerCase() === correctAnswer.toLowerCase()) {
                 solutionMessage.textContent = "Correct!";
                 solutionMessage.style.color = "green";
             } else {
