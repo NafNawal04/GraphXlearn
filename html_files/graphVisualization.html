@@ -1,5 +1,6 @@
 <!DOCTYPE html>
 <html lang="en">
+
 <head>
   <meta charset="UTF-8">
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
@@ -26,15 +27,14 @@
 
     .navbar-buttons {
       display: flex;
-      gap: 10px; /* Space between buttons */
+      gap: 10px;
       margin-right: 80px;
     }
 
     .navbar button {
       color: #fff;
-      text-decoration: none;
       padding: 10px 20px;
-      border: 2px solid #ffd700; /* Gold border color */
+      border: 2px solid #ffd700;
       border-radius: 5px;
       font-weight: bold;
       background-color: transparent;
@@ -60,7 +60,7 @@
       margin-top: 50px;
       display: flex;
       flex-direction: column;
-      gap: 10px; /* Add gap between buttons for better spacing */
+      gap: 10px;
     }
 
     .canvas-container {
@@ -88,21 +88,24 @@
       font-size: 16px;
       cursor: pointer;
       transition: background-color 0.3s, transform 0.2s;
-      margin-bottom: 10px; /* Added margin to ensure consistent spacing if flex gap doesn't work */
+      margin-bottom: 10px;
     }
 
     .sidebar-buttons button:hover {
       background-color: #0056b3;
-      transform: scale(1.05); /* Slightly increase size on hover */
+      transform: scale(1.05);
     }
 
     .sidebar-buttons button:active {
-      background-color: #004494; /* Darker shade on click */
-      transform: scale(1); /* Reset size when button is clicked */
+      background-color: #004494;
+      transform: scale(1);
     }
   </style>
+  <script src="https://cdnjs.cloudflare.com/ajax/libs/html2canvas/1.4.1/html2canvas.min.js"></script>
+  <script src="https://cdnjs.cloudflare.com/ajax/libs/PapaParse/5.3.0/papaparse.min.js"></script>
   <script src="https://d3js.org/d3.v7.min.js"></script>
 </head>
+
 <body>
   <div class="navbar">
     <h1>Graph Visualization</h1>
@@ -112,7 +115,9 @@
     </div>
   </div>
   <div class="sidebar">
+    <input type="file" id="csvFileInput" accept=".csv" />
     <div class="sidebar-buttons">
+      <button onclick="generateGraphFromCSV()">Generate Graph from CSV</button>
       <button onclick="addNode()">Add Node</button>
       <button onclick="setMode('edge')">Add Edge</button>
       <button onclick="setMode('directedEdge')">Add Directed Edge</button>
@@ -126,27 +131,25 @@
   <script>
     const nodes = [];
     const edges = [];
-    let mode = 'node';  // 'node', 'edge', or 'directedEdge'
-    let selectedNode = null;  // To track the selected node for edge creation
+    let mode = 'node';
+    let selectedNode = null;
 
-    // Create SVG canvas
     const svg = d3.select('#canvasGrid').append('svg')
       .attr('width', '100%')
       .attr('height', '100%');
 
-    // Define arrowhead marker for directed edges
     const defs = svg.append('defs');
     defs.append('marker')
       .attr('id', 'arrowhead')
       .attr('viewBox', '0 0 10 10')
-      .attr('refX', 15)  // Adjusted for better visibility
+      .attr('refX', 15)
       .attr('refY', 5)
-      .attr('markerWidth', 8)  // Make the arrowhead larger for better visibility
+      .attr('markerWidth', 8)
       .attr('markerHeight', 8)
       .attr('orient', 'auto')
       .append('path')
       .attr('d', 'M 0 0 L 10 5 L 0 10 Z')
-      .attr('fill', '#ff0000');  // Use a different color (red) for better visibility
+      .attr('fill', '#ff0000');
 
     function addNode() {
       const id = `${nodes.length + 1}`;
@@ -158,17 +161,16 @@
 
     function setMode(modeType) {
       mode = modeType;
-      selectedNode = null;  // Reset selected node when switching modes
+      selectedNode = null;
     }
 
     function updateGraph() {
-      svg.selectAll('line').remove(); // Remove previous edges
-      svg.selectAll('circle').remove(); // Remove previous nodes
-      svg.selectAll('text').remove(); // Remove previous text labels
+      svg.selectAll('line').remove();
+      svg.selectAll('circle').remove();
+      svg.selectAll('text').remove();
 
-      // Draw undirected edges (blue lines without arrowheads)
       svg.selectAll('line.undirected')
-        .data(edges.filter(e => !e.directed)) // Filter non-directed edges
+        .data(edges.filter(e => !e.directed))
         .enter().append('line')
         .attr('class', 'undirected')
         .attr('x1', d => nodes.find(n => n.id === d.source).x)
@@ -178,20 +180,18 @@
         .attr('stroke', '#007bff')
         .attr('stroke-width', 2);
 
-      // Draw directed edges (red lines with arrowheads)
       svg.selectAll('line.directed')
-        .data(edges.filter(d => d.directed)) // Filter directed edges
+        .data(edges.filter(d => d.directed))
         .enter().append('line')
         .attr('class', 'directed')
         .attr('x1', d => nodes.find(n => n.id === d.source).x)
         .attr('y1', d => nodes.find(n => n.id === d.source).y)
         .attr('x2', d => nodes.find(n => n.id === d.target).x)
         .attr('y2', d => nodes.find(n => n.id === d.target).y)
-        .attr('stroke', '#ff0000')  // Use a different color for directed edges
+        .attr('stroke', '#ff0000')
         .attr('stroke-width', 2)
-        .attr('marker-end', 'url(#arrowhead)');  // Apply arrowhead to directed edges
+        .attr('marker-end', 'url(#arrowhead)');
 
-      // Draw nodes
       svg.selectAll('circle')
         .data(nodes)
         .enter().append('circle')
@@ -199,7 +199,7 @@
         .attr('cy', d => d.y)
         .attr('r', 20)
         .attr('fill', '#007bff')
-        .on('click', handleNodeClick) // Handle node clicks for selecting nodes
+        .on('click', handleNodeClick)
         .call(d3.drag()
           .on('start', dragStarted)
           .on('drag', dragged)
@@ -212,23 +212,73 @@
         .attr('y', d => d.y)
         .attr('dy', 5).attr('dx', -10)
         .text(d => d.id).attr('fill', 'white');
+
+      addEdgeWeights();
+    }
+
+    function addEdgeWeights() {
+      svg.selectAll('.weight').remove();
+      svg.selectAll('.weight')
+        .data(edges)
+        .enter().append('text')
+        .attr('class', 'weight')
+        .attr('x', d => (nodes.find(n => n.id === d.source).x + nodes.find(n => n.id === d.target).x) / 2)
+        .attr('y', d => (nodes.find(n => n.id === d.source).y + nodes.find(n => n.id === d.target).y) / 2)
+        .attr('dy', -5)
+        .attr('fill', '#000')
+        .text(d => d.weight);
+    }
+
+    function generateGraphFromCSV() {
+      const fileInput = document.getElementById('csvFileInput');
+      const file = fileInput.files[0];
+      if (!file) return alert("Please upload a CSV file.");
+
+      Papa.parse(file, {
+        header: true,
+        complete: (results) => {
+          const data = results.data.filter(row => row.NodeID && row.Target);
+          nodes.length = 0;
+          edges.length = 0;
+
+          data.forEach(row => {
+            const { NodeID, Target, Weight, Directed } = row;
+
+            if (!nodes.find(n => n.id === NodeID)) {
+              nodes.push({ id: NodeID, x: Math.random() * 500 + 50, y: Math.random() * 400 + 50 });
+            }
+            if (!nodes.find(n => n.id === Target)) {
+              nodes.push({ id: Target, x: Math.random() * 500 + 50, y: Math.random() * 400 + 50 });
+            }
+
+            edges.push({
+              source: NodeID,
+              target: Target,
+              weight: parseInt(Weight) || 0,
+              directed: Directed === 'true'
+            });
+          });
+
+          updateGraph();
+        },
+        error: (error) => console.error("Error parsing CSV file:", error),
+      });
     }
 
     function handleNodeClick(event, d) {
       if (mode === 'edge' || mode === 'directedEdge') {
         if (selectedNode === null) {
           selectedNode = d;
-          d3.select(this).attr('fill', 'green');  // Highlight the first selected node
+          d3.select(this).attr('fill', 'green');
         } else {
-          // Create edge between the selected node and the clicked node
           if (mode === 'edge') {
-            edges.push({ source: selectedNode.id, target: d.id, weight: 1, directed: false });
+            edges.push({ source: selectedNode.id, target: d.id, weight: 0, directed: false });
           } else if (mode === 'directedEdge') {
-            edges.push({ source: selectedNode.id, target: d.id, weight: 1, directed: true });
+            edges.push({ source: selectedNode.id, target: d.id, weight: 0, directed: true });
           }
-          updateGraph(); // Re-render the graph
-          selectedNode = null; // Reset after adding the edge
-          svg.selectAll('circle').attr('fill', '#007bff'); // Reset node colors
+          updateGraph();
+          selectedNode = null;
+          svg.selectAll('circle').attr('fill', '#007bff');
         }
       }
     }
@@ -247,8 +297,24 @@
     }
 
     function downloadAsJPG() {
-      alert('Functionality for JPG download to be implemented.');
+      const canvasContainer = document.getElementById('canvasGrid');
+
+      html2canvas(canvasContainer).then((canvas) => {
+        const dataURL = canvas.toDataURL('image/jpeg', 1.0);
+        const link = document.createElement('a');
+        link.href = dataURL;
+        link.download = 'graph-visualization.jpg';
+        document.body.appendChild(link);
+        link.click();
+      }).catch((error) => {
+        console.error('Error capturing the canvas:', error);
+      });
+    }
+
+    function applyDijkstra() {
+      alert("Dijkstra's Algorithm functionality to be implemented.");
     }
   </script>
 </body>
+
 </html>
