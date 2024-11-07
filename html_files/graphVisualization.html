@@ -169,6 +169,7 @@
       svg.selectAll('circle').remove();
       svg.selectAll('text').remove();
 
+      // Draw undirected edges and attach click handler to update weight
       svg.selectAll('line.undirected')
         .data(edges.filter(e => !e.directed))
         .enter().append('line')
@@ -178,8 +179,10 @@
         .attr('x2', d => nodes.find(n => n.id === d.target).x)
         .attr('y2', d => nodes.find(n => n.id === d.target).y)
         .attr('stroke', '#007bff')
-        .attr('stroke-width', 2);
+        .attr('stroke-width', 2)
+        .on('click', (event, d) => updateEdgeWeight(d));
 
+      // Draw directed edges and attach click handler to update weight
       svg.selectAll('line.directed')
         .data(edges.filter(d => d.directed))
         .enter().append('line')
@@ -190,7 +193,8 @@
         .attr('y2', d => nodes.find(n => n.id === d.target).y)
         .attr('stroke', '#ff0000')
         .attr('stroke-width', 2)
-        .attr('marker-end', 'url(#arrowhead)');
+        .attr('marker-end', 'url(#arrowhead)')
+        .on('click', (event, d) => updateEdgeWeight(d));
 
       svg.selectAll('circle')
         .data(nodes)
@@ -227,6 +231,14 @@
         .attr('dy', -5)
         .attr('fill', '#000')
         .text(d => d.weight);
+    }
+
+    function updateEdgeWeight(edge) {
+      const newWeight = prompt("Enter the new weight for this edge:", edge.weight);
+      if (newWeight !== null) {
+        edge.weight = parseInt(newWeight, 10) || edge.weight;
+        updateGraph();  // Re-render the graph with updated weights
+      }
     }
 
     function generateGraphFromCSV() {
