@@ -38,6 +38,19 @@ app.get("/", (req, res) => {
     res.sendFile(path.join(__dirname, 'html_files', 'landing.html'));
 });
 
+
+
+function ensureAuthenticated(req, res, next) {
+    const publicPaths = ['/', '/login', '/signup'];
+    if (publicPaths.includes(req.path) || req.session.isAuthenticated) {
+        return next();
+    }
+    res.redirect('/login');
+}
+
+app.use(ensureAuthenticated);
+
+
 app.use(signupRoutes);
 app.use(loginRoutes)
 app.use(dashboardRoutes);
