@@ -3,7 +3,7 @@
 <head>
   <meta charset="UTF-8">
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
-  <title>Graph Visualization</title>
+  <title>Graph Visualization with Directed Edges</title>
   <style>
     body {
       font-family: Arial, sans-serif;
@@ -11,57 +11,58 @@
       display: flex;
       height: 100vh;
     }
-    /* Top Navbar */
     .navbar {
-        width: 100%;
-        display: flex;
-        justify-content: space-between;
-        align-items: center;
-        padding: 2px 30px;
-        background-color: #1c1c3d; /* Matching the dark purple color */
-        color: #fff;
-        box-sizing: border-box;
-        position: fixed;
-        top: 0;
-        z-index: 1000;
+      width: 100%;
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+      padding: 2px 30px;
+      background-color: #1c1c3d;
+      color: #fff;
+      position: fixed;
+      top: 0;
+      z-index: 1000;
     }
+
+    .navbar-buttons {
+      display: flex;
+      gap: 10px; /* Space between buttons */
+      margin-right: 80px;
+    }
+
     .navbar button {
+      color: #fff;
+      text-decoration: none;
       padding: 10px 20px;
-      color: #ffd700;
-      background: none;
-      border: 1px solid #ffd700;
+      border: 2px solid #ffd700; /* Gold border color */
       border-radius: 5px;
+      font-weight: bold;
+      background-color: transparent;
       cursor: pointer;
-      transition: background 0.3s;
+      transition: background-color 0.3s, color 0.3s;
     }
+
     .navbar button:hover {
       background-color: #ffd700;
       color: #1c1c3d;
     }
-    /* Sidebar */
+
     .sidebar {
       width: 200px;
       background-color: #f0f0f0;
       padding: 20px;
       margin-top: 60px;
+      display: flex;
+      flex-direction: column;
     }
-    .sidebar h3, .sidebar p {
-      color: #333;
-      margin-bottom: 50px;
-      margin-top: 100px;
-      
+
+    .sidebar-buttons {
+      margin-top: 50px;
+      display: flex;
+      flex-direction: column;
+      gap: 10px; /* Add gap between buttons for better spacing */
     }
-    .sidebar button {
-      width: 100%;
-      margin: 10px 0;
-      padding: 10px;
-      background-color: #007bff;
-      color: #fff;
-      border: none;
-      border-radius: 5px;
-      cursor: pointer;
-    }
-    /* Canvas area with grid */
+
     .canvas-container {
       flex: 1;
       display: flex;
@@ -70,146 +71,183 @@
       margin-top: 60px;
       position: relative;
       overflow: hidden;
-      background-color: #f9f9f9;
     }
+
     .canvas-grid {
       width: 90%;
       height: 90%;
-      background-size: 20px 20px;
-      background-image: linear-gradient(to right, #ccc 1px, transparent 1px), 
-                        linear-gradient(to bottom, #ccc 1px, transparent 1px);
       position: relative;
     }
-    /* Draggable elements */
-    .draggable {
-      width: 40px;
-      height: 40px;
-      border-radius: 50%;
+
+    .sidebar-buttons button {
       background-color: #007bff;
-      cursor: move;
-      display: flex;
-      align-items: center;
-      justify-content: center;
-      color: #fff;
-      font-weight: bold;
-      position: absolute;
-    }
-    /* Styles sidebar */
-    .styles {
-      width: 200px;
-      background-color: #f0f0f0;
-      padding: 20px;
-      margin-top: 60px;
-    }
-    .styles input[type="color"], .styles input[type="number"] {
-      width: 100%;
-      margin-top: 10px;
-    }
-    .styles button {
-      width: 100%;
-      margin-top: 20px;
-      padding: 10px;
-      background-color: #007bff;
-      color: #fff;
+      color: white;
       border: none;
+      padding: 10px 15px;
       border-radius: 5px;
+      font-size: 16px;
       cursor: pointer;
+      transition: background-color 0.3s, transform 0.2s;
+      margin-bottom: 10px; /* Added margin to ensure consistent spacing if flex gap doesn't work */
+    }
+
+    .sidebar-buttons button:hover {
+      background-color: #0056b3;
+      transform: scale(1.05); /* Slightly increase size on hover */
+    }
+
+    .sidebar-buttons button:active {
+      background-color: #004494; /* Darker shade on click */
+      transform: scale(1); /* Reset size when button is clicked */
     }
   </style>
+  <script src="https://d3js.org/d3.v7.min.js"></script>
 </head>
 <body>
-  <!-- Navbar -->
   <div class="navbar">
     <h1>Graph Visualization</h1>
-    <div>
+    <div class="navbar-buttons">
       <button onclick="window.location.href='/dashboard'">Dashboard</button>
       <button onclick="window.location.href='/logout'">Logout</button>
     </div>
   </div>
-
-  <!-- Sidebar for components -->
   <div class="sidebar">
-    <button onclick="addNode()">Node</button>
-    <button onclick="addEdge()">Edge</button>
-    <button onclick="addText()">Text</button>
+    <div class="sidebar-buttons">
+      <button onclick="addNode()">Add Node</button>
+      <button onclick="setMode('edge')">Add Edge</button>
+      <button onclick="setMode('directedEdge')">Add Directed Edge</button>
+      <button onclick="applyDijkstra()">Apply Dijkstra Algorithm</button>
+      <button onclick="downloadAsJPG()">Download as JPG</button>
+    </div>
   </div>
-
-  <!-- Main Canvas area -->
   <div class="canvas-container">
     <div class="canvas-grid" id="canvasGrid"></div>
   </div>
-
-  <!-- Sidebar for styles -->
-  <div class="styles">
-    <h3>Styles</h3>
-    <label for="color">Add Color:</label>
-    <input type="color" id="colorPicker" />
-    <label for="weight">Edge Weight:</label>
-    <input type="number" id="edgeWeight" value="1" />
-    <button onclick="downloadAsJPG()">Download as JPG</button>
-  </div>
-
   <script>
-    // Function to add nodes
+    const nodes = [];
+    const edges = [];
+    let mode = 'node';  // 'node', 'edge', or 'directedEdge'
+    let selectedNode = null;  // To track the selected node for edge creation
+
+    // Create SVG canvas
+    const svg = d3.select('#canvasGrid').append('svg')
+      .attr('width', '100%')
+      .attr('height', '100%');
+
+    // Define arrowhead marker for directed edges
+    const defs = svg.append('defs');
+    defs.append('marker')
+      .attr('id', 'arrowhead')
+      .attr('viewBox', '0 0 10 10')
+      .attr('refX', 15)  // Adjusted for better visibility
+      .attr('refY', 5)
+      .attr('markerWidth', 8)  // Make the arrowhead larger for better visibility
+      .attr('markerHeight', 8)
+      .attr('orient', 'auto')
+      .append('path')
+      .attr('d', 'M 0 0 L 10 5 L 0 10 Z')
+      .attr('fill', '#ff0000');  // Use a different color (red) for better visibility
+
     function addNode() {
-      const node = document.createElement('div');
-      node.classList.add('draggable');
-      node.textContent = 'N';
-      document.getElementById('canvasGrid').appendChild(node);
-
-      makeDraggable(node);
+      const id = `${nodes.length + 1}`;
+      const x = Math.random() * 500 + 50;
+      const y = Math.random() * 400 + 50;
+      nodes.push({ id, x, y });
+      updateGraph();
     }
 
-    // Function to add edges
-    function addEdge() {
-      // Implementation placeholder for edges
-      alert('Edge functionality not fully implemented yet.');
+    function setMode(modeType) {
+      mode = modeType;
+      selectedNode = null;  // Reset selected node when switching modes
     }
 
-    // Function to add text
-    function addText() {
-      const text = document.createElement('div');
-      text.classList.add('draggable');
-      text.textContent = 'T';
-      document.getElementById('canvasGrid').appendChild(text);
+    function updateGraph() {
+      svg.selectAll('line').remove(); // Remove previous edges
+      svg.selectAll('circle').remove(); // Remove previous nodes
+      svg.selectAll('text').remove(); // Remove previous text labels
 
-      makeDraggable(text);
+      // Draw undirected edges (blue lines without arrowheads)
+      svg.selectAll('line.undirected')
+        .data(edges.filter(e => !e.directed)) // Filter non-directed edges
+        .enter().append('line')
+        .attr('class', 'undirected')
+        .attr('x1', d => nodes.find(n => n.id === d.source).x)
+        .attr('y1', d => nodes.find(n => n.id === d.source).y)
+        .attr('x2', d => nodes.find(n => n.id === d.target).x)
+        .attr('y2', d => nodes.find(n => n.id === d.target).y)
+        .attr('stroke', '#007bff')
+        .attr('stroke-width', 2);
+
+      // Draw directed edges (red lines with arrowheads)
+      svg.selectAll('line.directed')
+        .data(edges.filter(d => d.directed)) // Filter directed edges
+        .enter().append('line')
+        .attr('class', 'directed')
+        .attr('x1', d => nodes.find(n => n.id === d.source).x)
+        .attr('y1', d => nodes.find(n => n.id === d.source).y)
+        .attr('x2', d => nodes.find(n => n.id === d.target).x)
+        .attr('y2', d => nodes.find(n => n.id === d.target).y)
+        .attr('stroke', '#ff0000')  // Use a different color for directed edges
+        .attr('stroke-width', 2)
+        .attr('marker-end', 'url(#arrowhead)');  // Apply arrowhead to directed edges
+
+      // Draw nodes
+      svg.selectAll('circle')
+        .data(nodes)
+        .enter().append('circle')
+        .attr('cx', d => d.x)
+        .attr('cy', d => d.y)
+        .attr('r', 20)
+        .attr('fill', '#007bff')
+        .on('click', handleNodeClick) // Handle node clicks for selecting nodes
+        .call(d3.drag()
+          .on('start', dragStarted)
+          .on('drag', dragged)
+          .on('end', dragEnded));
+
+      svg.selectAll('text')
+        .data(nodes)
+        .enter().append('text')
+        .attr('x', d => d.x)
+        .attr('y', d => d.y)
+        .attr('dy', 5).attr('dx', -10)
+        .text(d => d.id).attr('fill', 'white');
     }
 
-    // Make elements draggable
-    function makeDraggable(element) {
-      element.onmousedown = function(event) {
-        let shiftX = event.clientX - element.getBoundingClientRect().left;
-        let shiftY = event.clientY - element.getBoundingClientRect().top;
-
-        element.style.position = 'absolute';
-        element.style.zIndex = 1000;
-        document.body.append(element);
-
-        function moveAt(pageX, pageY) {
-          element.style.left = pageX - shiftX + 'px';
-          element.style.top = pageY - shiftY + 'px';
+    function handleNodeClick(event, d) {
+      if (mode === 'edge' || mode === 'directedEdge') {
+        if (selectedNode === null) {
+          selectedNode = d;
+          d3.select(this).attr('fill', 'green');  // Highlight the first selected node
+        } else {
+          // Create edge between the selected node and the clicked node
+          if (mode === 'edge') {
+            edges.push({ source: selectedNode.id, target: d.id, weight: 1, directed: false });
+          } else if (mode === 'directedEdge') {
+            edges.push({ source: selectedNode.id, target: d.id, weight: 1, directed: true });
+          }
+          updateGraph(); // Re-render the graph
+          selectedNode = null; // Reset after adding the edge
+          svg.selectAll('circle').attr('fill', '#007bff'); // Reset node colors
         }
-
-        function onMouseMove(event) {
-          moveAt(event.pageX, event.pageY);
-        }
-
-        document.addEventListener('mousemove', onMouseMove);
-
-        element.onmouseup = function() {
-          document.removeEventListener('mousemove', onMouseMove);
-          element.onmouseup = null;
-        };
-      };
-      element.ondragstart = function() {
-        return false;
-      };
+      }
     }
 
-    // Download as JPG placeholder function
+    function dragStarted(event, d) {
+      d3.select(this).raise().attr('stroke', 'black');
+    }
+
+    function dragged(event, d) {
+      d3.select(this).attr('cx', d.x = event.x).attr('cy', d.y = event.y);
+      updateGraph();
+    }
+
+    function dragEnded(event, d) {
+      d3.select(this).attr('stroke', null);
+    }
+
     function downloadAsJPG() {
-      alert('Download as JPG functionality to be implemented.');
+      alert('Functionality for JPG download to be implemented.');
     }
   </script>
 </body>
