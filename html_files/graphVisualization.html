@@ -12,6 +12,7 @@
       display: flex;
       height: 100vh;
     }
+
     .navbar {
       width: 100%;
       display: flex;
@@ -80,8 +81,8 @@
     }
 
     .sidebar-buttons button {
-      background-color: #007bff;
-      color: white;
+      background-color: #ffd700;
+      color: #1c1c3d;
       border: none;
       padding: 10px 15px;
       border-radius: 5px;
@@ -92,12 +93,13 @@
     }
 
     .sidebar-buttons button:hover {
-      background-color: #0056b3;
+      background-color: #1c1c3d;
+      color: #ffd700;
       transform: scale(1.05);
     }
 
     .sidebar-buttons button:active {
-      background-color: #004494;
+      background-color: #ffd700;
       transform: scale(1);
     }
   </style>
@@ -115,12 +117,13 @@
     </div>
   </div>
   <div class="sidebar">
-    <input type="file" id="csvFileInput" accept=".csv" />
     <div class="sidebar-buttons">
+      <input type="file" id="csvFileInput" accept=".csv" />
       <button onclick="generateGraphFromCSV()">Generate Graph from CSV</button>
       <button onclick="addNode()">Add Node</button>
       <button onclick="setMode('edge')">Add Edge</button>
       <button onclick="setMode('directedEdge')">Add Directed Edge</button>
+      <button onclick="setMode('removeEdge')">Remove Edge</button>
       <button onclick="applyDijkstra()">Apply Dijkstra Algorithm</button>
       <button onclick="downloadAsJPG()">Download as JPG</button>
     </div>
@@ -169,7 +172,7 @@
       svg.selectAll('circle').remove();
       svg.selectAll('text').remove();
 
-      // Draw undirected edges and attach click handler to update weight
+      // Draw undirected edges and attach click handler to update or remove edges
       svg.selectAll('line.undirected')
         .data(edges.filter(e => !e.directed))
         .enter().append('line')
@@ -180,9 +183,9 @@
         .attr('y2', d => nodes.find(n => n.id === d.target).y)
         .attr('stroke', '#007bff')
         .attr('stroke-width', 2)
-        .on('click', (event, d) => updateEdgeWeight(d));
+        .on('click', handleEdgeClick);
 
-      // Draw directed edges and attach click handler to update weight
+      // Draw directed edges and attach click handler to update or remove edges
       svg.selectAll('line.directed')
         .data(edges.filter(d => d.directed))
         .enter().append('line')
@@ -194,7 +197,7 @@
         .attr('stroke', '#ff0000')
         .attr('stroke-width', 2)
         .attr('marker-end', 'url(#arrowhead)')
-        .on('click', (event, d) => updateEdgeWeight(d));
+        .on('click', handleEdgeClick);
 
       svg.selectAll('circle')
         .data(nodes)
@@ -231,6 +234,19 @@
         .attr('dy', -5)
         .attr('fill', '#000')
         .text(d => d.weight);
+    }
+
+    function handleEdgeClick(event, d) {
+      if (mode === 'removeEdge') {
+        // Remove the selected edge from the edges array
+        const index = edges.findIndex(edge => edge.source === d.source && edge.target === d.target && edge.directed === d.directed);
+        if (index > -1) {
+          edges.splice(index, 1);
+        }
+        updateGraph(); // Re-render the graph after removing the edge
+      } else if (mode === 'edge' || mode === 'directedEdge') {
+        updateEdgeWeight(d);
+      }
     }
 
     function updateEdgeWeight(edge) {
