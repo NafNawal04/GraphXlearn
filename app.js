@@ -14,6 +14,8 @@ const loginRoutes = require('./routes/login.routes.js');
 const dashboardRoutes = require('./routes/dashboard.routes.js');
 const graphVisualizationRoutes = require('./routes/graphVisualization.routes.js');
 const learningModeRoutes = require('./routes/learningMode.routes.js');
+const codeExecutionRoutes = require('./routes/codeExecution.routes.js');
+const exerciseRoutes = require('./routes/exercise-routes.js');
 
 
 app.use(express.static('html_files'));
@@ -41,6 +43,9 @@ app.use(loginRoutes)
 app.use(dashboardRoutes);
 app.use(graphVisualizationRoutes);
 app.use(learningModeRoutes);
+app.use(codeExecutionRoutes);
+app.use(exerciseRoutes);
+
 
 const port = 3000;
 app.listen(port, () => {
