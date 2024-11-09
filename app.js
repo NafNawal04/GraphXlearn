@@ -3,6 +3,8 @@ const app = express();
 const path = require('path');
 const session = require('express-session');
 const bodyParser = require('body-parser');
+require('dotenv').config();
+
 
 
 app.use(bodyParser.json());
@@ -16,6 +18,7 @@ const graphVisualizationRoutes = require('./routes/graphVisualization.routes.js'
 const learningModeRoutes = require('./routes/learningMode.routes.js');
 const codeExecutionRoutes = require('./routes/codeExecution.routes.js');
 const exerciseRoutes = require('./routes/exercise-routes.js');
+const promptRoutes = require('./routes/prompt.routes.js');
 
 
 app.use(express.static('html_files'));
@@ -58,6 +61,7 @@ app.use(graphVisualizationRoutes);
 app.use(learningModeRoutes);
 app.use(codeExecutionRoutes);
 app.use(exerciseRoutes);
+app.use(promptRoutes);
 
 
 const port = 3000;
