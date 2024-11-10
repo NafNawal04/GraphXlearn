@@ -1,3 +1,4 @@
+
 <!DOCTYPE html>
 <html lang="en">
 <head>
@@ -5,19 +6,15 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Exercise 1: Simple Graph Traversal</title>
     <link rel="stylesheet" href="/exercise_html_files/styles.css">
-    
 </head>
 <body>
 
 <div class="exercise-container">
-    <h2>Exercise 1: Simple Graph Traversal</h2>
-    <p>Given the following undirected graph:</p>
+    <h2 id="exercise-title">Loading...</h2>
+    <p id="exercise-question"></p>
 
-    <!-- Graph Image -->
-    <img src="/image/bfs_dfs.PNG" alt="Graph Image">
-
-    <!-- Question -->
-    <p>Perform DFS starting from node 0.</p>
+    <!-- Dynamic Graph Image -->
+    <img id="exercise-image" alt="Graph Image" style="max-width: 400px; display: none;">
 
     <!-- User Answer Input -->
     <input type="text" id="userAnswer" placeholder="Enter DFS traversal order (e.g., 0-1-2-3)">
@@ -31,30 +28,34 @@
         <button onclick="window.location.href='/learning-mode'">Back to Learning Mode</button>
         <button onclick="window.location.href='/exercise/dfs-exercise2'">Next Exercise</button>
     </div>
-    
 </div>
 
 <script>
-    const correctAnswer = "0-1-3-4-5-6-2";
-    
-    // Step-by-step solution as an array of strings
-    const stepByStepSolution = [
-        "CorrectAnswer = 0-1-3-4-5-6-2",
-        "Stack: [0]",
-        "Visit 0, stack becomes: [1, 2].",
-        "Stack: [1, 2]",
-        "Visit 1, stack becomes: [3, 4, 2].",
-        "Stack: [3, 4, 2]",
-        "Visit 3, stack becomes: [4, 2].",
-        "Stack: [4, 2]",
-        "Visit 4, stack becomes: [5, 2].",
-        "Stack: [5, 2]",
-        "Visit 5, stack becomes: [6, 2].",
-        "Stack: [6, 2]",
-        "Visit 6, stack becomes: [2].",
-        "Stack: [2]",
-        "Visit 2, stack becomes: []."
-    ];
+    const exerciseId = "6730db8f4cb3b173608d3f4a"; // Replace with the actual ID of the exercise in the database
+    const apiUrl = `/api/exercise/${exerciseId}`;
+    let correctAnswer = "";
+    let stepByStepSolution = [];
+
+    async function loadExercise() {
+        try {
+            const response = await fetch(apiUrl);
+            const data = await response.json();
+
+            // Populate exercise data into the HTML
+            document.getElementById("exercise-title").textContent = data.title;
+            document.getElementById("exercise-question").textContent = data.question;
+            correctAnswer = data.correctAnswer;
+            stepByStepSolution = data.stepByStepSolution;
+
+            // Set the Base64 image as the src of the img tag
+            const exerciseImage = document.getElementById("exercise-image");
+            exerciseImage.src = `data:image/png;base64,${data.imageBase64}`;
+            exerciseImage.style.display = "block"; // Make sure the image is visible
+        } catch (error) {
+            console.error("Error loading exercise:", error);
+            document.getElementById("exercise-title").textContent = "Error loading exercise.";
+        }
+    }
 
     function checkAnswer() {
         const userAnswer = document.getElementById("userAnswer").value.trim();
@@ -63,14 +64,15 @@
         solutionMessage.innerHTML = ""; // Clear previous message
 
         if (userAnswer === "") {
-        solutionMessage.textContent = "Please enter an answer.";
-        solutionMessage.style.color = "red";
-        } else if  (userAnswer === correctAnswer) {
+            solutionMessage.textContent = "Please enter an answer.";
+            solutionMessage.style.color = "red";
+        } else if (userAnswer === correctAnswer) {
             solutionMessage.textContent = "Correct!";
             solutionMessage.style.color = "green";
         } else {
             solutionMessage.style.color = "white";
             solutionMessage.innerHTML = "<p>Incorrect. Here is the step-by-step solution:</p>";
+
             // Display step-by-step solution
             stepByStepSolution.forEach(step => {
                 const stepElement = document.createElement("p");
@@ -79,6 +81,9 @@
             });
         }
     }
+
+    // Load exercise data on page load
+    loadExercise();
 </script>
 
 </body>

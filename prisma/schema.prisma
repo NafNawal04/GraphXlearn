@@ -16,3 +16,12 @@ model User {
   email    String @unique
   password String
 }
+
+model Exercise {
+  id                String   @id @default(auto()) @map("_id") @db.ObjectId
+  title             String
+  question          String
+  imageBase64       String?  // Add this field for Base64-encoded image data
+  correctAnswer     String
+  stepByStepSolution String[]
+}

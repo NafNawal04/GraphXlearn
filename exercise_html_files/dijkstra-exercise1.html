@@ -1,22 +1,20 @@
+
 <!DOCTYPE html>
 <html lang="en">
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Exercise 1: Simple Graph Traversal</title>
+    <title>Exercise 1: Find the Shortest Path Using Dijkstra’s Algorithm</title>
     <link rel="stylesheet" href="/exercise_html_files/styles.css">
 </head>
 <body>
 
 <div class="exercise-container">
-    <h2>Exercise 1: Find the Shortest Path Using Dijkstra’s Algorithm</h2>
-    <p>Given the following directed, weighted graph:</p>
+    <h2 id="exercise-title">Loading...</h2>
+    <p id="exercise-question"></p>
 
-    <!-- Graph Image -->
-    <img src="/image/dijkstra1.PNG" alt="Graph Image">
-
-    <!-- Question -->
-    <p>Using Dijkstra’s algorithm, find the shortest path from node 0 to node 5.</p>
+    <!-- Dynamic Graph Image -->
+    <img id="exercise-image" alt="Graph Image" style="max-width: 400px; display: none;">
 
     <!-- User Answer Input -->
     <input type="text" id="userAnswer" placeholder="Enter value">
@@ -30,48 +28,63 @@
         <button onclick="window.location.href='/learning-mode'">Back to Learning Mode</button>
         <button onclick="window.location.href='/exercise/dijkstra-exercise2'">Next Exercise</button>
     </div>
-    
 </div>
 
 <script>
-    const correctAnswer = 11;
+    const exerciseId = "6730de2e5ddf43a544c742df"; // Replace with the actual ID of the exercise in the database
+    const apiUrl = `/api/exercise/${exerciseId}`;
+    let correctAnswer = "";
+    let stepByStepSolution = [];
 
-    const stepByStepSolution = [
-        "Initialize distances from Node 0: {0: 0, 1: ∞, 2: ∞, 3: ∞, 4: ∞, 5: ∞}",
-        "Visit Node 0, update distances: {0: 0, 1: 4, 2: 2, 3: ∞, 4: ∞, 5: ∞}",
-        "Visit Node 2, update distances: {0: 0, 1: 4, 2: 2, 3: ∞, 4: 4, 5: ∞}",
-        "Visit Node 1, update distances: {0: 0, 1: 4, 2: 2, 3: 11, 4: 4, 5: ∞}",
-        "Visit Node 4, update distances: {0: 0, 1: 4, 2: 2, 3: 11, 4: 4, 5: 11}",
-        "Visit Node 5, no update needed.",
-        "Shortest path from Node 0 to Node 5 is 11."
-    ];
+    async function loadExercise() {
+        try {
+            const response = await fetch(apiUrl);
+            const data = await response.json();
+
+            // Populate exercise data into the HTML
+            document.getElementById("exercise-title").textContent = data.title;
+            document.getElementById("exercise-question").textContent = data.question;
+            correctAnswer = parseInt(data.correctAnswer, 10);  // Convert correctAnswer to a number
+            stepByStepSolution = data.stepByStepSolution;
+
+            // Set the Base64 image as the src of the img tag
+            const exerciseImage = document.getElementById("exercise-image");
+            exerciseImage.src = `data:image/png;base64,${data.imageBase64}`;
+            exerciseImage.style.display = "block"; // Make sure the image is visible
+        } catch (error) {
+            console.error("Error loading exercise:", error);
+            document.getElementById("exercise-title").textContent = "Error loading exercise.";
+        }
+    }
 
     function checkAnswer() {
-    const userAnswer = parseInt(document.getElementById("userAnswer").value.trim(), 10);
-    const solutionMessage = document.getElementById("solutionMessage");
+        const userAnswer = parseInt(document.getElementById("userAnswer").value.trim(), 10);
+        const solutionMessage = document.getElementById("solutionMessage");
 
-    solutionMessage.innerHTML = ""; // Clear previous message
+        solutionMessage.innerHTML = ""; // Clear previous message
 
-    if (isNaN(userAnswer)) {
-        solutionMessage.textContent = "Please enter a valid answer.";
-        solutionMessage.style.color = "red";
-    } else if (userAnswer === correctAnswer) {
-        solutionMessage.textContent = "Correct!";
-        solutionMessage.style.color = "green";
-    } else {
-        solutionMessage.style.color = "white";
-        solutionMessage.innerHTML = "<p>Incorrect. Here is the step-by-step solution:</p>";
-        // Display step-by-step solution
-        stepByStepSolution.forEach(step => {
-            const stepElement = document.createElement("p");
-            stepElement.textContent = step;
-            solutionMessage.appendChild(stepElement);
-        });
+        if (isNaN(userAnswer)) {
+            solutionMessage.textContent = "Please enter a valid answer.";
+            solutionMessage.style.color = "red";
+        } else if (userAnswer === correctAnswer) {
+            solutionMessage.textContent = "Correct!";
+            solutionMessage.style.color = "green";
+        } else {
+            solutionMessage.style.color = "white";
+            solutionMessage.innerHTML = "<p>Incorrect. Here is the step-by-step solution:</p>";
+
+            // Display step-by-step solution
+            stepByStepSolution.forEach(step => {
+                const stepElement = document.createElement("p");
+                stepElement.textContent = step;
+                solutionMessage.appendChild(stepElement);
+            });
+        }
     }
-    }
 
+    // Load exercise data on page load
+    loadExercise();
 </script>
-
 
 </body>
 </html>

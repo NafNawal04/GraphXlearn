@@ -40,6 +40,23 @@ app.use(session({
 app.get("/", (req, res) => {
     res.sendFile(path.join(__dirname, 'html_files', 'landing.html'));
 });
+app.get("/api/exercise/:id", async (req, res) => {
+    const { id } = req.params;
+  
+    try {
+      const exercise = await prisma.exercise.findUnique({
+        where: { id },
+      });
+  
+      if (exercise) {
+        res.json(exercise);
+      } else {
+        res.status(404).json({ message: "Exercise not found" });
+      }
+    } catch (error) {
+      res.status(500).json({ error: "Server error" });
+    }
+  });
 
 
 
@@ -64,7 +81,7 @@ app.use(exerciseRoutes);
 app.use(promptRoutes);
 
 
-const port = 3001;
+const port = 3000;
 app.listen(port, () => {
     console.log(`App is listening to port ${port}`);
 });
