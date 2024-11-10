@@ -1,3 +1,4 @@
+const bcrypt = require('bcrypt');
 const db = require('../db');
 
 const handleSignup = async(req, res) => {
@@ -17,9 +18,11 @@ const handleSignup = async(req, res) => {
             return res.status(400).send('Email already exists.');
         }
 
-       
+        const saltRounds = 10;
+        const hashedPassword = await bcrypt.hash(password, saltRounds);
+
         await db.user.create({
-            data: { name, email, password },
+            data: { name, email, password: hashedPassword },
         });
 
         res.redirect('/login');

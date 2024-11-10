@@ -1,3 +1,4 @@
+const bcrypt = require('bcrypt');
 const db = require('../db');
 
 const handleLogin = async (req, res) => {
@@ -8,11 +9,16 @@ const handleLogin = async (req, res) => {
         const user = await db.user.findFirst({
             where: {
                 email,
-                password,
             },
         });
 
         if (!user) {
+            return res.status(400).send('Invalid email or password.');
+        }
+
+        const passwordMatch = await bcrypt.compare(password, user.password);
+        
+        if (!passwordMatch) {
             return res.status(400).send('Invalid email or password.');
         }
 
