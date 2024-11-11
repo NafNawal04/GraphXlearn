@@ -26,6 +26,8 @@ app.use('/content_html_files', express.static(path.join(__dirname, './resources/
 app.use('/exercise_html_files', express.static(path.join(__dirname, './resources/exercise_html_files')));
 app.use('/image', express.static(path.join(__dirname, './resources/image')));
 app.use('/videos', express.static(path.join(__dirname, './resources/videos')));
+app.use('/styles', express.static(path.join(__dirname, './resources/styles')));
+
 app.use(express.json());
 app.use(express.urlencoded({ extended: true }));
 
@@ -40,6 +42,8 @@ app.use(session({
 app.get("/", (req, res) => {
     res.sendFile(path.join(__dirname, './resources/html_files', 'landing.html'));
 });
+
+
 app.get("/api/exercise/:id", async (req, res) => {
     const { id } = req.params;
   
