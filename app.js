@@ -22,10 +22,10 @@ const promptRoutes = require('./routes/prompt.routes.js');
 
 
 app.use(express.static('html_files'));
-app.use('/content_html_files', express.static(path.join(__dirname, 'content_html_files')));
-app.use('/exercise_html_files', express.static(path.join(__dirname, 'exercise_html_files')));
-app.use('/image', express.static(path.join(__dirname, 'image')));
-app.use('/videos', express.static(path.join(__dirname, 'videos')));
+app.use('/content_html_files', express.static(path.join(__dirname, './resources/content_html_files')));
+app.use('/exercise_html_files', express.static(path.join(__dirname, './resources/exercise_html_files')));
+app.use('/image', express.static(path.join(__dirname, './resources/image')));
+app.use('/videos', express.static(path.join(__dirname, './resources/videos')));
 app.use(express.json());
 app.use(express.urlencoded({ extended: true }));
 
@@ -38,7 +38,7 @@ app.use(session({
 
 
 app.get("/", (req, res) => {
-    res.sendFile(path.join(__dirname, 'html_files', 'landing.html'));
+    res.sendFile(path.join(__dirname, './resources/html_files', 'landing.html'));
 });
 app.get("/api/exercise/:id", async (req, res) => {
     const { id } = req.params;
