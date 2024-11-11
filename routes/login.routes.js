@@ -5,7 +5,7 @@ const loginController = require('../controller/login.controller.js');
 
 
 router.get('/login', (req, res) => {
-    res.sendFile(path.join(__dirname, '../html_files/login.html')); 
+    res.sendFile(path.join(__dirname, '../resources/html_files/login.html')); 
 });
 
 router.post('/login', loginController.handleLogin);

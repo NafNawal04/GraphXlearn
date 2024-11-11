@@ -4,7 +4,7 @@ const router = express.Router();
 const { getAIAnswer } = require('../controller/prompt.controller');
 
 router.get('/prompt', (req, res) => {
-    res.sendFile(path.join(__dirname, '../html_files', 'prompt.html'));
+    res.sendFile(path.join(__dirname, '../resources/html_files', 'prompt.html'));
 });
 
 
