@@ -14,6 +14,9 @@ router.get('/dashboard/profile', (req, res) => {
     res.sendFile(path.join(__dirname, '../resources/html_files/userProfile.html'));
 });
 
+router.get('/dashboard/profile/edit', (req, res) => {
+    res.sendFile(path.join(__dirname, '../resources/html_files/edit_profile.html'));
+});
 
 
 module.exports = router;
