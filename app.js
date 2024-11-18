@@ -6,7 +6,6 @@ const bodyParser = require('body-parser');
 require('dotenv').config();
 
 
-
 app.use(bodyParser.json());
 app.use(bodyParser.urlencoded({ extended: true }));
 
@@ -17,7 +16,7 @@ const dashboardRoutes = require('./routes/dashboard.routes.js');
 const graphVisualizationRoutes = require('./routes/graphVisualization.routes.js');
 const learningModeRoutes = require('./routes/learningMode.routes.js');
 const codeExecutionRoutes = require('./routes/codeExecution.routes.js');
-const exerciseRoutes = require('./routes/exercise-routes.js');
+const exerciseRoutes = require('./routes/exercise.routes.js');
 const promptRoutes = require('./routes/prompt.routes.js');
 
 
