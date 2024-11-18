@@ -1,9 +1,11 @@
 <!DOCTYPE html>
 <html lang="en">
+
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Dashboard</title>
+    <link href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/5.15.4/css/all.min.css" rel="stylesheet">
     <style>
         body {
             font-family: Arial, sans-serif;
@@ -21,7 +23,7 @@
             justify-content: space-between;
             align-items: center;
             padding: 20px 40px;
-            background-color: #1c1c3d; /* Matching the dark purple color */
+            background-color: #1c1c3d;
             color: #fff;
             box-sizing: border-box;
             position: fixed;
@@ -31,29 +33,56 @@
 
         /* Styling the welcome text */
         .navbar #welcomeText {
-            font-size: 1.4em; /* Slightly increased font size */
+            font-size: 1.4em;
             font-weight: bold;
-            color: #ffd700; /* Yellow color */
+            color: #ffd700;
         }
 
-        .navbar .button-container {
-            display: flex;
-            gap: 10px; /* Space between buttons */
+        /* Dropdown container */
+        .dropdown {
+            position: relative;
+            margin-right: 20px;
         }
 
-        .navbar a {
-            color: #fff;
-            text-decoration: none;
-            padding: 10px 20px;
-            border: 2px solid #ffd700; /* Gold border color */
+        /* User icon */
+        .dropdown .user-icon {
+            font-size: 2.5em;
+            cursor: pointer;
+            color: #ffd700;
+        }
+
+        /* Dropdown menu */
+        .dropdown-menu {
+            position: absolute;
+            right: 0;
+            top: 45px;
+            background-color: #fff;
+            color: #333;
+            border: 1px solid #ddd;
             border-radius: 5px;
+            box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
+            display: none;
+            flex-direction: column;
+            z-index: 1000;
+            width: 200px;
+            /* Fixed width for consistent size */
+        }
+
+        .dropdown-menu a {
+            padding: 15px 20px;
+            text-decoration: none;
+            color: #333;
+            text-align: left;
             font-weight: bold;
             transition: background-color 0.3s, color 0.3s;
+            white-space: nowrap;
+            display: block;
+           
         }
 
-        .navbar a:hover {
-            background-color: #ffd700;
-            color: #1c1c3d;
+        .dropdown-menu a:hover {
+            /* background-color: #dfdfe0; */
+            color: #dfdfe0;
         }
 
         h1 {
@@ -75,7 +104,7 @@
 
         .box {
             width: 300px;
-            height: 250px; /* Increased height for vertical extension */
+            height: 250px;
             padding: 30px;
             border-radius: 10px;
             background-color: #1c1c3d;
@@ -105,7 +134,7 @@
             text-decoration: none;
             font-weight: bold;
             transition: background-color 0.3s;
-            align-self: center; /* Center button horizontally */
+            align-self: center;
         }
 
         .box a:hover {
@@ -113,13 +142,17 @@
         }
     </style>
 </head>
+
 <body>
     <!-- Navbar -->
     <div class="navbar">
-        <span id="welcomeText">Welcome to GraphXlearn!</span> 
-        <div class="button-container">
-            <a href="/dashboard/profile">View Profile</a>
-            <a href="/">Log Out</a>
+        <span id="welcomeText">Welcome to GraphXlearn!</span>
+        <div class="dropdown">
+            <i class="fas fa-user-circle user-icon" id="userIcon"></i>
+            <div class="dropdown-menu" id="dropdownMenu">
+                <a href="/dashboard/profile" id="viewProfile">View Profile</a>
+                <a href="/" id="logOut">Log Out</a>
+            </div>
         </div>
     </div>
 
@@ -134,8 +167,6 @@
                 <a href="/graph-visualization">Explore Visualization</a>
             </div>
 
-             
-
             <!-- Learning Mode Box -->
             <div class="box">
                 <h2>Learning Mode</h2>
@@ -143,21 +174,18 @@
                 <a href="/learning-mode">Enter Learning Mode</a>
             </div>
 
-
             <!-- Code Execution Box -->
             <div class="box">
                 <h2>Practice Code Execution</h2>
                 <p>Explore complex graph structures through practicing in code editor.</p>
-                <a href="/codeExecution"> Code Execution of Graph</a>
+                <a href="/codeExecution">Code Execution of Graph</a>
             </div>
-
-
-
         </div>
     </div>
 
     <script>
-        fetch('/dashboard/profile/data') 
+        // Fetch user data for personalization
+        fetch('/dashboard/profile/data')
             .then(response => {
                 if (!response.ok) {
                     throw new Error('Network response was not ok: ' + response.statusText);
@@ -166,15 +194,34 @@
             })
             .then(data => {
                 if (data.error) {
-                    document.getElementById('errorMessage').innerText = data.error;
+                    console.error(data.error);
                 } else {
                     document.getElementById('welcomeText').innerText = `Welcome to GraphXlearn, ${data.name}!`;
                 }
             })
             .catch(error => {
                 console.error('Error fetching user data:', error);
-                document.getElementById('errorMessage').innerText = 'Error fetching user data: ' + error.message;
             });
+
+        // Toggle dropdown menu
+        const userIcon = document.getElementById('userIcon');
+        const dropdownMenu = document.getElementById('dropdownMenu');
+
+        userIcon.addEventListener('click', () => {
+            if (dropdownMenu.style.display === 'flex') {
+                dropdownMenu.style.display = 'none';
+            } else {
+                dropdownMenu.style.display = 'flex';
+            }
+        });
+
+        // Close dropdown when clicking outside
+        document.addEventListener('click', (event) => {
+            if (!userIcon.contains(event.target) && !dropdownMenu.contains(event.target)) {
+                dropdownMenu.style.display = 'none';
+            }
+        });
     </script>
 </body>
+
 </html>
