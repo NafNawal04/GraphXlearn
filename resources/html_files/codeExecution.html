@@ -1,65 +1,161 @@
 <!DOCTYPE html>
 <html lang="en">
+
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>My Simple Web Page</title>
+    <title>Code Execution IDE</title>
+    <link href="https://fonts.googleapis.com/css2?family=Roboto:wght@400;500;700&display=swap" rel="stylesheet">
     <style>
         body {
-            font-family: Arial, sans-serif;
+            font-family: 'Roboto', sans-serif;
             margin: 0;
             padding: 0;
             display: flex;
             flex-direction: column;
-            align-items: center;
-            background-color: #f0f0f0;
+            height: 100vh;
+            background-color: #f4f7fb;
         }
+
         header {
-            background-color: #333;
+            background-color: #2d3748;
             color: #fff;
-            width: 100%;
-            padding: 1rem;
-            text-align: center;
-        }
-        main {
-            max-width: 800px;
-            margin: 20px;
             padding: 20px;
-            background-color: #fff;
-            box-shadow: 0 0 10px rgba(0, 0, 0, 0.1);
-        }
-        h1 {
-            color: #333;
-        }
-        p {
-            line-height: 1.6;
-        }
-        footer {
-            background-color: #333;
-            color: #fff;
-            width: 100%;
             text-align: center;
-            padding: 1rem;
-            position: fixed;
-            bottom: 0;
+            font-size: 1.5rem;
+            box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1);
+        }
+
+        main {
+            display: flex;
+            justify-content: center;
+            height: calc(100vh - 120px);
+            margin: 20px 0;
+        }
+
+        .editor-container,
+        .output-container {
+            width: 50%;
+            height: 100%;
+            background-color: #fff;
+            box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
+            border-radius: 8px;
+            padding: 20px;
+        }
+
+        #editor {
+            height: 80%;
+        }
+
+        footer {
+            background-color: #2d3748;
+            color: #fff;
+            text-align: center;
+            padding: 10px;
+            font-size: 0.9rem;
+            box-shadow: 0 -4px 6px rgba(0, 0, 0, 0.1);
+        }
+
+        button {
+            background-color: #3182ce;
+            color: #fff;
+            border: none;
+            padding: 10px 20px;
+            font-size: 1rem;
+            border-radius: 4px;
+            cursor: pointer;
+            position: absolute;
+            bottom: 20px;
+            left: 20px;
+        }
+
+        button:hover {
+            background-color: #2b6cb0;
         }
     </style>
 </head>
+
 <body>
 
-<header>
-    <h1>Practice Making Graph!</h1>
-</header>
+    <header>
+        <h1>Code Execution IDE</h1>
+    </header>
 
-<main>
-    <h2>About This Page</h2>
-    <p>This is a simple HTML page with basic styling. It has a header, a main content area, and a footer. You can add your own content and customize it as needed.</p>
-    <p>Lorem ipsum dolor sit amet, consectetur adipiscing elit. Donec vel dui eget arcu varius blandit. Proin at elit at ligula suscipit vestibulum.</p>
-</main>
+    <main>
+        <div class="editor-container">
+            <div id="editor"></div>
+            <button id="runButton">Run</button>
+        </div>
+        <div class="output-container">
+            <h2>Output/Visualization</h2>
+            <div id="output" style="height: 80%; overflow-y: auto;"></div>
+        </div>
+    </main>
 
-<footer>
-    <p>&copy; 2024 My Website</p>
-</footer>
+    <footer>
+        <p>&copy; 2024 My Code Execution Platform</p>
+    </footer>
+
+    <script src="https://cdn.jsdelivr.net/npm/monaco-editor@0.40.0/min/vs/loader.js"></script>
+    <script>
+        require.config({ paths: { vs: 'https://cdn.jsdelivr.net/npm/monaco-editor@0.40.0/min/vs' } });
+
+        require(['vs/editor/editor.main'], function () {
+            var editor = monaco.editor.create(document.getElementById('editor'), {
+                value: 'import networkx as nx\nimport matplotlib.pyplot as plt\n\nG = nx.Graph()\nG.add_edges_from([(1, 2), (2, 3), (3, 4)])\nnx.draw(G, with_labels=True)\nplt.savefig("graph.png")',
+                language: 'python',
+                theme: 'vs-dark'
+            });
+
+            document.getElementById('runButton').addEventListener('click', function () {
+                var code = editor.getValue();
+                runCode(code);
+            });
+
+            function runCode(code) {
+                fetch('/api/code-execute', {
+                    method: 'POST',
+                    headers: { 'Content-Type': 'application/json' },
+                    body: JSON.stringify({ code: code })
+                })
+                    .then(response => {
+                        if (!response.ok) {
+                            throw new Error(`HTTP error! status: ${response.status}`);
+                        }
+                        return response.json();
+                    })
+                    .then(data => {
+                        console.log('Server Response:', data);
+                        displayOutput(data);
+                    })
+                    .catch(error => {
+                        console.error('Error:', error.message);
+                        displayOutput({ error: `Failed to execute code: ${error.message}` });
+                    });
+            }
+
+
+            function displayOutput(data) {
+                const outputElement = document.getElementById('output');
+                if (data.error) {
+                    // Display error message
+                    outputElement.innerHTML = `<pre style="color: red;">${data.error}</pre>`;
+                } else {
+                    // Display output text
+                    outputElement.innerHTML = `<pre>${data.output}</pre>`;
+                    if (data.imagePath) {
+                        // Prevent caching by appending a timestamp to the URL
+                        const timestamp = new Date().getTime();
+                        const imgTag = `<img src="${data.imagePath}?t=${timestamp}" alt="Graph" style="max-width: 100%; height: auto; margin-top: 10px;" />`;
+                        outputElement.innerHTML += imgTag;
+                    }
+                }
+            }
+
+
+        });
+    </script>
 
 </body>
+
 </html>
