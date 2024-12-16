@@ -102,6 +102,29 @@
       background-color: #ffd700;
       transform: scale(1);
     }
+
+    .results-container {
+      width: 300px;
+      background-color: #f9f9f9;
+      border-left: 2px solid #ccc;
+      padding: 15px;
+      box-shadow: -2px 0px 5px rgba(0, 0, 0, 0.1);
+      margin-top: 60px;
+      overflow-y: auto;
+      font-size: 16px;
+    }
+
+    .results-container h3 {
+      text-align: center;
+      color: #1c1c3d;
+      margin-bottom: 10px;
+    }
+
+    .results-box {
+      white-space: pre-wrap;
+      font-family: monospace;
+      color: #333;
+    }
   </style>
   <script src="https://cdnjs.cloudflare.com/ajax/libs/html2canvas/1.4.1/html2canvas.min.js"></script>
   <script src="https://cdnjs.cloudflare.com/ajax/libs/PapaParse/5.3.0/papaparse.min.js"></script>
@@ -131,6 +154,11 @@
   <div class="canvas-container">
     <div class="canvas-grid" id="canvasGrid"></div>
   </div>
+  <div class="results-container">
+    <h3>Shortest Distances</h3>
+    <div id="resultsBox" class="results-box"></div>
+  </div>
+
   <script>
     const nodes = [];
     const edges = [];
@@ -238,12 +266,12 @@
 
     function handleEdgeClick(event, d) {
       if (mode === 'removeEdge') {
-        // Remove the selected edge from the edges array
+
         const index = edges.findIndex(edge => edge.source === d.source && edge.target === d.target && edge.directed === d.directed);
         if (index > -1) {
           edges.splice(index, 1);
         }
-        updateGraph(); // Re-render the graph after removing the edge
+        updateGraph();
       } else if (mode === 'edge' || mode === 'directedEdge') {
         updateEdgeWeight(d);
       }
@@ -253,7 +281,7 @@
       const newWeight = prompt("Enter the new weight for this edge:", edge.weight);
       if (newWeight !== null) {
         edge.weight = parseInt(newWeight, 10) || edge.weight;
-        updateGraph();  // Re-render the graph with updated weights
+        updateGraph();
       }
     }
 
@@ -339,9 +367,163 @@
       });
     }
 
-    function applyDijkstra() {
-      alert("Dijkstra's Algorithm functionality to be implemented.");
+
+
+    class PriorityQueue {
+      constructor() {
+        this.queue = [];
+      }
+
+      enqueue(item, priority) {
+        this.queue.push({ item, priority });
+        this.queue.sort((a, b) => a.priority - b.priority); // Sort by priority
+      }
+
+      dequeue() {
+        return this.queue.shift().item;
+      }
+
+      isEmpty() {
+        return this.queue.length === 0;
+      }
     }
+
+    async function applyDijkstra() {
+      const startNodeId = prompt("Enter the starting node for Dijkstra's algorithm:");
+
+      const startNode = nodes.find(n => n.id === startNodeId);
+      if (!startNode) {
+        alert("Starting node not found.");
+        return;
+      }
+
+      const distances = {};
+      const previous = {};
+      const visited = new Set();
+      const pq = new PriorityQueue();
+
+      nodes.forEach(node => {
+        distances[node.id] = Infinity;
+        previous[node.id] = null;
+      });
+      distances[startNode.id] = 0;
+
+      pq.enqueue(startNode.id, 0);
+
+      while (!pq.isEmpty()) {
+        const currentNodeId = pq.dequeue();
+
+        if (visited.has(currentNodeId)) continue;
+        visited.add(currentNodeId);
+
+        // Highlight the current node being processed
+        highlightNode(currentNodeId, 'orange');
+        await delay(500);
+
+        // Explore neighbors
+        const neighbors = edges.filter(edge => edge.source === currentNodeId);
+        for (const edge of neighbors) {
+          const newDist = distances[currentNodeId] + edge.weight;
+
+          if (newDist < distances[edge.target]) {
+            distances[edge.target] = newDist;
+            previous[edge.target] = currentNodeId;
+            pq.enqueue(edge.target, newDist);
+
+
+            highlightEdge(edge, 'orange');
+            await delay(500);
+          }
+        }
+      }
+      showShortestDistances(distances);
+
+      visualizeShortestPaths(previous, startNodeId, distances);
+
+    }
+
+    function highlightNode(nodeId, color) {
+      svg.selectAll('circle')
+        .filter(d => d.id === nodeId)
+        .attr('fill', color);
+    }
+
+    function highlightEdge(edge, color) {
+      svg.selectAll('line')
+        .filter(d => d.source === edge.source && d.target === edge.target)
+        .attr('stroke', color)
+        .attr('stroke-width', 3);
+    }
+
+    function delay(ms) {
+      return new Promise(resolve => setTimeout(resolve, ms));
+    }
+
+    function showShortestDistances(distances) {
+
+      svg.selectAll('.distance-label').remove();
+
+      svg.selectAll('.distance-label')
+        .data(nodes)
+        .enter()
+        .append('text')
+        .attr('class', 'distance-label')
+        .attr('x', d => d.x) 
+        .attr('y', d => d.y - 35) 
+        .attr('text-anchor', 'middle')
+        .attr('fill', 'black')
+        .attr('font-size', '16px')
+        .text(d => distances[d.id] === Infinity ? '∞' : distances[d.id]);
+      const resultsBox = document.getElementById('resultsBox');
+      resultsBox.innerHTML = ''; // Clear previous results
+
+      const sortedNodes = nodes.sort((a, b) => a.id - b.id); // Sort nodes by ID
+      sortedNodes.forEach(node => {
+        const distance = distances[node.id] === Infinity ? '∞' : distances[node.id];
+        resultsBox.innerHTML += `Node ${node.id}: ${distance}\n`;
+      });
+    }
+
+
+
+    function visualizeShortestPaths(previous, startNodeId, distances) {
+  const resultsBox = document.getElementById('resultsBox');
+  resultsBox.innerHTML = ''; // Clear previous results
+
+  nodes.forEach(node => {
+    const targetNodeId = node.id;
+    let path = [];
+    let currentNodeId = targetNodeId;
+
+    // Backtrack to find the path from the start node
+    while (currentNodeId && currentNodeId !== startNodeId) {
+      path.push(currentNodeId);
+      currentNodeId = previous[currentNodeId];
+    }
+
+    if (currentNodeId === startNodeId) {
+      path.push(startNodeId);
+      path.reverse(); 
+
+      
+      const totalDistance = distances[targetNodeId] === Infinity ? '∞' : distances[targetNodeId];
+      const formattedPath = path.join(' -> ');
+      resultsBox.innerHTML += `<li>Node ${targetNodeId}: ${formattedPath} (total distance = ${totalDistance})</li>`;
+    }
+  });
+}
+
+
+
+    function animateShortestPath(path) {
+      path.forEach((nodeId, index) => {
+        setTimeout(() => {
+          svg.selectAll('circle').filter(d => d.id === nodeId).attr('fill', 'purple');
+        }, index * 1000); 
+      });
+    }
+
+
   </script>
 </body>
 
