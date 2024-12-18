@@ -544,7 +544,7 @@
   }
 
   const distances = {};
-  const previous = {}; // To track the shortest path predecessors
+  const previous = {}; 
   nodes.forEach(node => {
     distances[node.id] = Infinity;
     previous[node.id] = null;
@@ -553,7 +553,7 @@
 
   console.log("Initial distances:", distances);
 
-  // Relax edges for (nodes.length - 1) iterations
+  
   for (let i = 1; i < nodes.length; i++) {
     console.log(`\nIteration ${i}:`);
     for (const { source, target, weight } of edges) {
@@ -586,7 +586,6 @@
   console.log("Final distances:", distances);
   showShortestDistances(distances);
 
-  // Highlight the shortest paths in orange
   highlightFinalPaths(previous, startNodeId);
 
  
@@ -594,7 +593,7 @@
 
 
 function highlightFinalPaths(previous, startNodeId) {
-  const edgesToHighlight = []; // To store edges that are part of the shortest paths
+  const edgesToHighlight = []; 
 
   // Backtrack for each node
   nodes.forEach(node => {
@@ -609,12 +608,12 @@ function highlightFinalPaths(previous, startNodeId) {
     }
   });
 
-  // Highlight the edges on the graph
   svg.selectAll('line')
     .attr('stroke', d => {
       return edgesToHighlight.some(e => e.source === d.source && e.target === d.target) 
-        ? 'orange' // Highlight edges that are part of the shortest paths
-        : '#007bff'; // Default edge color
+        ? 'orange' 
+        : '#007bff';
+        //if the edges are part of shortest path then orange else default color
     })
     .attr('stroke-width', d => {
       return edgesToHighlight.some(e => e.source === d.source && e.target === d.target) 
@@ -622,8 +621,6 @@ function highlightFinalPaths(previous, startNodeId) {
         : 2; // Make shortest path edges thicker
     });
 }
-
-
 
 
   </script>
