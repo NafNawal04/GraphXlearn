@@ -16,6 +16,7 @@ app.use(bodyParser.urlencoded({ extended: true }));
 
 const signupRoutes = require('./routes/signup.routes.js');
 const loginRoutes = require('./routes/login.routes.js');
+const logoutRoutes = require('./routes/logout.routes.js');
 const dashboardRoutes = require('./routes/dashboard.routes.js');
 const graphVisualizationRoutes = require('./routes/graphVisualization.routes.js');
 const learningModeRoutes = require('./routes/learningMode.routes.js');
@@ -101,29 +102,24 @@ passport.deserializeUser(async (email, done) => {
 app.get('/auth/google',
   passport.authenticate('google', { scope: ['profile', 'email'] })
 );
-
 app.get('/auth/google/callback',
   passport.authenticate('google', { failureRedirect: '/login' }),
   (req, res) => {
     if (req.user) {
-      
       req.session.isAuthenticated = true;
 
-     
-      if (req.user.password === null) {
-       
-        res.redirect('/dashboard');
+      if (req.user.isNewUser) {
+        // Redirect new users to the sign-up page
+        res.redirect('/signup'); // Replace with your sign-up route or onboarding flow
       } else {
-        
+        // Existing users go to the dashboard
         res.redirect('/dashboard');
       }
     } else {
-  
       res.redirect('/login');
     }
   }
 );
-
 
 
 
@@ -164,7 +160,8 @@ app.use(ensureAuthenticated);
 
 
 app.use(signupRoutes);
-app.use(loginRoutes)
+app.use(loginRoutes);
+app.use(logoutRoutes);
 app.use(dashboardRoutes);
 app.use(graphVisualizationRoutes);
 app.use(learningModeRoutes);
