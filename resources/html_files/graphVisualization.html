@@ -148,6 +148,12 @@
       <button onclick="setMode('directedEdge')">Add Directed Edge</button>
       <button onclick="setMode('removeEdge')">Remove Edge</button>
       <button onclick="applyDijkstra()">Apply Dijkstra Algorithm</button>
+      <button onclick="applyBellmanFord()">Apply Bellman-Ford Algorithm</button>
+      <button onclick="applyBFS()">Apply BFS</button>
+      <button onclick="applyDFS()">Apply DFS</button>
+      <button onclick="applyKruskal()">Apply Kruskal's Algorithm</button>
+      <button onclick="applyPrim()">Apply Prim's Algorithm</button>
+
       <button onclick="downloadAsJPG()">Download as JPG</button>
     </div>
   </div>
@@ -368,7 +374,7 @@
     }
 
 
-
+//Dijkstra algorithm
     class PriorityQueue {
       constructor() {
         this.queue = [];
@@ -432,6 +438,7 @@
 
 
             highlightEdge(edge, 'orange');
+            showShortestDistances(distances);
             await delay(500);
           }
         }
@@ -459,59 +466,60 @@
       return new Promise(resolve => setTimeout(resolve, ms));
     }
 
+
+    
     function showShortestDistances(distances) {
+  svg.selectAll('.distance-label').remove();
 
-      svg.selectAll('.distance-label').remove();
+  svg.selectAll('.distance-label')
+    .data(nodes)
+    .enter()
+    .append('text')
+    .attr('class', 'distance-label')
+    .attr('x', d => d.x)
+    .attr('y', d => d.y - 35)
+    .attr('text-anchor', 'middle')
+    .attr('fill', 'black')
+    .attr('font-size', '16px')
+    .text(d => distances[d.id] === Infinity ? '∞' : distances[d.id]);
 
-      svg.selectAll('.distance-label')
-        .data(nodes)
-        .enter()
-        .append('text')
-        .attr('class', 'distance-label')
-        .attr('x', d => d.x) 
-        .attr('y', d => d.y - 35) 
-        .attr('text-anchor', 'middle')
-        .attr('fill', 'black')
-        .attr('font-size', '16px')
-        .text(d => distances[d.id] === Infinity ? '∞' : distances[d.id]);
-      const resultsBox = document.getElementById('resultsBox');
-      resultsBox.innerHTML = ''; // Clear previous results
-
-      const sortedNodes = nodes.sort((a, b) => a.id - b.id); // Sort nodes by ID
-      sortedNodes.forEach(node => {
-        const distance = distances[node.id] === Infinity ? '∞' : distances[node.id];
-        resultsBox.innerHTML += `Node ${node.id}: ${distance}\n`;
-      });
-    }
-
-
-
-    function visualizeShortestPaths(previous, startNodeId, distances) {
   const resultsBox = document.getElementById('resultsBox');
   resultsBox.innerHTML = ''; // Clear previous results
 
   nodes.forEach(node => {
-    const targetNodeId = node.id;
-    let path = [];
-    let currentNodeId = targetNodeId;
-
-    // Backtrack to find the path from the start node
-    while (currentNodeId && currentNodeId !== startNodeId) {
-      path.push(currentNodeId);
-      currentNodeId = previous[currentNodeId];
-    }
-
-    if (currentNodeId === startNodeId) {
-      path.push(startNodeId);
-      path.reverse(); 
-
-      
-      const totalDistance = distances[targetNodeId] === Infinity ? '∞' : distances[targetNodeId];
-      const formattedPath = path.join(' -> ');
-      resultsBox.innerHTML += `<li>Node ${targetNodeId}: ${formattedPath} (total distance = ${totalDistance})</li>`;
-    }
+    const distance = distances[node.id] === Infinity ? '∞' : distances[node.id];
+    resultsBox.innerHTML += `Node ${node.id}: ${distance}\n`;
   });
 }
+
+
+
+    function visualizeShortestPaths(previous, startNodeId, distances) {
+      const resultsBox = document.getElementById('resultsBox');
+      resultsBox.innerHTML = ''; // Clear previous results
+
+      nodes.forEach(node => {
+        const targetNodeId = node.id;
+        let path = [];
+        let currentNodeId = targetNodeId;
+
+        // Backtrack to find the path from the start node
+        while (currentNodeId && currentNodeId !== startNodeId) {
+          path.push(currentNodeId);
+          currentNodeId = previous[currentNodeId];
+        }
+
+        if (currentNodeId === startNodeId) {
+          path.push(startNodeId);
+          path.reverse();
+
+
+          const totalDistance = distances[targetNodeId] === Infinity ? '∞' : distances[targetNodeId];
+          const formattedPath = path.join(' -> ');
+          resultsBox.innerHTML += `<li>Node ${targetNodeId}: ${formattedPath} (total distance = ${totalDistance})</li>`;
+        }
+      });
+    }
 
 
 
@@ -519,9 +527,103 @@
       path.forEach((nodeId, index) => {
         setTimeout(() => {
           svg.selectAll('circle').filter(d => d.id === nodeId).attr('fill', 'purple');
-        }, index * 1000); 
+        }, index * 1000);
       });
     }
+
+
+  //bellmanford algorithm
+
+  async function applyBellmanFord() {
+  const startNodeId = prompt("Enter the starting node for Bellman-Ford algorithm:");
+  const startNode = nodes.find(n => n.id === startNodeId);
+
+  if (!startNode) {
+    alert("Starting node not found.");
+    return;
+  }
+
+  const distances = {};
+  const previous = {}; // To track the shortest path predecessors
+  nodes.forEach(node => {
+    distances[node.id] = Infinity;
+    previous[node.id] = null;
+  });
+  distances[startNode.id] = 0;
+
+  console.log("Initial distances:", distances);
+
+  // Relax edges for (nodes.length - 1) iterations
+  for (let i = 1; i < nodes.length; i++) {
+    console.log(`\nIteration ${i}:`);
+    for (const { source, target, weight } of edges) {
+      console.log(`Processing edge ${source} -> ${target} with weight ${weight}`);
+
+      await highlightEdge({ source, target }, 'orange');
+      await highlightNode(source, 'blue');
+      await highlightNode(target, 'green');
+
+      if (distances[source] + weight < distances[target]) {
+        distances[target] = distances[source] + weight;
+        previous[target] = source; // Update the predecessor
+        console.log(`Updated distance of ${target} to ${distances[target]}`);
+        showShortestDistances(distances);
+        await delay(1000);
+      }
+      
+    }
+  }
+
+  // Check for negative weight cycles
+  for (const { source, target, weight } of edges) {
+    if (distances[source] + weight < distances[target]) {
+      alert("Graph contains a negative weight cycle!");
+      console.log("Negative cycle detected!");
+      return;
+    }
+  }
+
+  console.log("Final distances:", distances);
+  showShortestDistances(distances);
+
+  // Highlight the shortest paths in orange
+  highlightFinalPaths(previous, startNodeId);
+
+ 
+}
+
+
+function highlightFinalPaths(previous, startNodeId) {
+  const edgesToHighlight = []; // To store edges that are part of the shortest paths
+
+  // Backtrack for each node
+  nodes.forEach(node => {
+    let currentNode = node.id;
+
+    while (previous[currentNode] !== null) {
+      edgesToHighlight.push({
+        source: previous[currentNode],
+        target: currentNode
+      });
+      currentNode = previous[currentNode];
+    }
+  });
+
+  // Highlight the edges on the graph
+  svg.selectAll('line')
+    .attr('stroke', d => {
+      return edgesToHighlight.some(e => e.source === d.source && e.target === d.target) 
+        ? 'orange' // Highlight edges that are part of the shortest paths
+        : '#007bff'; // Default edge color
+    })
+    .attr('stroke-width', d => {
+      return edgesToHighlight.some(e => e.source === d.source && e.target === d.target) 
+        ? 3 
+        : 2; // Make shortest path edges thicker
+    });
+}
+
+
 
 
   </script>
