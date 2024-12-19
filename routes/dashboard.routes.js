@@ -18,5 +18,6 @@ router.get('/dashboard/profile/edit', (req, res) => {
     res.sendFile(path.join(__dirname, '../resources/html_files/edit_profile.html'));
 });
 
+router.post('/dashboard/profile/update', dashboardController.updateProfile);
 
 module.exports = router;
