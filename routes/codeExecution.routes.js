@@ -7,15 +7,15 @@ const codeExecutionController = require('../controller/codeExecution.controller.
 router.get('/codeExecution', codeExecutionController.getCodeExecutionPage);
 
 // Route to execute Python code
-router.post('/api/code-execute', codeExecutionController.executeCode);
+router.post('/code-execute', codeExecutionController.executeCode);
 
-// Route to serve graph.png
 router.get('/graph.png', (req, res) => {
-    const filePath = path.join(__dirname, '../../graph.png'); 
+    const filePath = path.join(__dirname, '../graph.png'); // Adjusted path to serve the graph image correctly
+    console.log('Serving graph.png from path:', filePath); // Log to debug the file location
     res.sendFile(filePath, (err) => {
         if (err) {
-            console.error('Error sending file:', err.message);
-            res.status(500).send('File not found');
+            console.error('Error serving graph.png:', err.message);
+            res.status(500).send('Error retrieving the graph image.');
         }
     });
 });

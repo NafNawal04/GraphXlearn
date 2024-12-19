@@ -108,49 +108,49 @@
             });
 
             document.getElementById('runButton').addEventListener('click', function () {
-                var code = editor.getValue();
-                runCode(code);
+                const code = editor.getValue();
+                console.log('Code sent to backend for execution:', code);
+
+                sendCodeToBackend(code);
+        
+                loadImage();
             });
 
-            function runCode(code) {
-                fetch('/api/code-execute', {
-                    method: 'POST',
-                    headers: { 'Content-Type': 'application/json' },
-                    body: JSON.stringify({ code: code })
-                })
-                    .then(response => {
-                        if (!response.ok) {
-                            throw new Error(`HTTP error! status: ${response.status}`);
-                        }
-                        return response.json();
-                    })
-                    .then(data => {
-                        console.log('Server Response:', data);
-                        displayOutput(data);
-                    })
-                    .catch(error => {
-                        console.error('Error:', error.message);
-                        displayOutput({ error: `Failed to execute code: ${error.message}` });
-                    });
-            }
+            function sendCodeToBackend(code) {
+                const xhr = new XMLHttpRequest();
+                xhr.open('POST', '/code-execute', true);
+                xhr.setRequestHeader('Content-Type', 'application/json');
 
-
-            function displayOutput(data) {
-                const outputElement = document.getElementById('output');
-                if (data.error) {
-                    // Display error message
-                    outputElement.innerHTML = `<pre style="color: red;">${data.error}</pre>`;
-                } else {
-                    // Display output text
-                    outputElement.innerHTML = `<pre>${data.output}</pre>`;
-                    if (data.imagePath) {
-                        // Prevent caching by appending a timestamp to the URL
-                        const timestamp = new Date().getTime();
-                        const imgTag = `<img src="${data.imagePath}?t=${timestamp}" alt="Graph" style="max-width: 100%; height: auto; margin-top: 10px;" />`;
-                        outputElement.innerHTML += imgTag;
+                xhr.onreadystatechange = function () {
+                    if (xhr.readyState === 4 && xhr.status === 200) {
+                        console.log('Code executed successfully on the backend.');
+                    } else if (xhr.readyState === 4) {
+                        console.error('Backend error:', xhr.status, xhr.statusText);
                     }
-                }
+                };
+
+                xhr.send(JSON.stringify({ code: code }));
             }
+
+            function loadImage() {
+                const outputElement = document.getElementById('output');
+                outputElement.innerHTML = '';
+
+                
+                const imageUrl = './graph.png' ;
+
+                const img = document.createElement('img');
+                img.src = imageUrl;
+                img.alt = 'Graph Output';
+                img.style = 'max-width: 100%; height: auto; margin-top: 10px;';
+
+                img.onload = () => console.log('Image loaded successfully:', imageUrl);
+                img.onerror = () => console.error('Error loading image. Ensure graph.png exists in the directory:', imageUrl);
+
+                outputElement.appendChild(img);
+            }
+
+
 
 
         });

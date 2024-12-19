@@ -21,11 +21,15 @@ const promptRoutes = require('./routes/prompt.routes.js');
 
 
 app.use(express.static('html_files'));
+
+app.use(express.static(path.join(__dirname)));
 app.use('/content_html_files', express.static(path.join(__dirname, './resources/content_html_files')));
 app.use('/exercise_html_files', express.static(path.join(__dirname, './resources/exercise_html_files')));
 app.use('/image', express.static(path.join(__dirname, './resources/image')));
 app.use('/videos', express.static(path.join(__dirname, './resources/videos')));
 app.use('/styles', express.static(path.join(__dirname, './resources/styles')));
+app.use(express.static(path.join(__dirname)));
+
 
 app.use(express.json());
 app.use(express.urlencoded({ extended: true }));
@@ -84,7 +88,7 @@ app.use(exerciseRoutes);
 app.use(promptRoutes);
 
 
-const port = 3006;
+const port = 3008;
 app.listen(port, () => {
     console.log(`App is listening to port ${port}`);
 });
