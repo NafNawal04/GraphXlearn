@@ -1,35 +1,27 @@
 const bcrypt = require('bcrypt');
 const db = require('../db');
+const passport = require('passport');
 
-const handleLogin = async (req, res) => {
-    const { email, password } = req.body;
-
-    try {
-        
-        const user = await db.user.findFirst({
-            where: {
-                email,
-            },
+const handleLogin = (req, res, next) => {
+    passport.authenticate('local', (err, user, info) => {
+        if (err) { 
+            console.error("Authentication Error:", err);
+            return next(err); 
+        }
+        if (!user) { 
+            // Authentication failed, set flash message
+            req.flash('error', info.message);
+            return res.redirect('/login'); 
+        }
+        req.logIn(user, (err) => {
+            if (err) { 
+                console.error("Login Error:", err);
+                return next(err); 
+            }
+            // Authentication successful, redirect to dashboard
+            res.redirect('/dashboard');
         });
-
-        if (!user) {
-            return res.status(400).send('Invalid email or password.');
-        }
-
-        const passwordMatch = await bcrypt.compare(password, user.password);
-        
-        if (!passwordMatch) {
-            return res.status(400).send('Invalid email or password.');
-        }
-
-        req.session.isAuthenticated = true;
-        req.session.email = user.email;
-
-        res.redirect('/dashboard'); 
-    } catch (error) {
-        console.error(error);
-        res.status(500).send('An error occurred during login.');
-    }
+    })(req, res, next);
 };
 
 module.exports = { handleLogin };
