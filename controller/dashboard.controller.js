@@ -1,22 +1,24 @@
 const db = require('../db');
 
 const viewProfile = async (req, res) => {
-    console.log("Session email:", req.session.email);
+    // Access the authenticated user via req.user
+    const user = req.user;
 
-    const email = req.session.email;
+    console.log("Authenticated user:", user);
 
-    if (!email) {
-        return res.status(403).json({ error: 'User not logged in' });
+    if (!user) {
+        return res.status(403).json({ error: 'User not authenticated' });
     }
 
     try {
-        const user = await db.user.findUnique({
-            where: { email },
+        // Optionally, you can fetch fresh user data from the database
+        const freshUser = await db.user.findUnique({
+            where: { email: user.email },
         });
 
-        if (user) {
-            console.log("User found:", user);
-            res.json({ name: user.name, email: user.email });
+        if (freshUser) {
+            console.log("User found:", freshUser);
+            res.json({ name: freshUser.name, email: freshUser.email });
         } else {
             res.status(404).json({ error: 'User not found' });
         }
@@ -25,6 +27,7 @@ const viewProfile = async (req, res) => {
         res.status(500).json({ error: 'An error occurred while retrieving the profile' });
     }
 };
+
 
 const updateProfile = async (req, res) => {
     console.log("Updating profile...");

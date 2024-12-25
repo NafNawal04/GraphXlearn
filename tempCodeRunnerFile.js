@@ -152,14 +152,13 @@ app.get("/api/exercise/:id", async (req, res) => {
 
 
 
-  function ensureAuthenticated(req, res, next) {
-    const publicPaths = ['/', '/login', '/signup', '/auth/google', '/auth/google/callback'];
-    if (publicPaths.includes(req.path) || req.isAuthenticated()) {
+function ensureAuthenticated(req, res, next) {
+    const publicPaths = ['/', '/login', '/signup'];
+    if (publicPaths.includes(req.path) || req.session.isAuthenticated) {
         return next();
     }
     res.redirect('/login');
 }
-
 
 app.use(ensureAuthenticated);
 

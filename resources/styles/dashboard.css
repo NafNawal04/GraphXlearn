@@ -1,0 +1,228 @@
+
+body {
+    font-family: 'Raleway', sans-serif;
+    background: #f4f4f9;
+    color: #fff;
+    margin: 0;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    min-height: 100vh;
+}
+
+/* Navbar Styling */
+.navbar {
+    width: 100%;
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    padding: 20px 50px;
+    background: #1a1a2e;
+    color: #fff;
+    position: fixed;
+    top: 0;
+    z-index: 1000;
+    box-shadow: 0 4px 10px rgba(0, 0, 0, 0.1);
+}
+
+.navbar #welcomeText {
+    font-size: 1.8rem;
+    font-weight: bold;
+    color: #FFD700;
+    margin-left: 20px; /* Shift to the right */
+}
+
+.dropdown .user-icon {
+    font-size: 2rem;
+    cursor: pointer;
+    color: #FFD700;
+    margin-right: 30px; /* Shift to the left */
+}
+
+.dropdown-menu {
+    position: absolute;
+    right: 70px;
+    top: 50px;
+    background-color: #ffffff;
+    color: #333;
+    border-radius: 10px;
+    box-shadow: 0 4px 10px rgba(0, 0, 0, 0.2);
+    display: none;
+    flex-direction: column;
+}
+
+.dropdown-menu a {
+    padding: 10px 20px;
+    text-decoration: none;
+    color: #333;
+}
+
+.dropdown-menu a:hover {
+    background-color: #f4f4f9;
+}
+
+/* Main Content */
+.container {
+    margin-top: 120px;
+    width: 90%;
+    max-width: 1200px;
+    text-align: center;
+}
+
+h1 {
+    font-size: 2.5rem;
+    margin-bottom: 40px;
+    color: #292952;
+}
+
+.box-container {
+    display: flex;
+    flex-wrap: wrap;
+    gap: 30px;
+    justify-content: center;
+}
+
+.box {
+    flex: 1 1 300px;
+    max-width: 300px;
+    padding: 25px;
+    background: #292952;
+    border-radius: 10px;
+    box-shadow: 5px 5px 15px rgba(0, 0, 0, 0.3), -5px -5px 15px rgba(50, 50, 70, 0.1);
+    transition: all 0.3s ease;
+    text-align: left;
+    position: relative; 
+    overflow: hidden; 
+}
+
+.box:hover {
+    transform: translateY(-5px);
+    box-shadow: 8px 8px 20px rgba(0, 0, 0, 0.4), -8px -8px 20px rgba(50, 50, 70, 0.2);
+}
+
+.box h2 {
+    font-size: 1.5rem;
+    margin-bottom: 10px;
+    color: #FFD700;
+}
+
+.box p {
+    color: #ccc;
+    font-size: 0.9rem;
+    margin-bottom: 15px;
+}
+
+.box .btn {
+    padding: 10px 15px;
+    background: #FFD700;
+    color: #1f1f2e;
+    text-decoration: none;
+    font-size: 0.9rem;
+    font-weight: 600;
+    border-radius: 10px;
+    transition: background-color 0.3s ease, transform 0.3s ease;
+    display: inline-block;
+}
+
+.box .btn:hover {
+    background: #FFA500;
+    transform: scale(1.05);
+}
+
+/* Footer Styling */
+footer {
+    margin-top: auto;
+    padding: 10px;
+    background-color: #bababe;
+    color: #0a0909;
+    text-align: center;
+    font-size: 0.9rem;
+    width: 100%;
+    position: relative;
+    overflow-x: auto;
+}
+
+footer a {
+    color: #FFD700;
+    text-decoration: none;
+}
+
+footer a:hover {
+    text-decoration: underline;
+}
+
+/* Slideshow Container Styling */
+.slideshow-container {
+    position: absolute;
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 100%;
+    display: none; 
+    align-items: center;
+    justify-content: center;
+    background: rgba(0, 0, 0, 0.3);
+    border-radius: 10px;
+    overflow: hidden; 
+    z-index: 1; 
+}
+
+
+.slides-wrapper {
+    display: flex;
+    width: 100%;
+    height: 100%;
+    transition: transform 0.5s ease-in-out;
+}
+
+
+.slide {
+    min-width: 100%;
+    height: 100%;
+    flex-shrink: 0;
+}
+
+.slide img {
+    width: 100%;
+    height: 100%;
+    object-fit: cover;
+    border-radius: 10px;
+}
+
+.content-overlay {
+    position: relative;
+    z-index: 2; 
+    color: #fff;
+    text-align: left;
+   padding: 2px;
+    transition: color 0.3s ease;
+}
+
+.content-overlay h2 {
+    font-size: 1.5rem;
+    margin-bottom: 10px;
+    color: #FFD700;
+}
+
+.content-overlay p {
+    color: #ccc;
+    font-size: 0.9rem;
+    margin-bottom: 15px;
+}
+
+.content-overlay .btn {
+    padding: 10px 15px;
+    background: #FFD700;
+    color: #1f1f2e;
+    text-decoration: none;
+    font-size: 0.9rem;
+    font-weight: 600;
+    border-radius: 10px;
+    transition: background-color 0.1s ease, transform 0.3s ease;
+    display: inline-block;
+}
+
+.content-overlay .btn:hover {
+    background: #FFA500;
+    transform: scale(1.05);
+}

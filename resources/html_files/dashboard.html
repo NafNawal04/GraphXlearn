@@ -6,152 +6,21 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Dashboard</title>
     <link href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/5.15.4/css/all.min.css" rel="stylesheet">
+    <link rel="stylesheet" href="../styles/dashboard.css">
     <style>
-        body {
-            font-family: Arial, sans-serif;
-            background-color: #f4f4f9;
-            margin: 10;
-            display: flex;
-            flex-direction: column;
-            align-items: center;
-        }
-
-        /* Navbar styling */
-        .navbar {
-            width: 100%;
-            display: flex;
-            justify-content: space-between;
-            align-items: center;
-            padding: 20px 40px;
-            background-color: #1c1c3d;
-            color: #fff;
-            box-sizing: border-box;
-            position: fixed;
-            top: 0;
-            z-index: 1000;
-        }
-
-      
-        .navbar #welcomeText {
-            font-size: 1.4em;
-            font-weight: bold;
-            color: #ffd700;
-        }
-
-       
-        .dropdown {
-            position: relative;
-            margin-right: 20px;
-        }
-
-     
-        .dropdown .user-icon {
-            font-size: 2.5em;
-            cursor: pointer;
-            color: #ffd700;
-        }
-
-    
-        .dropdown-menu {
-            position: absolute;
-            right: 0;
-            top: 45px;
-            background-color: #fff;
-            color: #333;
-            border: 1px solid #ddd;
-            border-radius: 5px;
-            box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
-            display: none;
-            flex-direction: column;
-            z-index: 1000;
-            width: 200px;
-            
-        }
-
-        .dropdown-menu a {
-            padding: 15px 20px;
-            text-decoration: none;
-            color: #333;
-            text-align: left;
-            font-weight: bold;
-            transition: background-color 0.3s, color 0.3s;
-            white-space: nowrap;
-            display: block;
-           
-        }
-
-        .dropdown-menu a:hover {
-           
-            color: #dfdfe0;
-        }
-
-        h1 {
-            font-size: 2em;
-            margin: 140px 0 40px;
-        }
-
-        .container {
-            max-width: 1000px;
-            text-align: center;
-        }
-
-        .box-container {
-            display: flex;
-            gap: 20px;
-            justify-content: center;
-            margin-top: 20px;
-        }
-
-        .box {
-            width: 300px;
-            height: 250px;
-            padding: 30px;
-            border-radius: 10px;
-            background-color: #1c1c3d;
-            color: #fff;
-            text-align: center;
-            box-shadow: 0 4px 8px rgba(0, 0, 0, 0.2);
-            display: flex;
-            flex-direction: column;
-            justify-content: space-between;
-        }
-
-        .box h2 {
-            margin-bottom: 10px;
-            font-size: 1.6em;
-        }
-
-        .box p {
-            color: #ccc;
-        }
-
-        .box a {
-            display: inline-block;
-            padding: 10px 20px;
-            background-color: #ffd700;
-            color: #1c1c3d;
-            border-radius: 5px;
-            text-decoration: none;
-            font-weight: bold;
-            transition: background-color 0.3s;
-            align-self: center;
-        }
-
-        .box a:hover {
-            background-color: #e6c200;
-        }
+        @import url('https://fonts.googleapis.com/css2?family=Raleway:wght@300;400;600&display=swap');
     </style>
 </head>
 
 <body>
     <!-- Navbar -->
     <div class="navbar">
-        <span id="welcomeText">Welcome to GraphXlearn!</span>
+        <span id="welcomeText">GRAPHXLEARN</span>
         <div class="dropdown">
             <i class="fas fa-user-circle user-icon" id="userIcon"></i>
             <div class="dropdown-menu" id="dropdownMenu">
-                <a href="/dashboard/profile" id="viewProfile">View Profile</a>
-                <a href="/logout" >Log Out</a>
+                <a href="/dashboard/profile">View Profile</a>
+                <a href="/logout">Log Out</a>
             </div>
         </div>
     </div>
@@ -160,68 +29,120 @@
     <div class="container">
         <h1>Choose a content to explore</h1>
         <div class="box-container">
-            <!-- Graph Visualization Box -->
-            <div class="box">
-                <h2>Graph Visualization</h2>
-                <p>Explore complex graph structures and visualize data through our interactive platform.</p>
-                <a href="/graph-visualization">Explore Visualization</a>
+      
+            <div class="box" id="graphVisualizationBox">
+                
+                <div class="slideshow-container">
+                    <div class="slides-wrapper">
+                        <div class="slide">
+                            <img src="../image/bfs_dfs.PNG" alt="Graph Slide 1">
+                        </div>
+                        <div class="slide">
+                            <img src="../image/bfs_dfs_2.PNG" alt="Graph Slide 2">
+                        </div>
+                        <div class="slide">
+                            <img src="../image/bfs_dfs_3.PNG" alt="Graph Slide 3">
+                        </div>
+                        <!-- Add more slides as needed -->
+                    </div>
+                </div>
+
+                <!-- Content Overlay -->
+                <div class="content-overlay">
+                    <h2>Graph Visualization</h2>
+                    <p>Dive into interactive visualizations of graph structures for better insights.</p>
+                    <a href="/graph-visualization" class="btn">Explore Now</a>
+                </div>
             </div>
 
             <!-- Learning Mode Box -->
+
+            
             <div class="box">
                 <h2>Learning Mode</h2>
-                <p>Engage in interactive modules designed to deepen your understanding of algorithms.</p>
-                <a href="/learning-mode">Enter Learning Mode</a>
+                <p>Interactive modules designed to teach graph algorithms in an engaging way.</p>
+                <a href="/learning-mode" class="btn">Start Learning</a>
             </div>
 
             <!-- Code Execution Box -->
             <div class="box">
-                <h2>Practice Code Execution</h2>
-                <p>Explore complex graph structures through practicing in code editor.</p>
-                <a href="/codeExecution">Code Execution of Graph</a>
+                <h2>Graph Execution</h2>
+                <p>Practice and execute graph algorithms directly in a code editor.</p>
+                <a href="/codeExecution" class="btn">Start Coding</a>
             </div>
         </div>
     </div>
 
-    <script>
-        // Fetch user data for personalization
-        fetch('/dashboard/profile/data')
-            .then(response => {
-                if (!response.ok) {
-                    throw new Error('Network response was not ok: ' + response.statusText);
-                }
-                return response.json();
-            })
-            .then(data => {
-                if (data.error) {
-                    console.error(data.error);
-                } else {
-                    document.getElementById('welcomeText').innerText = `Welcome to GraphXlearn, ${data.name}!`;
-                }
-            })
-            .catch(error => {
-                console.error('Error fetching user data:', error);
-            });
+    <!-- Footer -->
+    <footer>
+        <p>© 2024 GraphXlearn. Built with care by the GraphXlearn Team.</p>
+    </footer>
 
-        // Toggle dropdown menu
+    <script>
+        // Fetch user data
+        fetch('/dashboard/profile/data')
+            .then(response => response.json())
+            .then(data => {
+                document.getElementById('welcomeText').innerText = `Welcome to GraphXlearn, ${data.name}!`;
+            })
+            .catch(err => console.error(err));
+
+
         const userIcon = document.getElementById('userIcon');
         const dropdownMenu = document.getElementById('dropdownMenu');
 
         userIcon.addEventListener('click', () => {
-            if (dropdownMenu.style.display === 'flex') {
-                dropdownMenu.style.display = 'none';
-            } else {
-                dropdownMenu.style.display = 'flex';
-            }
+            dropdownMenu.style.display = dropdownMenu.style.display === 'flex' ? 'none' : 'flex';
         });
 
-        // Close dropdown when clicking outside
         document.addEventListener('click', (event) => {
             if (!userIcon.contains(event.target) && !dropdownMenu.contains(event.target)) {
                 dropdownMenu.style.display = 'none';
             }
         });
+
+        const graphBox = document.getElementById('graphVisualizationBox');
+        const slideshowContainer = graphBox.querySelector('.slideshow-container');
+        const slidesWrapper = slideshowContainer.querySelector('.slides-wrapper');
+        const slides = slideshowContainer.querySelectorAll('.slide');
+
+        let slideInterval;
+        let currentSlide = 0;
+        const totalSlides = slides.length;
+
+        function updateSlidePosition() {
+            slidesWrapper.style.transform = `translateX(-${currentSlide * 100}%)`;
+        }
+
+        
+        function startSlideshow() {
+            
+            updateSlidePosition();
+
+            
+            slideInterval = setInterval(() => {
+                currentSlide = (currentSlide + 1) % totalSlides;
+                updateSlidePosition();
+            }, 2000); 
+        }
+
+        function stopSlideshow() {
+            clearInterval(slideInterval);
+            slidesWrapper.style.transform = `translateX(0)`;
+            currentSlide = 0;
+        }
+
+        graphBox.addEventListener('mouseenter', () => {
+            slideshowContainer.style.display = 'flex';
+            startSlideshow();
+        });
+
+        graphBox.addEventListener('mouseleave', () => {
+            stopSlideshow();
+            slideshowContainer.style.display = 'none';
+        });
     </script>
 </body>
 
 </html>
+
