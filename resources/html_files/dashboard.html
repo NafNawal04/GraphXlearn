@@ -9,6 +9,8 @@
     <link rel="stylesheet" href="../styles/dashboard.css">
     <style>
         @import url('https://fonts.googleapis.com/css2?family=Raleway:wght@300;400;600&display=swap');
+
+        /* Add the updated CSS here or in your dashboard.css file */
     </style>
 </head>
 
@@ -29,23 +31,14 @@
     <div class="container">
         <h1>Choose a content to explore</h1>
         <div class="box-container">
-      
+
+            <!-- Graph Visualization Box with Video -->
             <div class="box" id="graphVisualizationBox">
-                
-                <div class="slideshow-container">
-                    <div class="slides-wrapper">
-                        <div class="slide">
-                            <img src="../image/bfs_dfs.PNG" alt="Graph Slide 1">
-                        </div>
-                        <div class="slide">
-                            <img src="../image/bfs_dfs_2.PNG" alt="Graph Slide 2">
-                        </div>
-                        <div class="slide">
-                            <img src="../image/bfs_dfs_3.PNG" alt="Graph Slide 3">
-                        </div>
-                        <!-- Add more slides as needed -->
-                    </div>
-                </div>
+                <!-- Video Element -->
+                <video class="video-background" autoplay muted loop>
+                    <source src="../videos/istock_video_1699485520950.mp4" type="video/mp4">
+                    Your browser does not support the video tag.
+                </video>
 
                 <!-- Content Overlay -->
                 <div class="content-overlay">
@@ -55,28 +48,43 @@
                 </div>
             </div>
 
-            <!-- Learning Mode Box -->
+            <!-- Learning Mode Box with Video -->
+            <div class="box" id="learningModeBox">
+                <!-- Video Element -->
+                <video class="video-background" autoplay muted loop>
+                    <source src="../videos/istock_video_1617896431420.mp4" type="video/mp4">
+                    Your browser does not support the video tag.
+                </video>
 
-            
-            <div class="box">
-                <h2>Learning Mode</h2>
-                <p>Interactive modules designed to teach graph algorithms in an engaging way.</p>
-                <a href="/learning-mode" class="btn">Start Learning</a>
+                <!-- Content Overlay -->
+                <div class="content-overlay">
+                    <h2>Learning Mode</h2>
+                    <p>Interactive modules designed to teach graph algorithms in an engaging way.</p>
+                    <a href="/learning-mode" class="btn">Start Learning</a>
+                </div>
             </div>
 
-            <!-- Code Execution Box -->
-            <div class="box">
-                <h2>Graph Execution</h2>
-                <p>Practice and execute graph algorithms directly in a code editor.</p>
-                <a href="/codeExecution" class="btn">Start Coding</a>
+            <!-- Graph Execution Box with Video -->
+            <div class="box" id="graphExecutionBox">
+                <!-- Video Element -->
+                <video class="video-background" autoplay muted loop>
+                    <source src="../videos/4733-179738669_small.mp4" type="video/mp4">
+                    Your browser does not support the video tag.
+                </video>
+
+                <!-- Content Overlay -->
+                <div class="content-overlay">
+                    <h2>Graph Execution</h2>
+                    <p>Practice and execute graph algorithms directly in a code editor.</p>
+                    <a href="/codeExecution" class="btn">Start Coding</a>
+                </div>
             </div>
+
         </div>
     </div>
 
     <!-- Footer -->
-    <footer>
-        <p>© 2024 GraphXlearn. Built with care by the GraphXlearn Team.</p>
-    </footer>
+    
 
     <script>
         // Fetch user data
@@ -86,7 +94,6 @@
                 document.getElementById('welcomeText').innerText = `Welcome to GraphXlearn, ${data.name}!`;
             })
             .catch(err => console.error(err));
-
 
         const userIcon = document.getElementById('userIcon');
         const dropdownMenu = document.getElementById('dropdownMenu');
@@ -101,48 +108,8 @@
             }
         });
 
-        const graphBox = document.getElementById('graphVisualizationBox');
-        const slideshowContainer = graphBox.querySelector('.slideshow-container');
-        const slidesWrapper = slideshowContainer.querySelector('.slides-wrapper');
-        const slides = slideshowContainer.querySelectorAll('.slide');
-
-        let slideInterval;
-        let currentSlide = 0;
-        const totalSlides = slides.length;
-
-        function updateSlidePosition() {
-            slidesWrapper.style.transform = `translateX(-${currentSlide * 100}%)`;
-        }
-
-        
-        function startSlideshow() {
-            
-            updateSlidePosition();
-
-            
-            slideInterval = setInterval(() => {
-                currentSlide = (currentSlide + 1) % totalSlides;
-                updateSlidePosition();
-            }, 2000); 
-        }
-
-        function stopSlideshow() {
-            clearInterval(slideInterval);
-            slidesWrapper.style.transform = `translateX(0)`;
-            currentSlide = 0;
-        }
-
-        graphBox.addEventListener('mouseenter', () => {
-            slideshowContainer.style.display = 'flex';
-            startSlideshow();
-        });
-
-        graphBox.addEventListener('mouseleave', () => {
-            stopSlideshow();
-            slideshowContainer.style.display = 'none';
-        });
+        // Removed slideshow functionality
     </script>
 </body>
 
 </html>
-
