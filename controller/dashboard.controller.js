@@ -33,34 +33,50 @@ const updateProfile = async (req, res) => {
     console.log("Updating profile...");
 
     const { name, email } = req.body;
-    const sessionEmail = req.session.email;
+    const sessionEmail = req.session?.passport?.user; 
 
     if (!sessionEmail) {
-        return res.status(403).json({ error: 'User not logged in' });
+        console.error("Error: User not logged in.");
+        return res.status(403).json({ error: "User not logged in" });
     }
 
     if (!name || !email) {
-        return res.status(400).json({ error: 'Name and email are required' });
+        console.error("Error: Name and email are required.");
+        return res.status(400).json({ error: "Name and email are required" });
+    }
+
+    if (!email.includes("@")) {
+        console.error("Error: Invalid email format.");
+        return res.status(400).json({ error: "Invalid email format" });
     }
 
     try {
+        console.log("Updating user with session email:", sessionEmail);
+
         const updatedUser = await db.user.update({
             where: { email: sessionEmail },
             data: { 
-                name: name, 
-                email: email 
+                name: name.trim(), 
+                email: email.trim(),
             },
         });
 
         console.log("Profile updated successfully:", updatedUser);
-        res.status(200).json({ 
-            message: 'Profile updated successfully', 
-            profile: { name: updatedUser.name, email: updatedUser.email } 
+
+        return res.status(200).json({ 
+            message: "Profile updated successfully", 
+            profile: { name: updatedUser.name, email: updatedUser.email },
         });
     } catch (error) {
         console.error("Error updating profile:", error);
-        res.status(500).json({ error: 'An error occurred while updating the profile' });
+
+        if (error.code === "P2025") { 
+            return res.status(404).json({ error: "User not found" });
+        }
+
+        return res.status(500).json({ error: "An error occurred while updating the profile" });
     }
 };
+
 
 module.exports = { viewProfile, updateProfile };
