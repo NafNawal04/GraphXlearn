@@ -1,0 +1,119 @@
+body {
+    font-family: 'Raleway', sans-serif;
+    background: url('../image/login.png') no-repeat center center fixed;
+    background-size: cover;
+    height: 100vh;
+    margin: 0;
+    color: #fff;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    flex-direction: column;
+}
+
+.logo {
+    position: absolute;
+    top: 20px;
+    left: 50px;
+}
+
+.logo img {
+    width: 200px;
+}
+
+.login-container {
+    background: rgba(255,255,255,0.07);
+    padding: 40px 30px;
+    border-radius: 20px;
+    box-shadow: 0 10px 30px rgba(0, 0, 0, 0.5);
+    text-align: center;
+    width: 400px;
+    backdrop-filter: blur(10px);
+}
+
+.login-container h1 {
+    font-size: 28px;
+    margin-bottom: 20px;
+    color: #fff;
+}
+
+.login-container label {
+    font-size: 14px;
+    display: block;
+    margin: 15px 0 5px;
+    text-align: left;
+    color: #ddd;
+}
+
+.login-container input {
+    width: 95%;
+    padding: 12px;
+    border: none;
+    border-radius: 10px;
+    margin-bottom: 5px;
+    font-size: 14px;
+    background: rgba(255, 255, 255, 0.1);
+    color: #fff;
+    box-shadow: inset 0 2px 5px rgba(0, 0, 0, 0.1);
+}
+
+.login-container input::placeholder {
+    color: #bbb;
+}
+
+.login-container button {
+    width: 100%;
+    padding: 12px;
+    border: none;
+    border-radius: 10px;
+    margin-top: 15px;
+    font-size: 16px;
+    font-weight: bold;
+    cursor: pointer;
+    transition: all 0.3s ease;
+}
+
+.login-container button[type="submit"] {
+    background: linear-gradient(135deg, #667eea, #764ba2);
+    color: white;
+}
+
+.login-container button[type="submit"]:hover {
+    background: linear-gradient(135deg, #764ba2, #667eea);
+}
+
+.login-container .google-login {
+    background: rgba(255, 255, 255, 0.1);
+    color: #ddd;
+    margin-top: 15px;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    gap: 10px;
+    font-size: 16px;
+    border: 1px solid rgba(255, 255, 255, 0.2);
+    border-radius: 10px;
+    transition: all 0.3s ease;
+}
+
+.login-container .google-login:hover {
+    background: rgba(255, 255, 255, 0.2);
+    transform: scale(1.05);
+}
+
+.login-container a {
+    display: block;
+    margin-top: 15px;
+    color: #667eea;
+    text-decoration: none;
+    font-weight: 600;
+}
+
+.login-container a:hover {
+    text-decoration: underline;
+}
+
+.google-logo {
+    width: 20px;
+    height: 20px;
+}
