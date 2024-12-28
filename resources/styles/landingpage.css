@@ -25,11 +25,11 @@ body {
     box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1);
 }
 
-.navbar .logo {
-    font-size: 1.8rem;
-    color: #FFD700;
-    font-weight: bold;
-    text-transform: uppercase;
+.navbar-logo {
+    height: 50px; /* Increase height for larger size */
+    max-height: 80px; /* Ensure it doesn't exceed this size */
+    object-fit: contain;
+    margin-right: 20px; /* Add space between the logo and menu */
 }
 
 .navbar .menu a {
