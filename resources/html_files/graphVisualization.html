@@ -4,46 +4,61 @@
 <head>
   <meta charset="UTF-8">
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
-  <title>Graph Visualization with Directed Edges</title>
+  <title>Graph Visualization</title>
+  <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0-alpha3/dist/css/bootstrap.min.css" rel="stylesheet">
+  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0-beta3/css/all.min.css">
   <link rel="stylesheet" href="../styles/graphVisualization.css">
-  <script src="https://cdnjs.cloudflare.com/ajax/libs/html2canvas/1.4.1/html2canvas.min.js"></script>
-  <script src="https://cdnjs.cloudflare.com/ajax/libs/PapaParse/5.3.0/papaparse.min.js"></script>
+  <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;600;700&display=swap" rel="stylesheet">
   <script src="https://d3js.org/d3.v7.min.js"></script>
+  <style>
+    
+  </style>
 </head>
 
 <body>
   <div class="navbar">
     <h1>Graph Visualization</h1>
-    <div class="navbar-buttons">
-      <button onclick="window.location.href='/dashboard'">Dashboard</button>
-      <button onclick="window.location.href='/'">Logout</button>
+    <div>
+      <button class="btn dashboard" onclick="window.location.href='/dashboard'">
+        <img src="../image/dashboard.svg" alt="Dashboard Icon" class="dashboard-icon" style="width: 20px; height: 20px; margin-right: 8px;"> Dashboard
+      </button>
+      
+      
+      <button class="btn logout" onclick="window.location.href='/'"><i class="fas fa-sign-out-alt btn-icon"></i> Logout</button>
     </div>
   </div>
-  <div class="sidebar">
-    <div class="sidebar-buttons">
-      <input type="file" id="csvFileInput" accept=".csv" />
-      <button onclick="generateGraphFromCSV()">Generate Graph from CSV</button>
-      <button onclick="addNode()">Add Node</button>
-      <button onclick="setMode('edge')">Add Edge</button>
-      <button onclick="setMode('directedEdge')">Add Directed Edge</button>
-      <button onclick="setMode('removeEdge')">Remove Edge</button>
-      <button onclick="applyDijkstra()">Apply Dijkstra Algorithm</button>
-      <button onclick="applyBellmanFord()">Apply Bellman-Ford Algorithm</button>
-      <button onclick="applyBFS()">Apply BFS</button>
-      <button onclick="applyDFS()">Apply DFS</button>
-      <button onclick="applyKruskal()">Apply Kruskal's Algorithm</button>
-      <button onclick="applyPrim()">Apply Prim's Algorithm</button>
 
-      <button onclick="downloadAsJPG()">Download as JPG</button>
+  <div class="container-fluid">
+    <aside class="sidebar">
+      <input type="file" id="csvFileInput" accept=".csv" class="form-control" />
+      <button class="btn" onclick="generateGraphFromCSV()"><i class="fas fa-file-upload"></i> Generate Graph</button>
+      <button class="btn" onclick="addNode()"><i class="fas fa-plus"></i> Add Node</button>
+      <button class="btn" onclick="setMode('edge')"><i class="fas fa-link"></i> Add Edge</button>
+      <button class="btn" onclick="setMode('directedEdge')"><i class="fas fa-arrow-right"></i> Add Directed Edge</button>
+      <button class="btn" onclick="setMode('removeEdge')"><i class="fas fa-trash-alt"></i> Remove Edge</button>
+      <button class="btn" onclick="applyDijkstra()"><i class="fas fa-route"></i> Dijkstra's Algorithm</button>
+      <button class="btn" onclick="applyBellmanFord()"><i class="fas fa-road"></i> Bellman-Ford Algorithm</button>
+      <button class="btn" onclick="applyBFS()"><i class="fas fa-search"></i> BFS</button>
+      <button class="btn" onclick="applyDFS()"><i class="fas fa-search-plus"></i> DFS</button>
+      <button class="btn" onclick="applyKruskal()"><i class="fas fa-network-wired"></i> Kruskal's Algorithm</button>
+      <button class="btn" onclick="applyPrim()"><i class="fas fa-project-diagram"></i> Prim's Algorithm</button>
+      <button class="btn" onclick="downloadAsJPG()"><i class="fas fa-download"></i> Download Graph</button>
+    </aside>
+
+    <div class="content">
+      <div class="canvas-container" id="canvasGrid"></div>
+      <div class="results">
+        <h3>Shortest Distances</h3>
+        <div id="resultsBox"></div>
+      </div>
     </div>
   </div>
-  <div class="canvas-container">
-    <div class="canvas-grid" id="canvasGrid"></div>
-  </div>
-  <div class="results-container">
-    <h3>Shortest Distances</h3>
-    <div id="resultsBox" class="results-box"></div>
-  </div>
+
+ 
+
+  <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0-alpha3/dist/js/bootstrap.bundle.min.js"></script>
+  <script src="https://cdnjs.cloudflare.com/ajax/libs/html2canvas/1.4.1/html2canvas.min.js"></script>
+  <script src="https://cdnjs.cloudflare.com/ajax/libs/PapaParse/5.3.0/papaparse.min.js"></script>
 
   <script>
     const nodes = [];
