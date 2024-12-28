@@ -1,9 +1,7 @@
-// server.js
-
 const passport = require('passport');
 const GoogleStrategy = require('passport-google-oauth20').Strategy;
-const LocalStrategy = require('passport-local').Strategy; // Add this line
-const bcrypt = require('bcrypt'); // Add this line
+const LocalStrategy = require('passport-local').Strategy; 
+const bcrypt = require('bcrypt'); 
 const db = require('./db');
 
 const express = require('express');
@@ -41,14 +39,12 @@ app.use(express.urlencoded({ extended: true }));
 app.use(session({
     secret: 'your-secret-key', 
     resave: false,
-    saveUninitialized: false, // It's better to set this to false
-    // Consider adding other session options like cookie settings
+    saveUninitialized: false, 
 }));
 
 app.use(passport.initialize());
 app.use(passport.session());
 
-// Google Strategy Configuration
 passport.use(new GoogleStrategy({
   clientID: process.env.GOOGLE_CLIENT_ID,
   clientSecret: process.env.GOOGLE_CLIENT_SECRET,
@@ -60,30 +56,27 @@ passport.use(new GoogleStrategy({
     });
 
     if (!user) {
-      // New user - create entry in the database
+    
       const newUser = await db.user.create({
         data: {
           name: profile.displayName,
           email: profile.emails[0].value,
-          password: null, // No password since it's a Google account
+          password: null, 
         }
       });
 
-      // Mark as a new user
       newUser.isNewUser = true; 
       return done(null, newUser);
     }
 
-    // Existing user
     return done(null, user);
   } catch (err) {
     return done(err, null);
   }
 }));
 
-// Local Strategy Configuration
 passport.use(new LocalStrategy({
-    usernameField: 'email', // Assuming the login form uses 'email' as the username
+    usernameField: 'email', 
     passwordField: 'password'
   },
   async (email, password, done) => {
@@ -112,10 +105,10 @@ passport.use(new LocalStrategy({
   }
 ));
 
-// Serialize and Deserialize User
+
 passport.serializeUser((user, done) => {
   console.log("Serializing user:", user); 
-  done(null, user.email); // Using email as the identifier
+  done(null, user.email); 
 });
 
 passport.deserializeUser(async (email, done) => {
@@ -130,10 +123,10 @@ passport.deserializeUser(async (email, done) => {
   }
 });
 
-// Google OAuth Routes
 app.get('/auth/google',
   passport.authenticate('google', { scope: ['profile', 'email'] })
 );
+
 app.get('/auth/google/callback',
   passport.authenticate('google', { failureRedirect: '/login' }),
   (req, res) => {
@@ -141,10 +134,8 @@ app.get('/auth/google/callback',
       req.session.isAuthenticated = true;
 
       if (req.user.isNewUser) {
-        // Redirect new users to the sign-up page
-        res.redirect('/signup'); // Replace with your sign-up route or onboarding flow
+        res.redirect('/signup'); 
       } else {
-        // Existing users go to the dashboard
         res.redirect('/dashboard');
       }
     } else {
@@ -153,17 +144,15 @@ app.get('/auth/google/callback',
   }
 );
 
-// Landing Page
 app.get("/", (req, res) => {
     res.sendFile(path.join(__dirname, './resources/html_files', 'landing.html'));
 });
 
-// API Route (Ensure Prisma is correctly set up)
 app.get("/api/exercise/:id", async (req, res) => {
     const { id } = req.params;
   
     try {
-      const exercise = await db.exercise.findUnique({ // Changed 'prisma' to 'db'
+      const exercise = await db.exercise.findUnique({ 
         where: { id },
       });
   
@@ -177,7 +166,6 @@ app.get("/api/exercise/:id", async (req, res) => {
     }
   });
 
-// Authentication Middleware
 function ensureAuthenticated(req, res, next) {
     const publicPaths = ['/', '/login', '/signup', '/auth/google', '/auth/google/callback'];
     if (publicPaths.includes(req.path) || req.isAuthenticated()) {
@@ -188,7 +176,6 @@ function ensureAuthenticated(req, res, next) {
 
 app.use(ensureAuthenticated);
 
-// Protected Routes
 app.use(signupRoutes);
 app.use(loginRoutes);
 app.use(logoutRoutes);
@@ -199,7 +186,6 @@ app.use(codeExecutionRoutes);
 app.use(exerciseRoutes);
 app.use(promptRoutes);
 
-// Start Server
 const port = 3000;
 app.listen(port, () => {
     console.log(`App is listening to port ${port}`);
