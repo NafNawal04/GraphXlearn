@@ -17,7 +17,8 @@
 <body>
     <!-- Navbar -->
     <div class="navbar">
-        <span id="welcomeText">GRAPHXLEARN</span>
+        <img src="../image/logo3.png" alt="GraphXlearn Logo" class="navbar-logo">
+        <span id="welcomeText">Welcome to GRAPHXLEARN</span>
         <div class="dropdown">
             <i class="fas fa-user-circle user-icon" id="userIcon"></i>
             <div class="dropdown-menu" id="dropdownMenu">
@@ -26,9 +27,12 @@
             </div>
         </div>
     </div>
+    
+    
 
     <!-- Main Content -->
     <div class="container">
+      
         <h1>Choose a content to explore</h1>
         <div class="box-container">
 
@@ -91,7 +95,7 @@
         fetch('/dashboard/profile/data')
             .then(response => response.json())
             .then(data => {
-                document.getElementById('welcomeText').innerText = `Welcome to GraphXlearn, ${data.name}!`;
+                document.getElementById('welcomeText').innerText = `Welcome, ${data.name}!`;
             })
             .catch(err => console.error(err));
 
