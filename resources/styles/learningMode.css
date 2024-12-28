@@ -1,0 +1,153 @@
+/* General Body Styling */
+body {
+    font-family: Arial, sans-serif;
+    margin: 0;
+    display: flex;
+    background-color: #c1cbff;
+    
+}
+
+.navbar {
+    background-color: #1a1a2e;
+    padding: 1rem;
+    color: white;
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    border-bottom: 1px solid #343a40;
+    position: fixed;
+    width: 100%;
+    top: 0;
+    z-index: 1000;
+}
+
+.navbar-logo {
+    height: 50px;
+    max-height: 80px;
+    object-fit: contain;
+    margin-right: 20px;
+}
+
+.center-title {
+    flex: 1;
+    text-align: center;
+    font-size: 1.6rem;
+    font-weight: bold;
+    color: white;
+}
+
+.navbar .btn {
+color: white;
+background-color: transparent;
+border-radius: 8px;
+font-weight: bold;
+padding: 8px 16px;
+transition: all 0.3s;
+}
+
+.navbar .btn:hover {
+color: #1a1a2e;
+}
+.dashboard:hover .dashboard-icon {
+filter: brightness(0);
+}
+
+.navbar .btn.dashboard {
+border: 2px solid #ff8b07;
+}
+.navbar .btn.logout {
+border: 2px solid #dc3545;
+margin-right: 20px;
+
+}
+
+.navbar .btn.askQ {
+border: 2px solid #ffc107;
+}
+
+
+.navbar .btn.askQ:hover {
+background-color: #ffc107;
+}
+
+
+.navbar .btn.dashboard:hover {
+background-color: #ff8b07;
+}
+
+.navbar .btn.logout:hover {
+background-color: #dc3545;
+}
+
+.sidebar {
+    width: 250px;
+    background-color: #1c1c3d;
+    color: #fff;
+    position: fixed;
+    top: 64px; 
+    bottom: 0;
+    overflow-y: auto;
+    padding-top: 20px;
+    box-sizing: border-box;
+    height: calc(100vh - 64px); 
+}
+
+.sidebar h2 {
+    text-align: center;
+    color: #ffd700;
+    margin-bottom: 20px;
+    margin-top: 20px;
+    font-size: 1.2em;
+}
+
+.sidebar .section-title {
+    font-size: 1.1em;
+    font-weight: bold;
+    padding: 10px 20px;
+    cursor: pointer;
+    color: #ffd700;
+    text-decoration: none;
+    display: block;
+}
+
+.sidebar .submenu {
+    list-style: none;
+    padding-left: 20px;
+    display: block;
+}
+
+.submenu a {
+    text-decoration: none;
+    color: #ccc;
+    display: block;
+    font-weight: bold;
+    padding: 8px 20px;
+    cursor: pointer;
+    transition: color 0.3s;
+}
+
+.submenu a:hover {
+    color: #ffd700;
+}
+
+/* Content Area */
+.content {
+    margin-left: 260px; 
+    padding: 20px;
+    flex-grow: 1;
+    background: radial-gradient(circle, #dbdbfd, #ffffff);
+    box-shadow: 0 4px 6px rgba(0, 0, 0, 0.5);
+    overflow-y: 100px;
+    margin-top: 52px; 
+    margin-right: 13px;
+}
+
+.content h2 {
+    font-size: 1.5em;
+    margin-bottom: 10px;
+}
+
+.content p {
+    font-size: 1em;
+    line-height: 1.6;
+}

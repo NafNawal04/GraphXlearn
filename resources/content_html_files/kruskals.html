@@ -45,28 +45,31 @@
         text-align: center;
         margin: 20px 0; 
         }
-        button {
+        .floating-buttons {
+        position: fixed;
+        bottom: 20px; /* Adjust as needed */
+        right: 20px; /* Adjust as needed */
+        display: flex;
+        flex-direction: column;
+        gap: 7px; 
+        z-index: 1000; 
+        }
+
+        .floating-buttons button {
             color: #fff;
             text-decoration: none;
             font-weight: bold;
-            margin-right: 10px;
             background-color: #1c1c3d;
-            padding: 8px 16px;
-            border: 2px solid #ffd700;
-            border-radius: 5px;
+            padding: 12px 20px;
+            
+            border-radius: 10px;
             transition: background-color 0.3s, color 0.3s;
+            cursor: pointer;
         }
 
-        button:hover {
+        .floating-buttons button:hover {
             background-color: #ffd700;
             color: #1c1c3d;
-        }
-        .navigation-buttons {
-            display: flex;
-            justify-content: flex-end;
-            gap: 5px;
-            margin-top: 50px;
-            margin-bottom: 20px;
         }
     </style>
 </head>
@@ -181,7 +184,7 @@
     <p>So overall complexity is <strong>O(E * logE + E * logV)</strong> time.</p>
     <p>The value of E can be at most O(V²), so O(logV) and O(logE) are the same. Therefore, the overall time complexity is <strong>O(E * logE) or O(E * logV)</strong>.</p>
     <p><strong>Auxiliary Space:</strong> O(V + E), where V is the number of vertices and E is the number of edges in the graph.</p>
-    <div class="navigation-buttons">
+    <div class="floating-buttons">
         <button onclick="window.location.href='/graph-visualization'">Visualize Graphs</button>
         <button onclick="window.location.href='/exercise/kruskals-exercise1'">Practice Exercises</button>
     </div>
