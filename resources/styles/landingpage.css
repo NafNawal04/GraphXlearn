@@ -26,10 +26,10 @@ body {
 }
 
 .navbar-logo {
-    height: 50px; /* Increase height for larger size */
-    max-height: 80px; /* Ensure it doesn't exceed this size */
+    height: 50px; 
+    max-height: 80px; 
     object-fit: contain;
-    margin-right: 20px; /* Add space between the logo and menu */
+    margin-right: 20px; 
 }
 
 .navbar .menu a {

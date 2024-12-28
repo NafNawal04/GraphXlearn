@@ -17,7 +17,8 @@
 
 <body>
   <div class="navbar">
-    <h1>Graph Visualization</h1>
+    <img src="../image/logo3.png" alt="GraphXlearn Logo" class="navbar-logo">
+    <div class="center-title">Graph Visualization</div>
     <div>
       <button class="btn dashboard" onclick="window.location.href='/dashboard'">
         <img src="../image/dashboard.svg" alt="Dashboard Icon" class="dashboard-icon" style="width: 20px; height: 20px; margin-right: 8px;"> Dashboard
@@ -81,7 +82,7 @@
       .attr('orient', 'auto')
       .append('path')
       .attr('d', 'M 0 0 L 10 5 L 0 10 Z')
-      .attr('fill', '#ff0000');
+      .attr('fill', '#ffffff');
 
     function addNode() {
       const id = `${nodes.length + 1}`;
@@ -110,7 +111,7 @@
         .attr('y1', d => nodes.find(n => n.id === d.source).y)
         .attr('x2', d => nodes.find(n => n.id === d.target).x)
         .attr('y2', d => nodes.find(n => n.id === d.target).y)
-        .attr('stroke', '#007bff')
+        .attr('stroke', '#ffffff')
         .attr('stroke-width', 2)
         .on('click', handleEdgeClick);
 
@@ -123,7 +124,7 @@
         .attr('y1', d => nodes.find(n => n.id === d.source).y)
         .attr('x2', d => nodes.find(n => n.id === d.target).x)
         .attr('y2', d => nodes.find(n => n.id === d.target).y)
-        .attr('stroke', '#ff0000')
+        .attr('stroke', '#ffffff')
         .attr('stroke-width', 2)
         .attr('marker-end', 'url(#arrowhead)')
         .on('click', handleEdgeClick);
@@ -134,7 +135,7 @@
         .attr('cx', d => d.x)
         .attr('cy', d => d.y)
         .attr('r', 20)
-        .attr('fill', '#007bff')
+        .attr('fill', '#ffc107')
         .on('click', handleNodeClick)
         .call(d3.drag()
           .on('start', dragStarted)
@@ -147,7 +148,7 @@
         .attr('x', d => d.x)
         .attr('y', d => d.y)
         .attr('dy', 5).attr('dx', -10)
-        .text(d => d.id).attr('fill', 'white');
+        .text(d => d.id).attr('fill', 'black');
 
       addEdgeWeights();
     }
@@ -161,7 +162,7 @@
         .attr('x', d => (nodes.find(n => n.id === d.source).x + nodes.find(n => n.id === d.target).x) / 2)
         .attr('y', d => (nodes.find(n => n.id === d.source).y + nodes.find(n => n.id === d.target).y) / 2)
         .attr('dy', -5)
-        .attr('fill', '#000')
+        .attr('fill', '#ffc107')
         .text(d => d.weight);
     }
 
@@ -318,7 +319,7 @@
         visited.add(currentNodeId);
 
         // Highlight the current node being processed
-        highlightNode(currentNodeId, 'orange');
+        highlightNode(currentNodeId, '#ff7207');
         await delay(500);
 
         // Explore neighbors
@@ -332,7 +333,7 @@
             pq.enqueue(edge.target, newDist);
 
 
-            highlightEdge(edge, 'orange');
+            highlightEdge(edge, '#ff7207');
             showShortestDistances(distances);
             await delay(500);
           }
@@ -374,12 +375,12 @@
         .attr('x', d => d.x)
         .attr('y', d => d.y - 35)
         .attr('text-anchor', 'middle')
-        .attr('fill', 'black')
+        .attr('fill', 'white')
         .attr('font-size', '16px')
         .text(d => distances[d.id] === Infinity ? '∞' : distances[d.id]);
 
       const resultsBox = document.getElementById('resultsBox');
-      resultsBox.innerHTML = ''; // Clear previous results
+      resultsBox.innerHTML = ''; 
 
       nodes.forEach(node => {
         const distance = distances[node.id] === Infinity ? '∞' : distances[node.id];

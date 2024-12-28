@@ -17,6 +17,22 @@ body {
   border-bottom: 2px solid #343a40;
 }
 
+.center-title {
+  flex: 1; 
+  text-align: center;
+  font-size: 1.3rem;
+  font-weight: bold;
+  color: #FFD700; 
+}
+
+.navbar-logo {
+  height: 50px; 
+  max-height: 80px; 
+  object-fit: contain;
+  margin-right: 20px; 
+}
+
+
 .navbar h1 {
   margin: 0;
   font-size: 1.5rem;
@@ -47,7 +63,7 @@ border: 2px solid #dc3545;
 }
 
 .navbar .btn.dashboard:hover {
-  background-color: #ffc107;
+  background-color: #f9f9f7;
 }
 
 .navbar .btn.logout:hover {
@@ -104,13 +120,13 @@ border: 2px solid #dc3545;
   padding: 1.5rem;
   gap: 1rem;
 }
-
+ 
 .canvas-container {
   flex: 3;
   border: 1px solid #ddd;
   border-radius: 8px;
-  background-color: white;
-  box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1);
+  background: radial-gradient(circle, #2e2e3a, #1e1e2f);
+  box-shadow: 0 4px 6px rgba(0, 0, 0, 0.5);
 }
 
 .results {
