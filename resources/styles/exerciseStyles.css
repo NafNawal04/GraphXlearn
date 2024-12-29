@@ -1,99 +1,154 @@
 body {
-    font-family: Arial, sans-serif;
-    background-color: #f4f4f9;
-    color: #333;
+    font-family: 'Poppins', sans-serif;
+    background-color: #eaeaf6;
     margin: 0;
     padding: 0;
-    display: flex;
-    justify-content: center;
-    align-items: center;
-    min-height: 100vh;
 }
 
+.navbar {
+    background-color: #1a1a2e;
+    color: white;
+    padding: 1rem;
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    position: fixed;
+    top: 0;
+    width: 100%;
+    z-index: 1000;
+    box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1);
+}
 
+.center-title {
+    flex: 1; 
+    text-align: center;
+    font-size: 1.6rem;
+    font-weight: bold;
+    color: white; 
+}
+  
+.navbar-logo {
+    height: 50px; 
+    max-height: 80px; 
+    object-fit: contain;
+    margin-right: 20px; 
+}
+
+.navbar .navigation-buttons {
+    display: flex;
+    gap: 10px;
+}
+
+.navbar .navigation-buttons button {
+    color: white;
+    background-color: transparent;
+    border-radius: 8px;
+    font-weight: bold;
+    padding: 8px 16px;
+    transition: all 0.3s;
+}
+
+.navbar .navigation-buttons button:hover {
+    color: #1a1a2e;
+}
+
+.navbar .navigation-buttons button.learningMode {
+    border: 2px solid #ffc107;
+    margin-right: 20px;
+}
+
+.navbar .navigation-buttons button.learningMode:hover {
+    background-color: #ffc107;
+}
+
+.navbar .navigation-buttons button.dashboard {
+    border: 2px solid #ffc107;
+}
+
+.navbar .navigation-buttons button.dashboard:hover {
+    background-color: #ffc107;
+}
 
 .exercise-container {
-    background-color: #1c1c3d;
-    color: #fff;
-    max-width: 600px;
-    width: 100%;
+    display: flex;
+    flex-direction: column;
+    gap: 20px;
+    padding: 80px 20px;
+}
+
+.main-section {
+    display: grid;
+    grid-template-columns: 2fr 1.5fr; /* Adjusted grid proportions */
+    gap: 20px;
+    width: 80%;
+    max-width: 1200px;
+}
+
+.question-box {
+    background-color: #4f0c6b;
+    border-radius: 20px;
+    margin-top: 30px;
     padding: 20px;
-    border-radius: 10px;
+    color: white;
     box-shadow: 0 4px 8px rgba(0, 0, 0, 0.2);
-    text-align: center;
 }
 
-h2 {
+.question-box h2 {
     color: #ffd700;
-    font-size: 1.5em;
-    margin-bottom: 10px;
-}
-
-p {
-    font-size: 1em;
-    line-height: 1.6;
-    color: #ddd;
-}
-
-.exercise-container img {
-    display: block;
-    margin-left: auto;
-    margin-right: auto;
-    margin-top: 20px;
     margin-bottom: 20px;
 }
 
-
-input[type="text"] {
-    padding: 10px;
-    font-size: 1em;
-    width: 80%;
+.question-box input {
+    width: 95%;
+    padding: 12px;
+    font-size: 1rem;
     margin-top: 10px;
-    border: 1px solid #ccc;
-    border-radius: 5px;
+    border: none;
+    border-radius: 10px;
 }
 
-button {
+.question-box button {
     background-color: #ffd700;
-    color: #1c1c3d;
+    color: #6a0098;
     font-weight: bold;
-    padding: 10px 20px;
+    padding: 12px 20px;
     margin-top: 15px;
     border: none;
-    border-radius: 5px;
+    border-radius: 10px;
     cursor: pointer;
     transition: background-color 0.3s;
 }
 
-button:hover {
+.question-box button:hover {
     background-color: #e0c200;
 }
 
-#solutionMessage {
-    margin-top: 15px;
-    font-weight: bold;
-    text-align: left;
-    color: #ddd;
-}
-
-.navigation-buttons-1 {
+.image-box {
+    background-color: #4f0c6b;
+    margin-top: 30px;
+    border-radius: 20px; /* Match the question box */
+    padding: 20px;
+    color: white;
+    box-shadow: 0 4px 8px rgba(0, 0, 0, 0.2);
     display: flex;
-    justify-content: space-between;
-    margin-top: 20px;
+    justify-content: center;
+    align-items: center;
+    height: auto; /* Ensure height matches content */
 }
 
-.navigation-buttons-1 button {
-    background-color: #ffd700;
-    color: #1c1c3d;
-    font-weight: bold;
-    padding: 10px 20px;
-    border: none;
-    border-radius: 5px;
-    cursor: pointer;
-    transition: background-color 0.3s;
-    width: 48%;
+.image-box img {
+    max-width: 100%;
+    border-radius: 10px;
 }
 
-.navigation-buttons-1 button:hover {
-    background-color: #e0c200;
+.solution-box {
+    width: 97%; 
+    background-color: #4f0c6b;
+    border-radius: 20px;
+    padding: 20px;
+    margin: 0 auto; /* Center the solution box */
+    color: white;
+    text-align: center;
+    font-size: 1.2rem;
+    box-shadow: 0 4px 8px rgba(0, 0, 0, 0.2);
 }

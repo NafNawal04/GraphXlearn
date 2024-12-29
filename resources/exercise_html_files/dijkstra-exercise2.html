@@ -5,29 +5,41 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Exercise 2: Find the Shortest Path Using Dijkstra’s Algorithm</title>
     <link rel="stylesheet" href="../styles/exerciseStyles.css">
+    <link href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/5.15.4/css/all.min.css" rel="stylesheet">
 </head>
 <body>
 
-<div class="exercise-container">
-    <h2 id="exercise-title">Loading...</h2>
-    <p id="exercise-question"></p>
-
-    <!-- Dynamic Graph Image -->
-    <img id="exercise-image" alt="Graph Image" style="max-width: 400px; display: none;">
-
-    <!-- User Answer Input -->
-    <input type="text" id="userAnswer" placeholder="Enter value">
-    <button onclick="checkAnswer()">Submit Answer</button>
-
-    <!-- Feedback Message -->
-    <div id="solutionMessage"></div>
-
-    <!-- Navigation Buttons -->
+<div class="navbar">
+    <img src="../image/logo3.png" alt="GraphXlearn Logo" class="navbar-logo">
+    <div class="center-title">Dijkstra Algorithm: Exercise 2</div>
     <div class="navigation-buttons">
-        <button onclick="window.location.href='/learning-mode'">Back to Learning Mode</button>
-        <button onclick="window.location.href='/exercise/dijkstra-exercise1'">Previous Exercise</button>
+        <button class="button dashboard" onclick="window.location.href='/dashboard'"><i class="fas fa-th"></i> Dashboard</button>
+        <button class="button learningMode" onclick="window.location.href='/learning-mode'"><i class="fas fa-sign-out-alt btn-icon"></i> Back to Learning Mode</button>     
     </div>
 </div>
+
+<div class="exercise-container">
+    <div class="main-section">
+
+        <div class="question-box">
+            <h2 id="exercise-title">Loading...</h2>
+            <p id="exercise-question"></p>
+
+
+            <input type="text" id="userAnswer" placeholder="Write the answer here">
+            <button onclick="checkAnswer()">Submit Answer</button>
+        </div>
+
+        <div class="image-box">
+            <img id="exercise-image" alt="Graph Image" style="width: 100%; border-radius: 10px; display: none;">
+        </div>
+    </div>
+
+    <div class="solution-box" id="solutionMessage">
+        Solution Details Here
+    </div>
+</div>
+
 
 <script>
     const exerciseId = "6730debf438ff32156ed7dd5"; // Replace with the actual ID of the exercise in the database

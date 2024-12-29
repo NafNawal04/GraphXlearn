@@ -1,4 +1,3 @@
-
 <!DOCTYPE html>
 <html lang="en">
 <head>
@@ -6,32 +5,43 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Exercise 1: Find the Shortest Path Using Dijkstra’s Algorithm</title>
     <link rel="stylesheet" href="../styles/exerciseStyles.css">
+    <link href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/5.15.4/css/all.min.css" rel="stylesheet">
 </head>
 <body>
 
-<div class="exercise-container">
-    <h2 id="exercise-title">Loading...</h2>
-    <p id="exercise-question"></p>
-
-    <!-- Dynamic Graph Image -->
-    <img id="exercise-image" alt="Graph Image" style="max-width: 400px; display: none;">
-
-    <!-- User Answer Input -->
-    <input type="text" id="userAnswer" placeholder="Enter value">
-    <button onclick="checkAnswer()">Submit Answer</button>
-
-    <!-- Feedback Message -->
-    <div id="solutionMessage"></div>
-
-    <!-- Navigation Buttons -->
+<div class="navbar">
+    <img src="../image/logo3.png" alt="GraphXlearn Logo" class="navbar-logo">
+    <div class="center-title">Dijkstra Algorithm: Exercise 1</div>
     <div class="navigation-buttons">
-        <button onclick="window.location.href='/learning-mode'">Back to Learning Mode</button>
-        <button onclick="window.location.href='/exercise/dijkstra-exercise2'">Next Exercise</button>
+        <button class="button dashboard" onclick="window.location.href='/dashboard'"><i class="fas fa-th"></i> Dashboard</button>
+        <button class="button learningMode" onclick="window.location.href='/learning-mode'"><i class="fas fa-sign-out-alt btn-icon"></i> Back to Learning Mode</button>     
+    </div>
+</div>
+
+<div class="exercise-container">
+    <div class="main-section">
+
+        <div class="question-box">
+            <h2 id="exercise-title">Loading...</h2>
+            <p id="exercise-question"></p>
+
+
+            <input type="text" id="userAnswer" placeholder="Write the answer here">
+            <button onclick="checkAnswer()">Submit Answer</button>
+        </div>
+
+        <div class="image-box">
+            <img id="exercise-image" alt="Graph Image" style="width: 100%; border-radius: 10px; display: none;">
+        </div>
+    </div>
+
+    <div class="solution-box" id="solutionMessage">
+        Solution Details Here
     </div>
 </div>
 
 <script>
-    const exerciseId = "6730de2e5ddf43a544c742df"; // Replace with the actual ID of the exercise in the database
+    const exerciseId = "6730de2e5ddf43a544c742df"; 
     const apiUrl = `/api/exercise/${exerciseId}`;
     let correctAnswer = "";
     let stepByStepSolution = [];
@@ -41,16 +51,14 @@
             const response = await fetch(apiUrl);
             const data = await response.json();
 
-            // Populate exercise data into the HTML
             document.getElementById("exercise-title").textContent = data.title;
             document.getElementById("exercise-question").textContent = data.question;
-            correctAnswer = parseInt(data.correctAnswer, 10);  // Convert correctAnswer to a number
+            correctAnswer = parseInt(data.correctAnswer, 10);  
             stepByStepSolution = data.stepByStepSolution;
 
-            // Set the Base64 image as the src of the img tag
             const exerciseImage = document.getElementById("exercise-image");
             exerciseImage.src = `data:image/png;base64,${data.imageBase64}`;
-            exerciseImage.style.display = "block"; // Make sure the image is visible
+            exerciseImage.style.display = "block";
         } catch (error) {
             console.error("Error loading exercise:", error);
             document.getElementById("exercise-title").textContent = "Error loading exercise.";
@@ -61,7 +69,7 @@
         const userAnswer = parseInt(document.getElementById("userAnswer").value.trim(), 10);
         const solutionMessage = document.getElementById("solutionMessage");
 
-        solutionMessage.innerHTML = ""; // Clear previous message
+        solutionMessage.innerHTML = "";
 
         if (isNaN(userAnswer)) {
             solutionMessage.textContent = "Please enter a valid answer.";
@@ -73,7 +81,6 @@
             solutionMessage.style.color = "white";
             solutionMessage.innerHTML = "<p>Incorrect. Here is the step-by-step solution:</p>";
 
-            // Display step-by-step solution
             stepByStepSolution.forEach(step => {
                 const stepElement = document.createElement("p");
                 stepElement.textContent = step;
@@ -82,7 +89,6 @@
         }
     }
 
-    // Load exercise data on page load
     loadExercise();
 </script>
 
