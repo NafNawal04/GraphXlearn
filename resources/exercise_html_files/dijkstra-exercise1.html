@@ -3,9 +3,10 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Exercise 1: Find the Shortest Path Using Dijkstra’s Algorithm</title>
+    <title>Dijkstra: Exercise 1</title>
     <link rel="stylesheet" href="../styles/exerciseStyles.css">
     <link href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/5.15.4/css/all.min.css" rel="stylesheet">
+    <script src="../../controller/exercise.controller.js" defer></script>
 </head>
 <body>
 
@@ -18,13 +19,11 @@
     </div>
 </div>
 
-<div class="exercise-container">
+<div class="exercise-container" data-exercise-id="6730de2e5ddf43a544c742df">
     <div class="main-section">
-
         <div class="question-box">
             <h2 id="exercise-title">Loading...</h2>
             <p id="exercise-question"></p>
-
 
             <input type="text" id="userAnswer" placeholder="Write the answer here">
             <button onclick="checkAnswer()">Submit Answer</button>
@@ -36,61 +35,13 @@
     </div>
 
     <div class="solution-box" id="solutionMessage">
-        Solution Details Here
+        Solution details here!
+    </div>
+
+    <div>
+        <button class="button-next" onclick="window.location.href='/exercise/dijkstra-exercise2'"> Next Exercise</button>
     </div>
 </div>
-
-<script>
-    const exerciseId = "6730de2e5ddf43a544c742df"; 
-    const apiUrl = `/api/exercise/${exerciseId}`;
-    let correctAnswer = "";
-    let stepByStepSolution = [];
-
-    async function loadExercise() {
-        try {
-            const response = await fetch(apiUrl);
-            const data = await response.json();
-
-            document.getElementById("exercise-title").textContent = data.title;
-            document.getElementById("exercise-question").textContent = data.question;
-            correctAnswer = parseInt(data.correctAnswer, 10);  
-            stepByStepSolution = data.stepByStepSolution;
-
-            const exerciseImage = document.getElementById("exercise-image");
-            exerciseImage.src = `data:image/png;base64,${data.imageBase64}`;
-            exerciseImage.style.display = "block";
-        } catch (error) {
-            console.error("Error loading exercise:", error);
-            document.getElementById("exercise-title").textContent = "Error loading exercise.";
-        }
-    }
-
-    function checkAnswer() {
-        const userAnswer = parseInt(document.getElementById("userAnswer").value.trim(), 10);
-        const solutionMessage = document.getElementById("solutionMessage");
-
-        solutionMessage.innerHTML = "";
-
-        if (isNaN(userAnswer)) {
-            solutionMessage.textContent = "Please enter a valid answer.";
-            solutionMessage.style.color = "red";
-        } else if (userAnswer === correctAnswer) {
-            solutionMessage.textContent = "Correct!";
-            solutionMessage.style.color = "green";
-        } else {
-            solutionMessage.style.color = "white";
-            solutionMessage.innerHTML = "<p>Incorrect. Here is the step-by-step solution:</p>";
-
-            stepByStepSolution.forEach(step => {
-                const stepElement = document.createElement("p");
-                stepElement.textContent = step;
-                solutionMessage.appendChild(stepElement);
-            });
-        }
-    }
-
-    loadExercise();
-</script>
 
 </body>
 </html>

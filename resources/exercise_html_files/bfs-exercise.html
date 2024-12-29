@@ -1,90 +1,47 @@
-
 <!DOCTYPE html>
 <html lang="en">
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Exercise 1: Simple Graph Traversal</title>
+    <title>BFS: Exercise 1</title>
     <link rel="stylesheet" href="../styles/exerciseStyles.css">
+    <link href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/5.15.4/css/all.min.css" rel="stylesheet">
+    <script src="../../controller/exercise.controller.js" defer></script>
 </head>
 <body>
 
-<div class="exercise-container">
-    <h2 id="exercise-title">Loading...</h2>
-    <p id="exercise-question"></p>
-
-    <!-- Dynamic Graph Image -->
-    <img id="exercise-image" alt="Graph Image" style="max-width: 400px; display: none;">
-
-    <!-- User Answer Input -->
-    <input type="text" id="userAnswer" placeholder="Enter BFS traversal order (e.g., 0-1-2-3)">
-    <button onclick="checkAnswer()">Submit Answer</button>
-
-    <!-- Feedback Message -->
-    <div id="solutionMessage"></div>
-
-    <!-- Navigation Buttons -->
-    <div class="navigation-buttons-1">
-        <button onclick="window.location.href='/learning-mode'">Back to Learning Mode</button>
-        <button onclick="window.location.href='/exercise/bfs-exercise2'">Next Exercise</button>
+<div class="navbar">
+    <img src="../image/logo3.png" alt="GraphXlearn Logo" class="navbar-logo">
+    <div class="center-title">Breadth First Search: Exercise 1</div>
+    <div class="navigation-buttons">
+        <button class="button dashboard" onclick="window.location.href='/dashboard'"><i class="fas fa-th"></i> Dashboard</button>
+        <button class="button learningMode" onclick="window.location.href='/learning-mode'"><i class="fas fa-sign-out-alt btn-icon"></i> Back to Learning Mode</button>     
     </div>
 </div>
 
-<script>
-    const exerciseId = "6730da111b5d99a0206976d5"; 
-    const apiUrl = `/api/exercise/${exerciseId}`;
-    let correctAnswer = "";
-    let stepByStepSolution = [];
+<div class="exercise-container" data-exercise-id="6730da111b5d99a0206976d5">
+    <div class="main-section">
+        <div class="question-box">
+            <h2 id="exercise-title">Loading...</h2>
+            <p id="exercise-question"></p>
 
-    async function loadExercise() {
-        try {
-            const response = await fetch(apiUrl);
-            const data = await response.json();
+            <input type="text" id="userAnswer" placeholder="Enter bfs traversal order (e.g 0-1-2-3)">
+            <button onclick="checkAnswer()">Submit Answer</button>
+        </div>
 
-            // Populate exercise data into the HTML
-            document.getElementById("exercise-title").textContent = data.title;
-            document.getElementById("exercise-question").textContent = data.question;
-            correctAnswer = data.correctAnswer;
-            stepByStepSolution = data.stepByStepSolution;
+        <div class="image-box">
+            <img id="exercise-image" alt="Graph Image" style="width: 100%; border-radius: 10px; display: none;">
+        </div>
+    </div>
 
-            // Set the Base64 image as the src of the img tag
-            const exerciseImage = document.getElementById("exercise-image");
-            exerciseImage.src = `data:image/png;base64,${data.imageBase64}`;
-            exerciseImage.style.display = "block"; // Make sure the image is visible
-        } catch (error) {
-            console.error("Error loading exercise:", error);
-            document.getElementById("exercise-title").textContent = "Error loading exercise.";
-        }
-    }
+    <div class="solution-box" id="solutionMessage">
+        Solution details here!
+    </div>
 
-    function checkAnswer() {
-        const userAnswer = document.getElementById("userAnswer").value.trim();
-        const solutionMessage = document.getElementById("solutionMessage");
-
-        solutionMessage.innerHTML = ""; // Clear previous message
-
-        if (userAnswer === "") {
-            solutionMessage.textContent = "Please enter an answer.";
-            solutionMessage.style.color = "red";
-        } else if (userAnswer === correctAnswer) {
-            solutionMessage.textContent = "Correct!";
-            solutionMessage.style.color = "green";
-        } else {
-            solutionMessage.style.color = "white";
-            solutionMessage.innerHTML = "<p>Incorrect. Here is the step-by-step solution:</p>";
-
-            // Display step-by-step solution
-            stepByStepSolution.forEach(step => {
-                const stepElement = document.createElement("p");
-                stepElement.textContent = step;
-                solutionMessage.appendChild(stepElement);
-            });
-        }
-    }
-
-    // Load exercise data on page load
-    loadExercise();
-</script>
+    <div>
+        <button class="button-next" onclick="window.location.href='/exercise/bfs-exercise2'"> Next Exercise</button>
+    </div>
+</div>
 
 </body>
 </html>
