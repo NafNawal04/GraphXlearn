@@ -1,4 +1,4 @@
-/* General Body Styling */
+
 body {
     font-family: Arial, sans-serif;
     margin: 0;
@@ -94,8 +94,9 @@ background-color: #dc3545;
 
 .sidebar h2 {
     text-align: center;
+    text-decoration: underline;
     color: #ffd700;
-    margin-bottom: 20px;
+    margin-bottom: 10px;
     margin-top: 20px;
     font-size: 1.2em;
 }
@@ -104,9 +105,11 @@ background-color: #dc3545;
     font-size: 1.1em;
     font-weight: bold;
     padding: 10px 20px;
+    margin-bottom: 1px;
+  
     cursor: pointer;
-    color: #ffd700;
-    text-decoration: none;
+    color: #ff9500;
+    text-decoration:none;
     display: block;
 }
 
@@ -130,7 +133,6 @@ background-color: #dc3545;
     color: #ffd700;
 }
 
-/* Content Area */
 .content {
     margin-left: 260px; 
     padding: 20px;
