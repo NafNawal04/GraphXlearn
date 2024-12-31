@@ -10,12 +10,12 @@
     <style>
         @import url('https://fonts.googleapis.com/css2?family=Raleway:wght@300;400;600&display=swap');
 
-        /* Add the updated CSS here or in your dashboard.css file */
+  
     </style>
 </head>
 
 <body>
-    <!-- Navbar -->
+  
     <div class="navbar">
         <img src="../image/logo3.png" alt="GraphXlearn Logo" class="navbar-logo">
         <span id="welcomeText">Welcome to GRAPHXLEARN</span>
@@ -29,14 +29,11 @@
     </div>
     
     
-
-    <!-- Main Content -->
     <div class="container">
       
         <h1>Choose a content to explore</h1>
         <div class="box-container">
 
-            <!-- Graph Visualization Box with Video -->
             <div class="box" id="graphVisualizationBox">
                 <!-- Video Element -->
                 <video class="video-background" autoplay muted loop>
@@ -44,7 +41,7 @@
                     Your browser does not support the video tag.
                 </video>
 
-                <!-- Content Overlay -->
+        
                 <div class="content-overlay">
                     <h2>Graph Visualization</h2>
                     <p>Dive into interactive visualizations of graph structures for better insights.</p>
@@ -52,15 +49,13 @@
                 </div>
             </div>
 
-            <!-- Learning Mode Box with Video -->
             <div class="box" id="learningModeBox">
-                <!-- Video Element -->
+
                 <video class="video-background" autoplay muted loop>
                     <source src="../videos/istock_video_1617896431420.mp4" type="video/mp4">
                     Your browser does not support the video tag.
                 </video>
 
-                <!-- Content Overlay -->
                 <div class="content-overlay">
                     <h2>Learning Mode</h2>
                     <p>Interactive modules designed to teach graph algorithms in an engaging way.</p>
@@ -68,15 +63,15 @@
                 </div>
             </div>
 
-            <!-- Graph Execution Box with Video -->
+
             <div class="box" id="graphExecutionBox">
-                <!-- Video Element -->
+       
                 <video class="video-background" autoplay muted loop>
                     <source src="../videos/4733-179738669_small.mp4" type="video/mp4">
                     Your browser does not support the video tag.
                 </video>
 
-                <!-- Content Overlay -->
+      
                 <div class="content-overlay">
                     <h2>Graph Execution</h2>
                     <p>Practice and execute graph algorithms directly in a code editor.</p>
@@ -84,14 +79,50 @@
                 </div>
             </div>
 
+
+
+
+            <div class="box" id="shortestPathGameBox">
+       
+                <video class="video-background" autoplay muted loop>
+                    <source src="../videos/game1.mp4" type="video/mp4">
+                    Your browser does not support the video tag.
+                </video>
+
+      
+                <div class="content-overlay">
+                    <h2>Shortest Path Game</h2>
+                    <p>Learn by playing a fun game where you have to find the shortest path from one node to another by adding weight of each path.</p>
+                    <p>Have Fun!</p>
+                    <a href="/game" class="btn">Start playing</a>
+                </div>
+            </div>
+
+
+            <div class="box" id="coloringGameBox">
+       
+                <video class="video-background" autoplay muted loop>
+                    <source src="../videos/game2.mp4" type="video/mp4">
+                    Your browser does not support the video tag.
+                </video>
+
+      
+                <div class="content-overlay">
+                    <h2>Graph Coloring Game</h2>
+                    <p>Color a graph with the minimum number of colors so that no two adjacent nodes share the same color.</p>
+                    <p>Have Fun!</p>
+                    <a href="/game2" class="btn">Start playing</a>
+                </div>
+            </div>
+
         </div>
     </div>
 
-    <!-- Footer -->
+
     
 
     <script>
-        // Fetch user data
+   
         fetch('/dashboard/profile/data')
             .then(response => response.json())
             .then(data => {
@@ -112,7 +143,6 @@
             }
         });
 
-        // Removed slideshow functionality
     </script>
 </body>
 
