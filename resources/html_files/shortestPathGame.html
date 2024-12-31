@@ -1,0 +1,28 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Shortest Path Challenge</title>
+    <link rel="stylesheet" href="../styles/shortestPathGame.css">
+    <script src="../../controller/shortestPathGame.js" defer></script>
+</head>
+<body>
+    <div class="container">
+        <h1>Shortest Path Challenge</h1>
+        <div class="game-container">
+            <div class="graph-box">
+                <canvas id="graphCanvas" width="600" height="400"></canvas>
+            </div>
+            <div class="instructions-box">
+                <h3>Instructions</h3>
+                <p id="instructions">Find the shortest path from 0 to 3. Calculate the shortest distance and submit your answer below.</p>
+                <input type="text" id="userAnswer" placeholder="Enter shortest path distance">
+                <button onclick="submitAnswer()">Submit Answer</button>
+                <p id="timer">Time Left: 60 seconds</p>
+                <p id="feedback"></p>
+            </div>
+        </div>
+    </div>
+</body>
+</html>

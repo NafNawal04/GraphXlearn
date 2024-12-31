@@ -1,0 +1,36 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Graph Coloring Challenge</title>
+    <link rel="stylesheet" href="../styles/coloringGame.css">
+    <script src="../../controller/coloringGame.js" defer></script>
+</head>
+<body>
+    <div class="container">
+        <h1>Graph Coloring Challenge</h1>
+        <div class="game-container">
+            <div class="graph-box">
+                <canvas id="graphCanvas" width="600" height="400"></canvas>
+            </div>
+            <div class="instructions-box">
+                <h3>Instructions</h3>
+                <p>1. Select a color from the palette below.</p>
+                <p>2. Click on the nodes to apply the selected color.</p>
+                <p>3. Ensure no two connected nodes share the same color.</p>
+                <p>4. Press "Submit Coloring" to check your answer.</p>
+                <div id="colors">
+                    <button onclick="selectColor('red')" class="color-button" style="background-color: red;"></button>
+                    <button onclick="selectColor('blue')" class="color-button" style="background-color: blue;"></button>
+                    <button onclick="selectColor('green')" class="color-button" style="background-color: green;"></button>
+                    <button onclick="selectColor('yellow')" class="color-button" style="background-color: yellow;"></button>
+                </div>
+                <p id="selected-color">Selected Color: None</p>
+                <button onclick="submitColoring()">Submit Coloring</button>
+                <p id="feedback"></p>
+            </div>
+        </div>
+    </div>
+</body>
+</html>

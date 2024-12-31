@@ -1,0 +1,81 @@
+body {
+    font-family: 'Poppins', sans-serif;
+    background-color: #eaeaf6;
+    margin: 0;
+    padding: 0;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    height: 100vh;
+}
+
+.container {
+    text-align: center;
+    width: 80%;
+}
+
+h1 {
+    color: #1a1a2e;
+    margin-bottom: 20px;
+}
+
+.game-container {
+    display: flex;
+    gap: 20px;
+    justify-content: center;
+}
+
+.graph-box {
+    background-color: #f4f4f9;
+    padding: 20px;
+    border-radius: 10px;
+    box-shadow: 0 4px 8px rgba(0, 0, 0, 0.2);
+}
+
+.instructions-box {
+    background-color: #1a1a2e;
+    color: white;
+    padding: 20px;
+    border-radius: 10px;
+    width: 300px;
+    box-shadow: 0 4px 8px rgba(0, 0, 0, 0.2);
+}
+
+.instructions-box h3 {
+    margin-top: 0;
+    color: #ffd700;
+}
+
+.instructions-box input {
+    width: 90%;
+    padding: 10px;
+    margin: 10px 0;
+    border-radius: 5px;
+    border: none;
+}
+
+.instructions-box button {
+    background-color: #ffd700;
+    color: #1a1a2e;
+    font-weight: bold;
+    padding: 10px 20px;
+    border: none;
+    border-radius: 5px;
+    cursor: pointer;
+    transition: 0.3s;
+}
+
+.instructions-box button:hover {
+    background-color: #e0c200;
+}
+
+#timer {
+    margin-top: 10px;
+    font-weight: bold;
+}
+
+#feedback {
+    margin-top: 10px;
+    font-weight: bold;
+    text-shadow: 2px 2px 5px rgba(0, 0, 0, 0.3);
+}
