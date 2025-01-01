@@ -20,4 +20,12 @@ router.get('/dashboard/profile/edit', (req, res) => {
 
 router.post('/dashboard/profile/update', dashboardController.updateProfile);
 
+router.get('/game1', (req, res) => {
+    res.sendFile(path.join(__dirname, '../resources/html_files/shortestPathGame.html'));
+});
+
+router.get('/game2', (req, res) => {
+    res.sendFile(path.join(__dirname, '../resources/html_files/coloringGame.html'));
+});
+
 module.exports = router;
