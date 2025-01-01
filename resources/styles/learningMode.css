@@ -45,6 +45,13 @@ padding: 8px 16px;
 transition: all 0.3s;
 }
 
+.dashboard-icon {
+    vertical-align: middle;
+    margin-right: 2px;
+     margin-bottom: 2px;
+}
+
+
 .navbar .btn:hover {
 color: #1a1a2e;
 }
@@ -53,26 +60,26 @@ filter: brightness(0);
 }
 
 .navbar .btn.dashboard {
-border: 2px solid #ff8b07;
+border: 2px solid #ffc107 ;
 }
 .navbar .btn.logout {
 border: 2px solid #dc3545;
 margin-right: 20px;
-
 }
 
+
 .navbar .btn.askQ {
-border: 2px solid #ffc107;
+border: 2px solid #ff8b07;
 }
 
 
 .navbar .btn.askQ:hover {
-background-color: #ffc107;
+background-color: #ff8b07;
 }
 
 
 .navbar .btn.dashboard:hover {
-background-color: #ff8b07;
+background-color: #ffc107;
 }
 
 .navbar .btn.logout:hover {

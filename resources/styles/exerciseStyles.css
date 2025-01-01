@@ -39,6 +39,16 @@ body {
     gap: 10px;
 }
 
+.dashboard-icon {
+    vertical-align: middle;
+    margin-right: 2px;
+    margin-bottom: 2px;
+}
+
+.dashboard:hover .dashboard-icon {
+    filter: brightness(0);
+    }
+
 .navbar .navigation-buttons button {
     color: white;
     background-color: transparent;
