@@ -1,0 +1,137 @@
+body {
+    margin: 0;
+    font-family: 'Raleway', sans-serif;
+    height: 100vh;
+    display: flex;
+    flex-direction: column;
+    background-color: #f9f9f9;
+}
+
+.navbar {
+    background-color: #1a1a2e;
+    padding: 1rem;
+    color: white;
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    border-bottom: 2px solid #343a40;
+}
+
+.center-title {
+    text-align: center;
+    font-size: 1.6rem;
+    font-weight: bold;
+    color: white;
+}
+
+.navbar-logo {
+    height: 50px;
+    max-height: 80px;
+    object-fit: contain;
+}
+
+.btn-container {
+    display: flex;
+    flex-direction: row;
+    gap: 10px;
+    align-items: center;
+}
+
+.navbar .btn {
+    color: white;
+    background-color: transparent;
+    border-radius: 8px;
+    font-weight: bold;
+    padding: 8px 16px;
+    transition: all 0.3s;
+    border: 2px solid transparent;
+    display: flex;
+    align-items: center;
+    gap: 8px;
+}
+
+.navbar .btn:hover {
+    color: #1a1a2e;
+}
+
+.navbar .btn.dashboard {
+    border-color: #ffc107;
+}
+
+.navbar .btn.logout {
+    border-color: #dc3545;
+}
+
+.navbar .btn.dashboard:hover {
+    background-color: #ffc107;
+}
+
+.navbar .btn.logout:hover {
+    background-color: #dc3545;
+}
+
+main {
+    display: flex;
+    justify-content: center;
+    height: calc(100vh - 120px);
+    margin: 20px 0;
+}
+
+.editor-container {
+    width: 45%;
+    height: 90%;
+    background-color: #fff;
+    box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
+    border-radius: 8px;
+    padding: 20px;
+    margin-right: 20px;
+}
+.output-container {
+    width: 40%;
+    height: 94%;
+    background-color: #c3c9e7;
+    box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
+    border-radius: 8px;
+    padding: 10px;
+    margin-left: 15px;
+}
+
+#editor {
+
+    height: 75%;
+}
+
+footer {
+    background-color: #2d3748;
+    color: #fff;
+    text-align: center;
+    padding: 10px;
+    font-size: 0.9rem;
+    box-shadow: 0 -4px 6px rgba(0, 0, 0, 0.1);
+}
+
+button {
+    background-color: #3182ce;
+    color: #fff;
+    border: none;
+    padding: 10px 20px;
+    font-size: 1rem;
+    border-radius: 4px;
+    cursor: pointer;
+    margin-top: 10px;
+    width: 100%;
+}
+
+button:hover {
+    background-color: #2b6cb0;
+}
+#runButton{
+    background: linear-gradient(135deg, #667eea, #764ba2);
+    color: white;
+    width: 50%;
+    margin-top: 5%;
+   
+}
+#runButton:hover{
+    background: linear-gradient(135deg, #764ba2, #667eea);
+}
