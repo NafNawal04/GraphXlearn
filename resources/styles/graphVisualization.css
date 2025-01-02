@@ -18,18 +18,18 @@ body {
 }
 
 .center-title {
-  flex: 1; 
+  flex: 1;
   text-align: center;
   font-size: 1.6rem;
   font-weight: bold;
-  color: white; 
+  color: white;
 }
 
 .navbar-logo {
-  height: 50px; 
-  max-height: 80px; 
+  height: 50px;
+  max-height: 80px;
   object-fit: contain;
-  margin-right: 20px; 
+  margin-right: 20px;
 }
 
 
@@ -50,16 +50,17 @@ body {
 .navbar .btn:hover {
   color: #1a1a2e;
 }
+
 .dashboard:hover .dashboard-icon {
   filter: brightness(0);
 }
 
 .navbar .btn.dashboard {
-border: 2px solid #ffc107;
+  border: 2px solid #ffc107;
 }
-.navbar .btn.logout {
-border: 2px solid #dc3545;
 
+.navbar .btn.logout {
+  border: 2px solid #dc3545;
 }
 
 .navbar .btn.dashboard:hover {
@@ -120,13 +121,14 @@ border: 2px solid #dc3545;
   padding: 1.5rem;
   gap: 1rem;
 }
- 
+
 .canvas-container {
   flex: 3;
   border: 1px solid #ddd;
   border-radius: 8px;
   background: radial-gradient(circle, #2e2e3a, #1e1e2f);
   box-shadow: 0 4px 6px rgba(0, 0, 0, 0.5);
+  position: relative;
 }
 
 .results {
@@ -136,6 +138,7 @@ border: 2px solid #dc3545;
   border-radius: 8px;
   padding: 1rem;
   box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1);
+  overflow-y: auto; 
 }
 
 .results h3 {
@@ -158,3 +161,57 @@ footer {
 .btn-icon:hover {
   color: #ffc107;
 }
+
+.dfs-row {
+  display: flex;
+  flex-direction: column-reverse; 
+  align-items: flex-start;
+  margin-bottom: 10px;
+  transition: all 0.5s ease;
+}
+.dfs-cell {
+  background-color: #6c757d;
+  color: white;
+  padding: 8px 12px;
+  margin: 4px;
+  border-radius: 4px;
+  font-size: 14px;
+  transition: background-color 0.3s ease, transform 0.3s ease;
+  white-space: nowrap; 
+}
+
+.dfs-cell.current {
+  background-color: #dc3545; 
+  transform: scale(1.05); 
+}
+
+.stack-label {
+  font-weight: bold;
+  margin-bottom: 5px;
+}
+
+
+.results {
+  overflow-y: auto;
+}
+
+.visited-row {
+  display: flex;
+  flex-direction: row; 
+  align-items: center;
+  margin-bottom: 10px;
+  transition: all 0.5s ease;
+  overflow-x: auto; 
+}
+
+.stack-column {
+  display: flex;
+  flex-direction: column;
+  align-items: flex-start;
+  margin-bottom: 10px;
+  transition: all 0.5s ease;
+  max-height: 200px;
+  overflow-y: auto;
+}
+
+

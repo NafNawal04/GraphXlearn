@@ -11,7 +11,7 @@
   <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;600;700&display=swap" rel="stylesheet">
   <script src="https://d3js.org/d3.v7.min.js"></script>
   <style>
-    
+
   </style>
 </head>
 
@@ -21,11 +21,13 @@
     <div class="center-title">Graph Visualization</div>
     <div>
       <button class="btn dashboard" onclick="window.location.href='/dashboard'">
-        <img src="../image/dashboard.svg" alt="Dashboard Icon" class="dashboard-icon" style="width: 20px; height: 20px; margin-right: 8px;"> Dashboard
+        <img src="../image/dashboard.svg" alt="Dashboard Icon" class="dashboard-icon"
+          style="width: 20px; height: 20px; margin-right: 8px;"> Dashboard
       </button>
-      
-      
-      <button class="btn logout" onclick="window.location.href='/'"><i class="fas fa-sign-out-alt btn-icon"></i> Logout</button>
+
+
+      <button class="btn logout" onclick="window.location.href='/'"><i class="fas fa-sign-out-alt btn-icon"></i>
+        Logout</button>
     </div>
   </div>
 
@@ -35,7 +37,8 @@
       <button class="btn" onclick="generateGraphFromCSV()"><i class="fas fa-file-upload"></i> Generate Graph</button>
       <button class="btn" onclick="addNode()"><i class="fas fa-plus"></i> Add Node</button>
       <button class="btn" onclick="setMode('edge')"><i class="fas fa-link"></i> Add Edge</button>
-      <button class="btn" onclick="setMode('directedEdge')"><i class="fas fa-arrow-right"></i> Add Directed Edge</button>
+      <button class="btn" onclick="setMode('directedEdge')"><i class="fas fa-arrow-right"></i> Add Directed
+        Edge</button>
       <button class="btn" onclick="setMode('removeEdge')"><i class="fas fa-trash-alt"></i> Remove Edge</button>
       <button class="btn" onclick="applyDijkstra()"><i class="fas fa-route"></i> Dijkstra's Algorithm</button>
       <button class="btn" onclick="applyBellmanFord()"><i class="fas fa-road"></i> Bellman-Ford Algorithm</button>
@@ -49,13 +52,13 @@
     <div class="content">
       <div class="canvas-container" id="canvasGrid"></div>
       <div class="results">
-        <h3>Shortest Distances</h3>
+        <h3>Output</h3>
         <div id="resultsBox"></div>
       </div>
     </div>
   </div>
 
- 
+
 
   <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0-alpha3/dist/js/bootstrap.bundle.min.js"></script>
   <script src="https://cdnjs.cloudflare.com/ajax/libs/html2canvas/1.4.1/html2canvas.min.js"></script>
@@ -102,7 +105,7 @@
       svg.selectAll('circle').remove();
       svg.selectAll('text').remove();
 
-     
+
       svg.selectAll('line.undirected')
         .data(edges.filter(e => !e.directed))
         .enter().append('line')
@@ -115,7 +118,7 @@
         .attr('stroke-width', 2)
         .on('click', handleEdgeClick);
 
-      
+
       svg.selectAll('line.directed')
         .data(edges.filter(d => d.directed))
         .enter().append('line')
@@ -317,11 +320,11 @@
         if (visited.has(currentNodeId)) continue;
         visited.add(currentNodeId);
 
-      
+
         highlightNode(currentNodeId, '#ff7207');
         await delay(500);
 
-        
+
         const neighbors = edges.filter(edge => edge.source === currentNodeId);
         for (const edge of neighbors) {
           const newDist = distances[currentNodeId] + edge.weight;
@@ -379,7 +382,7 @@
         .text(d => distances[d.id] === Infinity ? '∞' : distances[d.id]);
 
       const resultsBox = document.getElementById('resultsBox');
-      resultsBox.innerHTML = ''; 
+      resultsBox.innerHTML = '';
 
       nodes.forEach(node => {
         const distance = distances[node.id] === Infinity ? '∞' : distances[node.id];
@@ -391,7 +394,7 @@
 
     function visualizeShortestPaths(previous, startNodeId, distances) {
       const resultsBox = document.getElementById('resultsBox');
-      resultsBox.innerHTML = ''; 
+      resultsBox.innerHTML = '';
 
       nodes.forEach(node => {
         const targetNodeId = node.id;
@@ -460,7 +463,7 @@
 
           if (distances[source] + weight < distances[target]) {
             distances[target] = distances[source] + weight;
-            previous[target] = source; 
+            previous[target] = source;
             console.log(`Updated distance of ${target} to ${distances[target]}`);
             showShortestDistances(distances);
             await delay(1000);
@@ -507,7 +510,7 @@
           return edgesToHighlight.some(e => e.source === d.source && e.target === d.target)
             ? 'orange'
             : '#007bff';
-         
+
         })
         .attr('stroke-width', d => {
           return edgesToHighlight.some(e => e.source === d.source && e.target === d.target)
@@ -517,7 +520,7 @@
     }
 
 
-    
+
 
     async function applyBFS() {
       const startNodeId = prompt("Enter the starting node for BFS:");
@@ -530,9 +533,9 @@
 
       const queue = [startNode.id];
       const visited = new Set();
-      const traversalOrder = []; 
+      const traversalOrder = [];
 
-    
+
       initializeBFSVisualization();
 
       while (queue.length > 0) {
@@ -542,21 +545,21 @@
         visited.add(currentNodeId);
         traversalOrder.push(currentNodeId);
 
-        
-        highlightNode(currentNodeId, 'orange');
-        updateBFSVisualization(visited, queue, currentNodeId); 
-        await delay(1000); 
 
-      
+        highlightNode(currentNodeId, 'orange');
+        updateBFSVisualization(visited, queue, currentNodeId);
+        await delay(1000);
+
+
         const neighbors = edges.filter(edge => edge.source === currentNodeId);
         for (const edge of neighbors) {
           const targetNodeId = edge.target;
 
           if (!visited.has(targetNodeId) && !queue.includes(targetNodeId)) {
             queue.push(targetNodeId);
-            highlightEdge(edge, 'orange'); 
-            highlightNode(targetNodeId, 'green'); 
-            updateBFSVisualization(visited, queue); 
+            highlightEdge(edge, 'orange');
+            highlightNode(targetNodeId, 'green');
+            updateBFSVisualization(visited, queue);
             await delay(1500);
           }
         }
@@ -564,9 +567,9 @@
         // resetHighlights(); // Reset highlights for clarity
       }
 
-      
+
       finalizeBFSVisualization(traversalOrder);
-      
+
     }
 
     function initializeBFSVisualization() {
@@ -584,13 +587,13 @@
       const visitedBox = document.getElementById('visitedBox');
       const queueBox = document.getElementById('queueBox');
 
-    
+
       visitedBox.innerHTML = '';
       Array.from(visited).forEach(nodeId => {
         visitedBox.innerHTML += `<div class="bfs-cell">${nodeId}</div>`;
       });
 
-     
+
       queueBox.innerHTML = '';
       queue.forEach(nodeId => {
         queueBox.innerHTML += `<div class="bfs-cell ${nodeId === currentNodeId ? 'current' : ''}">${nodeId}</div>`;
@@ -605,10 +608,165 @@
 
 
     function resetHighlights() {
-      svg.selectAll('circle').attr('fill', '#ffa500'); 
-      svg.selectAll('line').attr('stroke', '#007bff').attr('stroke-width', 2); 
+      svg.selectAll('circle').attr('fill', '#ffa500');
+      svg.selectAll('line').attr('stroke', '#007bff').attr('stroke-width', 2);
     }
 
+    
+
+   function finalizeDFSVisualization(traversalOrder) {
+      const resultsBox = document.getElementById('resultsBox');
+      resultsBox.innerHTML += `<strong><br/>DFS Traversal Order:</strong><br/>`;
+      resultsBox.innerHTML += traversalOrder.join(' -> ');
+
+      setTimeout(() => {
+        svg.selectAll('circle').attr('fill', '#ffc107'); 
+        svg.selectAll('line').attr('stroke', '#ffffff').attr('stroke-width', 2);
+      }, 2000);
+    }
+
+
+async function applyDFS() {
+  const startNodeId = prompt("Enter the starting node for DFS:");
+  if (!startNodeId) return; 
+
+  const startNode = nodes.find(n => n.id === startNodeId.trim());
+  if (!startNode) {
+    alert("Starting node not found.");
+    return;
+  }
+
+  const visited = new Set();
+  const stack = [];
+  const traversalOrder = [];
+
+  initializeDFSVisualization();
+
+  stack.push(startNode.id);
+  updateDFSVisualization(visited, stack);
+
+  while (stack.length > 0) {
+    const currentNodeId = stack.pop();
+    updateStackVisualization(stack);
+
+    if (!visited.has(currentNodeId)) {
+      visited.add(currentNodeId);
+      traversalOrder.push(currentNodeId);
+
+      highlightNode(currentNodeId, 'purple'); 
+      await delay(500);
+
+      const neighbors = getNeighbors(currentNodeId);
+
+      
+      for (const neighborId of neighbors) {
+        if (!visited.has(neighborId) && !stack.includes(neighborId)) {
+          stack.push(neighborId);
+          highlightEdge({ source: currentNodeId, target: neighborId }, 'purple'); 
+          updateStackVisualization(stack);
+          await delay(1500); 
+        }
+      }
+
+      updateDFSVisualization(visited, stack);
+    }
+  }
+
+  finalizeDFSVisualization(traversalOrder);
+}
+function getNeighbors(nodeId) {
+  return edges.reduce((acc, edge) => {
+    if (edge.source === nodeId) {
+      acc.push(edge.target);
+    }
+    
+    if (!edge.directed && edge.target === nodeId) {
+      acc.push(edge.source);
+    }
+    return acc;
+  }, []);
+}
+
+
+    async function dfsVisit(nodeId, visited, stack, traversalOrder) {
+      console.log(`Visiting Node: ${nodeId}`);
+      visited.add(nodeId);
+      traversalOrder.push(nodeId);
+      stack.push(nodeId);
+
+      highlightNode(nodeId, 'purple'); 
+      updateDFSVisualization(visited, stack, nodeId);
+      await delay(2000);
+
+   
+      const neighbors = edges.reduce((acc, edge) => {
+        if (edge.source === nodeId) {
+          acc.push(edge.target);
+        }
+       
+        if (!edge.directed && edge.target === nodeId) {
+          acc.push(edge.source);
+        }
+        return acc;
+      }, []);
+
+      console.log(`Neighbors of ${nodeId}:`, neighbors);
+
+      for (const neighborId of neighbors) {
+        if (!visited.has(neighborId)) {
+          console.log(`Traversing to Neighbor: ${neighborId}`);
+          highlightEdge({ source: nodeId, target: neighborId }, 'purple');
+          await delay(2500);
+          await dfsVisit(neighborId, visited, stack, traversalOrder);
+        }
+      }
+
+      stack.pop();
+      updateDFSVisualization(visited, stack);
+    }
+
+    function initializeDFSVisualization() {
+  const resultsBox = document.getElementById('resultsBox');
+  resultsBox.innerHTML = `
+    <strong>DFS Visualization:</strong><br/>
+    <div><strong>Visited:</strong></div>
+    <div id="visitedBox" class="visited-row"></div>
+    <div><strong>Stack:</strong></div>
+    <div id="stackBox" class="stack-column"></div>
+  `;
+}
+
+function updateDFSVisualization(visited, stack) {
+  const visitedBox = document.getElementById('visitedBox');
+  const stackBox = document.getElementById('stackBox');
+
+  
+  visitedBox.innerHTML = '';
+  Array.from(visited).forEach(nodeId => {
+    visitedBox.innerHTML += `<div class="dfs-cell">${nodeId}</div>`;
+  });
+
+  
+  stackBox.innerHTML = '';
+  stack.slice().reverse().forEach((nodeId, index) => { 
+    const isTop = index === 0;
+    stackBox.innerHTML += `<div class="dfs-cell ${isTop ? 'current' : ''}">${nodeId}</div>`;
+  });
+}
+
+function updateStackVisualization(stack) {
+  const stackBox = document.getElementById('stackBox');
+
+  
+  stackBox.innerHTML = '';
+  stack.slice().reverse().forEach((nodeId, index) => { 
+    const isTop = index === 0;
+    stackBox.innerHTML += `<div class="dfs-cell ${isTop ? 'current' : ''}">${nodeId}</div>`;
+  });
+}
+
+
+    
   </script>
 </body>
 
