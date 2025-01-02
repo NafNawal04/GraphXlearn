@@ -2,9 +2,6 @@ const { PythonShell } = require('python-shell');
 const path = require('path');
 const fs = require('fs');
 
-
-
-
 const getCodeExecutionPage = (req, res) => {
     res.sendFile(path.join(__dirname, '../resources/html_files/codeExecution.html'));
 };
@@ -20,7 +17,7 @@ function executeCode(req, res) {
     }
 
     const tempFile = path.join(__dirname, 'python.py'); 
-    // Write the code to a temporary Python file
+   
     fs.writeFile(tempFile, code, (err) => {
         if (err) {
             console.error('Failed to save code:', err.message);
@@ -28,7 +25,7 @@ function executeCode(req, res) {
         }
 
         console.log('Executing Python script...');
-        // Run the Python script
+        
         PythonShell.run(tempFile, null, (err, result) => {
             if (err) {
                 console.error('Error executing Python script:', err.message);
@@ -40,7 +37,7 @@ function executeCode(req, res) {
         
             console.log('Python script executed successfully:', result);
         
-            // Respond with success without waiting for further action
+            
             res.json({ output: 'Graph generated successfully' });
         });
         
@@ -49,6 +46,4 @@ function executeCode(req, res) {
 
 
 
-module.exports = {
-    executeCode, getCodeExecutionPage
-};
+module.exports = { executeCode, getCodeExecutionPage};

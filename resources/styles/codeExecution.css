@@ -81,17 +81,17 @@ main {
     width: 45%;
     height: 90%;
     background-color: #fff;
-    box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
-    border-radius: 8px;
+    box-shadow: 0 4px 8px rgba(0, 0, 0, 0.5);
+    border-radius: 2px;
     padding: 20px;
     margin-right: 20px;
 }
 .output-container {
     width: 40%;
     height: 94%;
-    background-color: #c3c9e7;
-    box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
-    border-radius: 8px;
+    background-color: #e3e7fa;
+    box-shadow: 0 4px 8px rgba(0, 0, 0, 0.5);
+    border-radius: 2px;
     padding: 10px;
     margin-left: 15px;
 }
@@ -129,9 +129,20 @@ button:hover {
     background: linear-gradient(135deg, #667eea, #764ba2);
     color: white;
     width: 50%;
-    margin-top: 5%;
+    margin-top: 2%;
    
 }
 #runButton:hover{
+    background: linear-gradient(135deg, #764ba2, #667eea);
+}
+
+#saveButton{
+    background: linear-gradient(135deg, #667eea, #764ba2);
+    color: white;
+    width: 50%;
+    margin-top: 3%;
+   
+}
+#saveButton:hover{
     background: linear-gradient(135deg, #764ba2, #667eea);
 }
