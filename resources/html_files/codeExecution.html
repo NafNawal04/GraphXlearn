@@ -112,7 +112,7 @@
                 console.log('Code sent to backend for execution:', code);
 
                 sendCodeToBackend(code);
-        
+
                 loadImage();
             });
 
@@ -136,8 +136,7 @@
                 const outputElement = document.getElementById('output');
                 outputElement.innerHTML = '';
 
-                
-                const imageUrl = './graph.png' ;
+                const imageUrl = `http://localhost:3007/graph.png?t=${Date.now()}`;
 
                 const img = document.createElement('img');
                 img.src = imageUrl;
@@ -149,6 +148,7 @@
 
                 outputElement.appendChild(img);
             }
+
 
 
 

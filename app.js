@@ -31,7 +31,7 @@ app.use('/exercise_html_files', express.static(path.join(__dirname, './resources
 app.use('/image', express.static(path.join(__dirname, './resources/image')));
 app.use('/videos', express.static(path.join(__dirname, './resources/videos')));
 app.use('/styles', express.static(path.join(__dirname, './resources/styles')));
-app.use(express.static(path.join(__dirname)));
+
 
 app.use(express.json());
 app.use(express.urlencoded({ extended: true }));

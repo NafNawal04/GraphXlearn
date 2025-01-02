@@ -1,7 +1,3 @@
-
-
-
-const { exec } = require('child_process');
 const { PythonShell } = require('python-shell');
 const path = require('path');
 const fs = require('fs');
@@ -15,7 +11,7 @@ const getCodeExecutionPage = (req, res) => {
 
 
 function executeCode(req, res) {
-    console.log('Received code:', req.body.code); // Log received code
+    console.log('Received code:', req.body.code); 
     const code = req.body.code;
 
     if (!code) {
@@ -23,8 +19,7 @@ function executeCode(req, res) {
         return res.status(400).json({ error: 'No code provided in the request.' });
     }
 
-    const tempFile = path.join(__dirname, 'temp_code.py'); // Temp file to save code
-
+    const tempFile = path.join(__dirname, 'python.py'); 
     // Write the code to a temporary Python file
     fs.writeFile(tempFile, code, (err) => {
         if (err) {
