@@ -102,7 +102,7 @@
       svg.selectAll('circle').remove();
       svg.selectAll('text').remove();
 
-      // Draw undirected edges and attach click handler to update or remove edges
+     
       svg.selectAll('line.undirected')
         .data(edges.filter(e => !e.directed))
         .enter().append('line')
@@ -115,7 +115,7 @@
         .attr('stroke-width', 2)
         .on('click', handleEdgeClick);
 
-      // Draw directed edges and attach click handler to update or remove edges
+      
       svg.selectAll('line.directed')
         .data(edges.filter(d => d.directed))
         .enter().append('line')
@@ -270,7 +270,6 @@
     }
 
 
-    //Dijkstra algorithm
     class PriorityQueue {
       constructor() {
         this.queue = [];
@@ -318,11 +317,11 @@
         if (visited.has(currentNodeId)) continue;
         visited.add(currentNodeId);
 
-        // Highlight the current node being processed
+      
         highlightNode(currentNodeId, '#ff7207');
         await delay(500);
 
-        // Explore neighbors
+        
         const neighbors = edges.filter(edge => edge.source === currentNodeId);
         for (const edge of neighbors) {
           const newDist = distances[currentNodeId] + edge.weight;
@@ -392,14 +391,14 @@
 
     function visualizeShortestPaths(previous, startNodeId, distances) {
       const resultsBox = document.getElementById('resultsBox');
-      resultsBox.innerHTML = ''; // Clear previous results
+      resultsBox.innerHTML = ''; 
 
       nodes.forEach(node => {
         const targetNodeId = node.id;
         let path = [];
         let currentNodeId = targetNodeId;
 
-        // Backtrack to find the path from the start node
+
         while (currentNodeId && currentNodeId !== startNodeId) {
           path.push(currentNodeId);
           currentNodeId = previous[currentNodeId];
@@ -428,7 +427,7 @@
     }
 
 
-    //bellmanford algorithm
+
 
     async function applyBellmanFord() {
       const startNodeId = prompt("Enter the starting node for Bellman-Ford algorithm:");
@@ -461,7 +460,7 @@
 
           if (distances[source] + weight < distances[target]) {
             distances[target] = distances[source] + weight;
-            previous[target] = source; // Update the predecessor
+            previous[target] = source; 
             console.log(`Updated distance of ${target} to ${distances[target]}`);
             showShortestDistances(distances);
             await delay(1000);
@@ -470,7 +469,6 @@
         }
       }
 
-      // Check for negative weight cycles
       for (const { source, target, weight } of edges) {
         if (distances[source] + weight < distances[target]) {
           alert("Graph contains a negative weight cycle!");
@@ -491,7 +489,7 @@
     function highlightFinalPaths(previous, startNodeId) {
       const edgesToHighlight = [];
 
-      // Backtrack for each node
+
       nodes.forEach(node => {
         let currentNode = node.id;
 
@@ -509,17 +507,17 @@
           return edgesToHighlight.some(e => e.source === d.source && e.target === d.target)
             ? 'orange'
             : '#007bff';
-          //if the edges are part of shortest path then orange else default color
+         
         })
         .attr('stroke-width', d => {
           return edgesToHighlight.some(e => e.source === d.source && e.target === d.target)
             ? 3
-            : 2; // Make shortest path edges thicker
+            : 2;
         });
     }
 
 
-    //bfs algorithm:
+    
 
     async function applyBFS() {
       const startNodeId = prompt("Enter the starting node for BFS:");
@@ -544,12 +542,12 @@
         visited.add(currentNodeId);
         traversalOrder.push(currentNodeId);
 
-        // Highlight the current node
+        
         highlightNode(currentNodeId, 'orange');
         updateBFSVisualization(visited, queue, currentNodeId); 
         await delay(1000); 
 
-        // Explore neighbors
+      
         const neighbors = edges.filter(edge => edge.source === currentNodeId);
         for (const edge of neighbors) {
           const targetNodeId = edge.target;
@@ -557,7 +555,7 @@
           if (!visited.has(targetNodeId) && !queue.includes(targetNodeId)) {
             queue.push(targetNodeId);
             highlightEdge(edge, 'orange'); 
-            highlightNode(targetNodeId, 'green'); // Highlight the target node
+            highlightNode(targetNodeId, 'green'); 
             updateBFSVisualization(visited, queue); 
             await delay(1500);
           }
@@ -566,7 +564,7 @@
         // resetHighlights(); // Reset highlights for clarity
       }
 
-      // Finalize BFS visualization
+      
       finalizeBFSVisualization(traversalOrder);
       
     }
@@ -586,13 +584,13 @@
       const visitedBox = document.getElementById('visitedBox');
       const queueBox = document.getElementById('queueBox');
 
-      // Update Visited Nodes
+    
       visitedBox.innerHTML = '';
       Array.from(visited).forEach(nodeId => {
         visitedBox.innerHTML += `<div class="bfs-cell">${nodeId}</div>`;
       });
 
-      // Update Queue
+     
       queueBox.innerHTML = '';
       queue.forEach(nodeId => {
         queueBox.innerHTML += `<div class="bfs-cell ${nodeId === currentNodeId ? 'current' : ''}">${nodeId}</div>`;
@@ -607,8 +605,8 @@
 
 
     function resetHighlights() {
-      svg.selectAll('circle').attr('fill', '#ffa500'); // Default node color
-      svg.selectAll('line').attr('stroke', '#007bff').attr('stroke-width', 2); // Default edge color
+      svg.selectAll('circle').attr('fill', '#ffa500'); 
+      svg.selectAll('line').attr('stroke', '#007bff').attr('stroke-width', 2); 
     }
 
   </script>

@@ -207,7 +207,7 @@
 </head>
 
 <body>
-    <!-- Navbar -->
+
     <div class="top-navbar">
 
         <img src="../image/logo3.png" alt="GraphXlearn Logo" style="height: 50px; 
@@ -228,7 +228,7 @@
 
     <main>
         <div class="profile-container">
-            <!-- Left Panel: Personal Info -->
+        
             <div class="left-panel">
                 <h2>Personal Info</h2>
                 <div class="personal-info-container">
@@ -254,7 +254,7 @@
 
             </div>
 
-            <!-- Right Panel: Progress & Achievements -->
+          
             <div class="right-panel">
                 <h2>Progress</h2>
 
@@ -270,11 +270,11 @@
                     <canvas id="pieChart"></canvas>
                 </div>
 
-                <!-- Achievement Badges -->
+             
                 <div id="badgeContainer" class="badge-container">
                     <h3>Achievements</h3>
                     <div id="badges">
-                        <!-- Badges will appear here -->
+                        
                     </div>
                 </div>
             </div>
@@ -282,21 +282,20 @@
     </main>
 
 
-    <!-- Scripts -->
     <script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
     <script>
         fetch('/dashboard/profile/data')
             .then(response => response.json())
             .then(data => {
-                // User Info
+            
                 document.getElementById('userName').innerText = data.name || "N/A";
                 document.getElementById('userEmail').innerText = data.email || "N/A";
 
-                // Exercise Progress
+              
                 const exerciseProgress = data.exerciseCompletion || 50;
                 document.getElementById('exerciseProgress').style.width = exerciseProgress + '%';
 
-                // Pie Chart for Learning Materials
+               
                 const ctx = document.getElementById('pieChart').getContext('2d');
                 new Chart(ctx, {
                     type: 'pie',
@@ -309,7 +308,7 @@
                     }
                 });
 
-                // Achievements
+       
                 if (data.learningMaterialsCompleted >= 100) {
                     const badgeContainer = document.getElementById('badgeContainer');
                     badgeContainer.style.display = 'block';
