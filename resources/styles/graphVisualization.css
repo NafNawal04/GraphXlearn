@@ -6,6 +6,24 @@ body {
   flex-direction: column;
   background-color: #f9f9f9;
 }
+.bfs-row {
+  display: flex;
+  gap: 5px;
+}
+.bfs-cell {
+  width: 30px;
+  height: 30px;
+  border: 1px solid #ccc;
+  text-align: center;
+  line-height: 30px;
+  font-weight: bold;
+  background-color: #f9f9f9;
+  color: #333;
+}
+.bfs-cell.current {
+  background-color: #ffb3b3;
+  
+}
 
 .navbar {
   background-color: #1a1a2e;

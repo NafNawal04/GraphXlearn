@@ -395,6 +395,7 @@
     function visualizeShortestPaths(previous, startNodeId, distances) {
       const resultsBox = document.getElementById('resultsBox');
       resultsBox.innerHTML = '';
+      resultsBox.innerHTML = `<strong>Shortest Paths:</strong><br/>`;
 
       nodes.forEach(node => {
         const targetNodeId = node.id;
@@ -485,7 +486,7 @@
 
       highlightFinalPaths(previous, startNodeId);
 
-
+      visualizeShortestPaths(previous, startNodeId, distances);
     }
 
 
