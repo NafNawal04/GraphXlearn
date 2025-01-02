@@ -613,80 +613,80 @@
       svg.selectAll('line').attr('stroke', '#007bff').attr('stroke-width', 2);
     }
 
-    
 
-   function finalizeDFSVisualization(traversalOrder) {
+
+    function finalizeDFSVisualization(traversalOrder) {
       const resultsBox = document.getElementById('resultsBox');
       resultsBox.innerHTML += `<strong><br/>DFS Traversal Order:</strong><br/>`;
       resultsBox.innerHTML += traversalOrder.join(' -> ');
 
       setTimeout(() => {
-        svg.selectAll('circle').attr('fill', '#ffc107'); 
+        svg.selectAll('circle').attr('fill', '#ffc107');
         svg.selectAll('line').attr('stroke', '#ffffff').attr('stroke-width', 2);
       }, 2000);
     }
 
 
-async function applyDFS() {
-  const startNodeId = prompt("Enter the starting node for DFS:");
-  if (!startNodeId) return; 
+    async function applyDFS() {
+      const startNodeId = prompt("Enter the starting node for DFS:");
+      if (!startNodeId) return;
 
-  const startNode = nodes.find(n => n.id === startNodeId.trim());
-  if (!startNode) {
-    alert("Starting node not found.");
-    return;
-  }
+      const startNode = nodes.find(n => n.id === startNodeId.trim());
+      if (!startNode) {
+        alert("Starting node not found.");
+        return;
+      }
 
-  const visited = new Set();
-  const stack = [];
-  const traversalOrder = [];
+      const visited = new Set();
+      const stack = [];
+      const traversalOrder = [];
 
-  initializeDFSVisualization();
+      initializeDFSVisualization();
 
-  stack.push(startNode.id);
-  updateDFSVisualization(visited, stack);
+      stack.push(startNode.id);
+      updateDFSVisualization(visited, stack);
 
-  while (stack.length > 0) {
-    const currentNodeId = stack.pop();
-    updateStackVisualization(stack);
+      while (stack.length > 0) {
+        const currentNodeId = stack.pop();
+        updateStackVisualization(stack);
 
-    if (!visited.has(currentNodeId)) {
-      visited.add(currentNodeId);
-      traversalOrder.push(currentNodeId);
+        if (!visited.has(currentNodeId)) {
+          visited.add(currentNodeId);
+          traversalOrder.push(currentNodeId);
 
-      highlightNode(currentNodeId, 'purple'); 
-      await delay(500);
+          highlightNode(currentNodeId, 'purple');
+          await delay(500);
 
-      const neighbors = getNeighbors(currentNodeId);
+          const neighbors = getNeighbors(currentNodeId);
 
-      
-      for (const neighborId of neighbors) {
-        if (!visited.has(neighborId) && !stack.includes(neighborId)) {
-          stack.push(neighborId);
-          highlightEdge({ source: currentNodeId, target: neighborId }, 'purple'); 
-          updateStackVisualization(stack);
-          await delay(1500); 
+
+          for (const neighborId of neighbors) {
+            if (!visited.has(neighborId) && !stack.includes(neighborId)) {
+              stack.push(neighborId);
+              highlightEdge({ source: currentNodeId, target: neighborId }, 'purple');
+              updateStackVisualization(stack);
+              await delay(1500);
+            }
+          }
+
+          updateDFSVisualization(visited, stack);
         }
       }
 
-      updateDFSVisualization(visited, stack);
+      finalizeDFSVisualization(traversalOrder);
     }
-  }
+    function getNeighbors(nodeId) {
+      return edges.reduce((acc, edge) => {
+        if (edge.source === nodeId) {
+          acc.push(edge.target);
+        }
 
-  finalizeDFSVisualization(traversalOrder);
-}
-function getNeighbors(nodeId) {
-  return edges.reduce((acc, edge) => {
-    if (edge.source === nodeId) {
-      acc.push(edge.target);
+        if (!edge.directed && edge.target === nodeId) {
+          acc.push(edge.source);
+        }
+        return acc;
+      }, []);
     }
-    
-    if (!edge.directed && edge.target === nodeId) {
-      acc.push(edge.source);
-    }
-    return acc;
-  }, []);
-}
 
 
     async function dfsVisit(nodeId, visited, stack, traversalOrder) {
@@ -695,16 +695,16 @@ function getNeighbors(nodeId) {
       traversalOrder.push(nodeId);
       stack.push(nodeId);
 
-      highlightNode(nodeId, 'purple'); 
+      highlightNode(nodeId, 'purple');
       updateDFSVisualization(visited, stack, nodeId);
       await delay(2000);
 
-   
+
       const neighbors = edges.reduce((acc, edge) => {
         if (edge.source === nodeId) {
           acc.push(edge.target);
         }
-       
+
         if (!edge.directed && edge.target === nodeId) {
           acc.push(edge.source);
         }
@@ -727,47 +727,172 @@ function getNeighbors(nodeId) {
     }
 
     function initializeDFSVisualization() {
-  const resultsBox = document.getElementById('resultsBox');
-  resultsBox.innerHTML = `
+      const resultsBox = document.getElementById('resultsBox');
+      resultsBox.innerHTML = `
     <strong>DFS Visualization:</strong><br/>
     <div><strong>Visited:</strong></div>
     <div id="visitedBox" class="visited-row"></div>
     <div><strong>Stack:</strong></div>
     <div id="stackBox" class="stack-column"></div>
   `;
-}
+    }
 
-function updateDFSVisualization(visited, stack) {
-  const visitedBox = document.getElementById('visitedBox');
-  const stackBox = document.getElementById('stackBox');
+    function updateDFSVisualization(visited, stack) {
+      const visitedBox = document.getElementById('visitedBox');
+      const stackBox = document.getElementById('stackBox');
 
-  
-  visitedBox.innerHTML = '';
-  Array.from(visited).forEach(nodeId => {
-    visitedBox.innerHTML += `<div class="dfs-cell">${nodeId}</div>`;
-  });
 
-  
-  stackBox.innerHTML = '';
-  stack.slice().reverse().forEach((nodeId, index) => { 
-    const isTop = index === 0;
-    stackBox.innerHTML += `<div class="dfs-cell ${isTop ? 'current' : ''}">${nodeId}</div>`;
-  });
-}
+      visitedBox.innerHTML = '';
+      Array.from(visited).forEach(nodeId => {
+        visitedBox.innerHTML += `<div class="dfs-cell">${nodeId}</div>`;
+      });
 
-function updateStackVisualization(stack) {
-  const stackBox = document.getElementById('stackBox');
 
-  
-  stackBox.innerHTML = '';
-  stack.slice().reverse().forEach((nodeId, index) => { 
-    const isTop = index === 0;
-    stackBox.innerHTML += `<div class="dfs-cell ${isTop ? 'current' : ''}">${nodeId}</div>`;
-  });
-}
+      stackBox.innerHTML = '';
+      stack.slice().reverse().forEach((nodeId, index) => {
+        const isTop = index === 0;
+        stackBox.innerHTML += `<div class="dfs-cell ${isTop ? 'current' : ''}">${nodeId}</div>`;
+      });
+    }
 
+    function updateStackVisualization(stack) {
+      const stackBox = document.getElementById('stackBox');
+
+
+      stackBox.innerHTML = '';
+      stack.slice().reverse().forEach((nodeId, index) => {
+        const isTop = index === 0;
+        stackBox.innerHTML += `<div class="dfs-cell ${isTop ? 'current' : ''}">${nodeId}</div>`;
+      });
+    }
+
+
+    class UnionFind {
+      constructor(nodes) {
+        this.parent = {};
+        nodes.forEach(node => {
+          this.parent[node.id] = node.id;
+        });
+      }
+
+      find(nodeId) {
+        if (this.parent[nodeId] !== nodeId) {
+          this.parent[nodeId] = this.find(this.parent[nodeId]);
+        }
+        return this.parent[nodeId];
+      }
+
+      union(node1, node2) {
+        const root1 = this.find(node1);
+        const root2 = this.find(node2);
+
+        if (root1 === root2) {
+          return false;
+        }
+
+        this.parent[root2] = root1;
+        return true;
+      }
+    }
+    async function applyKruskal() {
+      
+      const undirectedEdges = edges.filter(edge => !edge.directed);
+
+      if (undirectedEdges.length === 0) {
+        alert("No undirected edges available for Kruskal's Algorithm.");
+        return;
+      }
+
+      
+      const sortedEdges = undirectedEdges.sort((a, b) => a.weight - b.weight);
+
+      const uf = new UnionFind(nodes);
+
+      const mst = [];
+      let totalWeight = 0;
+
+      
+      initializeKruskalVisualization();
 
     
+      const sortedEdgesContainer = document.getElementById('sortedEdges');
+      sortedEdges.forEach(edge => {
+        sortedEdgesContainer.innerHTML += `<div class="sorted-edge">${edge.source} - ${edge.target} (${edge.weight})</div>`;
+      });
+
+      for (const edge of sortedEdges) {
+       
+        highlightEdge(edge, 'blue');
+        await delay(1000); 
+
+      
+
+       
+        const kruskalEdgesContainer = document.getElementById('kruskalEdges');
+        kruskalEdgesContainer.innerHTML += `<div class="kruskal-edge">${edge.source} - ${edge.target} (${edge.weight})</div>`;
+
+        const root1 = uf.find(edge.source);
+        const root2 = uf.find(edge.target);
+
+        if (root1 !== root2) {
+          uf.union(edge.source, edge.target);
+          mst.push(edge);
+          totalWeight += edge.weight;
+
+          
+          highlightEdge(edge, 'green'); 
+
+        
+
+          await delay(1000);
+
+        
+          updateKruskalVisualization(mst, totalWeight);
+        } else {
+         
+          highlightEdge(edge, 'red'); 
+
+
+          await delay(1000); 
+        }
+      }
+      finalizeKruskalVisualization(mst, totalWeight);
+    }
+
+
+    function initializeKruskalVisualization() {
+      const resultsBox = document.getElementById('resultsBox');
+      resultsBox.innerHTML = `
+      <strong>Kruskal's Algorithm Visualization:</strong><br/>
+      <div><strong>Sorted Edges:</strong></div>
+      <div id="sortedEdges" class="sorted-edges"></div>
+      <div><strong>Edges Considered:</strong></div>
+      <div id="kruskalEdges" class="kruskal-edges"></div>
+      <div><strong>MST:</strong></div>
+      <div id="mstBox" class="mst-row"></div>
+      <div><strong>Total Weight:</strong> <span id="totalWeight">0</span></div>
+    `;
+    }
+
+    function updateKruskalVisualization(mst, totalWeight) {
+      const mstBox = document.getElementById('mstBox');
+      mstBox.innerHTML = '';
+
+      mst.forEach(edge => {
+        mstBox.innerHTML += `<div class="kruskal-cell">${edge.source} - ${edge.target} (${edge.weight})</div>`;
+      });
+
+      document.getElementById('totalWeight').textContent = totalWeight;
+    }
+    function finalizeKruskalVisualization(mst, totalWeight) {
+      const resultsBox = document.getElementById('resultsBox');
+      resultsBox.innerHTML += `<br/><strong>MST Total Weight:</strong> ${totalWeight}`;
+    }
+
+
+
+
+
   </script>
 </body>
 

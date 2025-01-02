@@ -150,7 +150,8 @@ body {
 }
 
 .results {
-  flex: 1;
+  flex:1.2 ;
+  margin-right: -1rem;
   background-color: white;
   border: 1px solid #ddd;
   border-radius: 8px;
@@ -232,4 +233,25 @@ footer {
   overflow-y: auto;
 }
 
+.kruskal-edges {
+  display: flex;
+  flex-direction: column;
+  gap: 5px;
+  margin-bottom: 10px;
+}
+
+.mst-row {
+  display: flex;
+  flex-direction: column;
+  gap: 5px;
+}
+
+.kruskal-cell {
+  background-color: #28a745;
+  color: white;
+  padding: 6px 10px;
+  border-radius: 4px;
+  font-size: 14px;
+  width: fit-content;
+}
 
