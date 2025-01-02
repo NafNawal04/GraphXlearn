@@ -870,6 +870,21 @@
       <div id="kruskalEdges" class="kruskal-edges"></div>
       <div><strong>MST:</strong></div>
       <div id="mstBox" class="mst-row"></div>
+      <div class="legend">
+          <h4>Legend:</h4>
+          <div>
+            <span style="background-color: blue; width: 20px; height: 10px; display: inline-block;"></span>
+            Edge Being Considered
+          </div>
+          <div>
+            <span style="background-color: green; width: 20px; height: 10px; display: inline-block;"></span>
+            Edge Included in MST
+          </div>
+          <div>
+            <span style="background-color: red; width: 20px; height: 10px; display: inline-block;"></span>
+            Edge Skipped (Cycle)
+          </div>
+        </div>
       <div><strong>Total Weight:</strong> <span id="totalWeight">0</span></div>
     `;
     }
@@ -891,8 +906,181 @@
 
 
 
+    function addEdgeToConsidered(edge, isIncluded = false) {
+      const primEdgesContainer = document.getElementById('primEdges');
+      if (!primEdgesContainer) return;
 
+      const edgeDiv = document.createElement('div');
+      edgeDiv.classList.add('prim-edge');
+      edgeDiv.textContent = `${edge.source} - ${edge.target} (${edge.weight})`;
 
+      if (isIncluded) {
+        edgeDiv.style.backgroundColor = '#28a745';
+      } else {
+        edgeDiv.style.backgroundColor = '#17a2b8';
+      }
+
+      primEdgesContainer.appendChild(edgeDiv);
+    }
+
+   
+    function highlightEdge(edge, color) {
+      svg.selectAll('line')
+        .filter(d => 
+          (d.source === edge.source && d.target === edge.target) || 
+          (d.source === edge.target && d.target === edge.source)
+        )
+        .transition()
+        .duration(500)
+        .attr('stroke', color)
+        .attr('stroke-width', color === 'green' ? 4 : (color === 'red' ? 2 : 3));
+    }
+
+    
+    function initializePrimVisualization() {
+      const resultsBox = document.getElementById('resultsBox');
+      resultsBox.innerHTML = `
+        <strong>Prim's Algorithm Visualization:</strong><br/>
+        <div class="prim-flex-container">
+          <div class="sorted-edges-container">
+            <strong>Sorted Edges:</strong>
+            <div id="sortedEdges" class="sorted-edges"></div>
+          </div>
+          <div class="edges-considered-container">
+            <strong>Edges Considered:</strong>
+            <div id="primEdges" class="prim-edges"></div>
+          </div>
+        </div>
+        <div><strong>MST:</strong></div>
+        <div id="primMST" class="prim-mst-row"></div>
+        <div><strong>Total Weight:</strong> <span id="primTotalWeight">0</span></div>
+        <div class="legend">
+          <h4>Legend:</h4>
+          <div>
+            <span style="background-color: blue; width: 20px; height: 10px; display: inline-block;"></span>
+            Edge Being Considered
+          </div>
+          <div>
+            <span style="background-color: green; width: 20px; height: 10px; display: inline-block;"></span>
+            Edge Included in MST
+          </div>
+          <div>
+            <span style="background-color: red; width: 20px; height: 10px; display: inline-block;"></span>
+            Edge Skipped (Cycle)
+          </div>
+        </div>
+      `;
+    }
+
+    
+    function updatePrimVisualization(mst, totalWeight) {
+      const primMST = document.getElementById('primMST');
+      primMST.innerHTML = ''; 
+      mst.forEach(edge => {
+        primMST.innerHTML += `<div class="prim-cell">${edge.source} - ${edge.target} (${edge.weight})</div>`;
+      });
+
+      document.getElementById('primTotalWeight').textContent = totalWeight;
+    }
+
+    
+    function finalizePrimVisualization(mst, totalWeight) {
+      const resultsBox = document.getElementById('resultsBox');
+      resultsBox.innerHTML += `<br/><strong>Prim's Algorithm Completed!</strong>`;
+      resultsBox.innerHTML += `<br/><strong>MST Total Weight:</strong> ${totalWeight}`;
+    }
+
+    
+    function delay(ms = 1000) {
+      return new Promise(resolve => setTimeout(resolve, ms));
+    }
+
+    async function applyPrim() {
+      
+      if (nodes.length === 0 || edges.length === 0) {
+        alert("Please add nodes and edges to the graph before running Prim's Algorithm.");
+        return;
+      }
+
+    
+      const startNodeId = prompt("Enter the starting node for Prim's Algorithm:", nodes[0].id);
+      if (!startNodeId) return;
+
+      const startNode = nodes.find(n => n.id === startNodeId);
+      if (!startNode) {
+        alert("Starting node not found.");
+        return;
+      }
+
+     
+      const mst = [];
+      const visited = new Set();
+      visited.add(startNode.id);
+
+      
+      const pq = new PriorityQueue();
+      edges.forEach(edge => {
+        if (edge.source === startNode.id || edge.target === startNode.id) {
+          pq.enqueue(edge, edge.weight);
+          highlightEdge(edge, 'blue'); 
+          addEdgeToConsidered(edge);   
+        }
+      });
+
+  
+      initializePrimVisualization();
+
+     
+      const sortedEdgesContainer = document.getElementById('sortedEdges');
+      sortedEdgesContainer.innerHTML = ''; 
+
+      edges.forEach(edge => {
+        sortedEdgesContainer.innerHTML += `<div class="sorted-edge">${edge.source} - ${edge.target} (${edge.weight})</div>`;
+      });
+
+      let totalWeight = 0;
+
+      while (!pq.isEmpty()) {
+        const currentEdge = pq.dequeue();
+
+       
+        const nextNodeId = visited.has(currentEdge.source) ? currentEdge.target : currentEdge.source;
+
+        if (visited.has(nextNodeId)) {
+          
+          highlightEdge(currentEdge, 'red');
+          addEdgeToConsidered(currentEdge, false);
+          await delay(1000); 
+          continue;
+        }
+
+        mst.push(currentEdge);
+        totalWeight += currentEdge.weight;
+        visited.add(nextNodeId);
+
+       
+        highlightEdge(currentEdge, 'green');
+        addEdgeToConsidered(currentEdge, true); 
+        
+        updatePrimVisualization(mst, totalWeight);
+        await delay(1000); 
+
+       
+        edges.forEach(edge => {
+          if ((edge.source === nextNodeId && !visited.has(edge.target)) ||
+              (edge.target === nextNodeId && !visited.has(edge.source))) {
+            pq.enqueue(edge, edge.weight);
+            highlightEdge(edge, 'blue'); 
+            addEdgeToConsidered(edge);  
+          }
+        });
+
+        await delay(1000); 
+      }
+
+   
+      finalizePrimVisualization(mst, totalWeight);
+    }
   </script>
 </body>
 

@@ -255,3 +255,86 @@ footer {
   width: fit-content;
 }
 
+/* Prim's Flex Container */
+.prim-flex-container {
+  display: flex;
+  flex-direction: row;
+  gap: 20px; /* Space between the two sections */
+  margin-bottom: 20px; /* Space below the flex container */
+}
+
+/* Sorted and Edges Considered Containers for Prim's */
+.sorted-edges-container,
+.edges-considered-container {
+  flex: 1; /* Equal width for both containers */
+  background-color: #f1f1f1; /* Light background for distinction */
+  padding: 10px;
+  border-radius: 8px;
+  box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
+}
+
+/* Titles within the Containers */
+.sorted-edges-container strong,
+.edges-considered-container strong {
+  display: block;
+  margin-bottom: 10px;
+  font-size: 1.1rem;
+}
+
+/* Sorted and Considered Edges Styling */
+.sorted-edges,
+.prim-edges {
+  max-height: 200px; /* Limit height with scrollbar if necessary */
+  overflow-y: auto;
+}
+
+.sorted-edge,
+.prim-edge {
+  background-color: #17a2b8; /* Blue for considered edges */
+  color: white;
+  padding: 6px 10px;
+  border-radius: 4px;
+  font-size: 14px;
+  margin-bottom: 5px;
+  width: fit-content;
+}
+
+/* Prim's MST Styling */
+.prim-mst-row {
+  display: flex;
+  flex-direction: column;
+  gap: 5px;
+}
+
+.prim-cell {
+  background-color: #28a745; /* Green for MST edges */
+  color: white;
+  padding: 6px 10px;
+  border-radius: 4px;
+  font-size: 14px;
+  width: fit-content;
+}
+
+/* Legend Styling */
+.legend {
+  margin-top: 20px;
+  font-size: 14px;
+}
+
+.legend div {
+  display: flex;
+  align-items: center;
+  gap: 5px;
+  margin-bottom: 5px;
+}
+
+.legend span {
+  display: inline-block;
+}
+
+/* Responsive Design */
+@media (max-width: 768px) {
+  .prim-flex-container {
+    flex-direction: column;
+  }
+}
