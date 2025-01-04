@@ -29,35 +29,42 @@ body {
     max-height: 80px;
     object-fit: contain;
     margin-left: 1.5%;
-    
+
 }
 
-
-#welcomeText {
-    font-size: 1.6rem;
+.navbar .btn {
+    color: white;
+    background-color: transparent;
+    border-radius: 8px;
     font-weight: bold;
-    color: #FFD700;
-    text-align: center;
-    margin-right: 20%;
-    flex: 1; 
+    padding: 8px 16px;
+    transition: all 0.3s;
+
+
 }
-.dropdown {
-    margin-left: auto;
-    display: flex;
-    align-items: center;
-    position: relative;
+
+.navbar .btn:hover {
+    color: #1a1a2e;
 }
-.game-icon {
-    font-size: 2rem;
-    cursor: pointer;
-    color: #FFD700;
-    margin-right: 25px;
+
+.dashboard:hover .dashboard-icon {
+    filter: brightness(0);
 }
-.user-icon {
-    font-size: 2rem;
-    cursor: pointer;
-    color: #FFD700;
-    margin-right: 25px;
+
+.navbar .btn.dashboard {
+    border: 2px solid #ffc107;
+}
+
+.navbar .btn.logout {
+    border: 2px solid #dc3545;
+}
+
+.navbar .btn.dashboard:hover {
+    background-color: #ffc107;
+}
+
+.navbar .btn.logout:hover {
+    background-color: #dc3545;
 }
 
 .dropdown-menu {
@@ -96,29 +103,31 @@ h1 {
     margin-bottom: 30px;
     color: #292952;
 }
+
 .box-container {
     display: flex;
-    flex-direction: column; 
+    flex-direction: column;
     gap: 30px;
-    align-items: center; 
+    align-items: center;
     width: 100%;
     margin-bottom: 3%;
 }
 
 .box {
     min-height: 300px;
-    width: 100%; 
-    max-width: 850px; 
+    width: 100%;
+    max-width: 850px;
     padding: 25px;
     background: #292952;
     border-radius: 10px;
     box-shadow: 5px 5px 15px rgba(0, 0, 0, 0.3), -5px -5px 15px rgba(50, 50, 70, 0.1);
     transition: all 0.3s ease;
     text-align: center;
-    position: relative; 
+    position: relative;
     overflow: hidden;
-    margin: 0 auto; 
+    margin: 0 auto;
 }
+
 .box:hover {
     transform: translateY(-5px);
     box-shadow: 8px 8px 20px rgba(0, 0, 0, 0.4), -8px -8px 20px rgba(50, 50, 70, 0.2);
@@ -156,13 +165,13 @@ h1 {
 
 footer {
     margin-top: auto;
-    
+
     background-color: #bababe;
     color: #0a0909;
     text-align: center;
     font-size: 0.9rem;
     width: 100%;
-    position:relative;
+    position: relative;
     overflow-x: auto;
 }
 
@@ -184,13 +193,13 @@ footer a:hover {
     height: 100%;
     object-fit: cover;
     border-radius: 10px;
-    z-index: 0; 
-    opacity: 0.7; 
+    z-index: 0;
+    opacity: 0.7;
 }
 
 .content-overlay {
     position: relative;
-    z-index: 1; 
+    z-index: 1;
     color: #fff;
     text-align: center;
     padding: 70px;
@@ -227,6 +236,18 @@ footer a:hover {
     transform: scale(1.05);
 }
 
+#center-title {
+    flex: 1;
+    font-weight: bold;
+    text-align: center;
+    font-size: 1.6rem;
+    font-weight: bold;
+    color: white;
+    
+
+
+}
+
 @media (max-width: 768px) {
     .navbar {
         flex-direction: column;
@@ -245,7 +266,7 @@ footer a:hover {
     }
 
     .dropdown {
-        margin-left: 0; 
+        margin-left: 0;
         margin-top: 10px;
     }
 

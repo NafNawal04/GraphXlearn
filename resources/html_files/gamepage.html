@@ -6,7 +6,7 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Dashboard</title>
     <link href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/5.15.4/css/all.min.css" rel="stylesheet">
-    <link rel="stylesheet" href="../styles/dashboard.css">
+    <link rel="stylesheet" href="../styles/gamepage.css">
     <style>
         @import url('https://fonts.googleapis.com/css2?family=Raleway:wght@300;400;600&display=swap');
     </style>
@@ -16,18 +16,17 @@
 
     <div class="navbar">
         <img src="../image/logo3.png" alt="GraphXlearn Logo" class="navbar-logo">
-        <span id="welcomeText">Welcome to GRAPHXLEARN</span>
-        <a href="/gamepage">
-            <i class="fas fa-solid fa-gamepad game-icon"></i>
-        </a>
-
-        <div class="dropdown">
-            <i class="fas fa-user-circle user-icon" id="userIcon"></i>
-            <div class="dropdown-menu" id="dropdownMenu">
-                <a href="/dashboard/profile">View Profile</a>
-                <a href="/logout">Log Out</a>
-            </div>
-        </div>
+        <span id="center-title">GAMES</span>
+        <div>
+            <button class="btn dashboard" onclick="window.location.href='/dashboard'">
+              <img src="../image/dashboard.svg" alt="Dashboard Icon" class="dashboard-icon"
+                style="width: 20px; height: 20px; margin-right: 8px;"> Dashboard
+            </button>
+      
+      
+            <button class="btn logout" onclick="window.location.href='/'"><i class="fas fa-sign-out-alt btn-icon"></i>
+              Logout</button>
+          </div>
     </div>
 
 
@@ -36,54 +35,7 @@
         <h1>Choose a content to explore</h1>
         <div class="box-container">
 
-            <div class="box" id="graphVisualizationBox">
-
-                <video class="video-background" autoplay muted loop>
-                    <source src="../videos/istock_video_1699485520950.mp4" type="video/mp4">
-                    Your browser does not support the video tag.
-                </video>
-
-
-                <div class="content-overlay">
-                    <h2>Graph Visualization</h2>
-                    <p>Dive into interactive visualizations of graph structures for better insights.</p>
-                    <a href="/graph-visualization" class="btn">Explore Now</a>
-                </div>
-            </div>
-
-            <div class="box" id="learningModeBox">
-
-                <video class="video-background" autoplay muted loop>
-                    <source src="../videos/istock_video_1617896431420.mp4" type="video/mp4">
-                    Your browser does not support the video tag.
-                </video>
-
-                <div class="content-overlay">
-                    <h2>Learning Mode</h2>
-                    <p>Interactive modules designed to teach graph algorithms in an engaging way.</p>
-                    <a href="/learning-mode" class="btn">Start Learning</a>
-                </div>
-            </div>
-
-
-            <div class="box" id="graphExecutionBox">
-
-                <video class="video-background" autoplay muted loop>
-                    <source src="../videos/4733-179738669_small.mp4" type="video/mp4">
-                    Your browser does not support the video tag.
-                </video>
-
-
-                <div class="content-overlay">
-                    <h2>Code Execution</h2>
-                    <p>Practice and execute graph algorithms directly in a code editor.</p>
-                    <a href="/codeExecution" class="btn">Start Coding</a>
-                </div>
-            </div>
-
-
-
-
+            
             <div class="box" id="shortestPathGameBox">
 
                 <video class="video-background" autoplay muted loop>

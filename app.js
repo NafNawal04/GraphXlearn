@@ -23,6 +23,7 @@ const learningModeRoutes = require('./routes/learningMode.routes.js');
 const codeExecutionRoutes = require('./routes/codeExecution.routes.js');
 const exerciseRoutes = require('./routes/exercise.routes.js');
 const promptRoutes = require('./routes/prompt.routes.js');
+const gamepageRoutes = require('./routes/gamepage.routes.js');
 
 app.use(express.static('html_files'));
 app.use(express.static(path.join(__dirname)));
@@ -185,6 +186,7 @@ app.use(learningModeRoutes);
 app.use(codeExecutionRoutes);
 app.use(exerciseRoutes);
 app.use(promptRoutes);
+app.use(gamepageRoutes);
 
 const port = 3000;
 app.listen(port, () => {
