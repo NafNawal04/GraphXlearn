@@ -111,7 +111,7 @@ passport.use(new GitHubStrategy(
   {
     clientID: process.env.GITHUB_CLIENT_ID,
     clientSecret: process.env.GITHUB_CLIENT_SECRET,
-    callbackURL: "http://localhost:3001/auth/github/callback",
+    callbackURL: "http://localhost:3000/auth/github/callback",
     scope: ['user:email']
   },
   async(accessToken, refreshToken, profile, done) => {
@@ -229,7 +229,7 @@ app.get("/api/exercise/:id", async (req, res) => {
   });
 
 function ensureAuthenticated(req, res, next) {
-    const publicPaths = ['/', '/login', '/signup', '/auth/google', '/auth/google/callback'];
+    const publicPaths = ['/', '/login', '/signup', '/auth/google', '/auth/google/callback','/auth/github','/auth/github/callback'];
     if (publicPaths.includes(req.path) || req.isAuthenticated()) {
         return next();
     }
