@@ -184,6 +184,28 @@ app.get('/auth/google/callback',
   }
 );
 
+app.get(
+  "/auth/github",
+  passport.authenticate("github", { scope: ["user:email"] })
+);
+
+app.get(
+  "/auth/github/callback",
+  passport.authenticate("github", { failureRedirect: "/login" }),
+  (req, res) => {
+      if (req.user) {
+        req.session.userId = req.user.id;  
+        req.session.email = req.user.email; 
+        req.session.isAuthenticated = true;
+        res.redirect('/dashboard');
+        
+      } else {
+        res.redirect('/login');
+      }
+    }
+);
+
+
 app.get("/", (req, res) => {
     res.sendFile(path.join(__dirname, './resources/html_files', 'landing.html'));
 });
