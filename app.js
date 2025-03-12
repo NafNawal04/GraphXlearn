@@ -113,6 +113,10 @@ passport.use(new GitHubStrategy({
   callbackURL: "http://localhost:3000/auth/github/callback"
 }, async (accessToken, refreshToken, profile, done) => {
   try {
+
+    if (!profile.emails || profile.emails.length === 0) {
+      return done(new Error("GitHub profile doesn't have an email."));
+    }
    
     const user = await db.user.findUnique({
       where: { email: profile.emails[0].value }
@@ -137,6 +141,7 @@ passport.use(new GitHubStrategy({
     return done(err, null);
   }
 }));
+
 passport.serializeUser((user, done) => {
   console.log("Serializing user:", user); 
   done(null, user.email); 
