@@ -1,6 +1,7 @@
 const passport = require('passport');
 const GoogleStrategy = require('passport-google-oauth20').Strategy;
 const LocalStrategy = require('passport-local').Strategy; 
+const GitHubStrategy = require("passport-github2").Strategy;
 const bcrypt = require('bcrypt'); 
 const db = require('./db');
 
@@ -106,6 +107,44 @@ passport.use(new LocalStrategy({
   }
 ));
 
+passport.use(new GitHubStrategy(
+  {
+    clientID: process.env.GITHUB_CLIENT_ID,
+    clientSecret: process.env.GITHUB_CLIENT_SECRET,
+    callbackURL: "http://localhost:3001/auth/github/callback",
+    scope: ['user:email']
+  },
+  async(accessToken, refreshToken, profile, done) => {
+    try {
+
+      if (!profile.emails || profile.emails.length === 0) {
+        return done(new Error("GitHub profile doesn't have an email."));
+      }
+
+      const user = await db.user.findUnique({
+        where: { email: profile.emails[0].value }
+      });
+  
+      if (!user) {
+      
+        const newUser = await db.user.create({
+          data: {
+            email: profile.emails[0].value,
+            password: null, 
+          }
+        });
+  
+        newUser.isNewUser = true; 
+        return done(null, newUser);
+      }
+  
+      return done(null, user);
+    } catch (err) {
+      return done(err, null);
+    }
+  }
+)
+);
 
 passport.serializeUser((user, done) => {
   console.log("Serializing user:", user); 
