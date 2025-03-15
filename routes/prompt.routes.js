@@ -1,7 +1,7 @@
 const express = require('express');
 const path = require('path');
 const router = express.Router();
-const { getAIAnswer } = require('../controller/prompt.controller');
+const { getAIAnswer ,getUserHistory } = require('../controller/prompt.controller');
 
 router.get('/prompt', (req, res) => {
     res.sendFile(path.join(__dirname, '../resources/html_files', 'prompt.html'));
@@ -9,5 +9,6 @@ router.get('/prompt', (req, res) => {
 
 
 router.post('/api/ask', getAIAnswer);
+router.get('/api/history', getUserHistory);
 
 module.exports = router;

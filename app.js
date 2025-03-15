@@ -42,10 +42,20 @@ app.use(session({
     secret: 'your-secret-key', 
     resave: false,
     saveUninitialized: false, 
+    cookie: { secure: false, httpOnly: true },
 }));
 
 app.use(passport.initialize());
 app.use(passport.session());
+
+app.use((req, res, next) => {
+  if (!req.session.userId && req.session.passport?.user) {
+      req.session.userId = req.session.passport.user;
+  }
+  next();
+});
+
+
 
 passport.use(new GoogleStrategy({
   clientID: process.env.GOOGLE_CLIENT_ID,
@@ -144,13 +154,13 @@ passport.use(new GitHubStrategy({
 
 passport.serializeUser((user, done) => {
   console.log("Serializing user:", user); 
-  done(null, user.email); 
+  done(null, user.id); 
 });
 
-passport.deserializeUser(async (email, done) => {
-  console.log("Deserializing email:", email); 
+passport.deserializeUser(async (id, done) => {
+  console.log("Deserializing user ID :", id); 
   try {
-    const user = await db.user.findUnique({ where: { email } });
+    const user = await db.user.findUnique({ where: { id } });
     console.log("Deserialized user:", user); 
     done(null, user);
   } catch (err) {
