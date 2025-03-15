@@ -1,5 +1,3 @@
-const bcrypt = require('bcrypt');
-const db = require('../db');
 const passport = require('passport');
 
 const handleLogin = (req, res, next) => {
@@ -9,16 +7,15 @@ const handleLogin = (req, res, next) => {
             return next(err); 
         }
         if (!user) { 
-            // Authentication failed, set flash message
             req.flash('error', info.message);
             return res.redirect('/login'); 
         }
-        req.logIn(user, (err) => {
+        req.login(user, (err) => {
             if (err) { 
                 console.error("Login Error:", err);
                 return next(err); 
             }
-            // Authentication successful, redirect to dashboard
+            req.session.passport.userId = user.id;
             res.redirect('/dashboard');
         });
     })(req, res, next);
