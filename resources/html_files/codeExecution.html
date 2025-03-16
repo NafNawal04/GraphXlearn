@@ -16,7 +16,8 @@
         <div class="center-title">Code Execution</div>
         <div class="btn-container">
             <button class="btn dashboard" onclick="window.location.href='/dashboard'">
-                <img src="../image/dashboard.svg" alt="Dashboard Icon" class="dashboard-icon" style="width: 20px; height: 20px;"> Dashboard
+                <img src="../image/dashboard.svg" alt="Dashboard Icon" class="dashboard-icon"
+                    style="width: 20px; height: 20px;"> Dashboard
             </button>
             <button class="btn logout" onclick="window.location.href='/'">
                 <i class="fas fa-sign-out-alt"></i> Logout
@@ -28,10 +29,14 @@
         <div class="editor-container">
             <div id="editor"></div>
             <div class="button-group">
-                <button id="saveButton">Save</button>
-                <button id="runButton">Run</button>
+                <button id="saveButton">Run</button>
+                <!-- <button id="runButton">Run</button>  -->
+
             </div>
         </div>
+
+
+
         <div class="output-container">
             <h2 style="margin-top: 10px;">Output/Visualization</h2>
             <div id="output" style="height: 90%; overflow-y: auto;"></div>
@@ -40,13 +45,13 @@
 
     <script src="https://cdn.jsdelivr.net/npm/monaco-editor@0.40.0/min/vs/loader.js"></script>
     <script>
+        let editor;
         require.config({ paths: { vs: 'https://cdn.jsdelivr.net/npm/monaco-editor@0.40.0/min/vs' } });
 
         require(['vs/editor/editor.main'], function () {
             const editor = monaco.editor.create(document.getElementById('editor'), {
                 value: `import networkx as nx
-import matplotlib.pyplot as plt
-
+import matplotlib.pyplot as plt   
 G = nx.Graph()
 G.add_edges_from([(1, 2), (2, 3), (3, 4)])
 nx.draw(G, with_labels=True)
@@ -55,7 +60,7 @@ plt.savefig("graph.png")`,
                 theme: 'vs-dark'
             });
 
-           
+            // Function to send code to the backend
             function sendCodeToBackend(code) {
                 const xhr = new XMLHttpRequest();
                 xhr.open('POST', '/code-execute', true);
@@ -63,10 +68,29 @@ plt.savefig("graph.png")`,
 
                 xhr.onreadystatechange = function () {
                     if (xhr.readyState === 4) {
+                        const outputElement = document.getElementById('output');
+                        outputElement.innerHTML = '';
+
                         if (xhr.status === 200) {
-                            console.log('Code executed successfully on the backend.');
+                            const response = JSON.parse(xhr.responseText);
+
+                            if (response.error) {
+                                outputElement.innerHTML = `<pre style="color: red;">${response.error}</pre>`;
+                            } else {
+                                outputElement.innerHTML = `<pre>${response.output}</pre>`;
+
+                                // If the code involves a graph (detects matplotlib usage), display the graph
+                                if (code.includes("plt.show()") || code.includes("plt.savefig")) {
+                                    const timestamp = new Date().getTime();
+                                    const img = document.createElement('img');
+                                    img.src = `./graph.png?timestamp=${timestamp}`;
+                                    img.alt = 'Graph Output';
+                                    img.style = 'max-width: 100%; height: auto; margin-top: 5px;';
+                                    outputElement.appendChild(img);
+                                }
+                            }
                         } else {
-                            console.error('Backend error:', xhr.status, xhr.statusText);
+                            outputElement.innerHTML = `<pre style="color: red;">Backend error: ${xhr.status} ${xhr.statusText}</pre>`;
                         }
                     }
                 };
@@ -74,16 +98,22 @@ plt.savefig("graph.png")`,
                 xhr.send(JSON.stringify({ code: code }));
             }
 
-           
+
+        
             document.getElementById('saveButton').addEventListener('click', function () {
-                const code = editor.getValue(); 
+                if (!editor) {
+                    console.error(" Editor is not initialized yet.");
+                    return;
+                }
+                const code = editor.getValue();
                 console.log('Code sent to backend for execution:', code);
                 sendCodeToBackend(code);
             });
 
+      
             document.getElementById('runButton').addEventListener('click', function () {
                 const outputElement = document.getElementById('output');
-                outputElement.innerHTML = ''; 
+                outputElement.innerHTML = '';
 
                 const timestamp = new Date().getTime();
                 const img = document.createElement('img');
@@ -97,7 +127,10 @@ plt.savefig("graph.png")`,
                 outputElement.appendChild(img);
             });
         });
+       
+
     </script>
+
 </body>
 
 </html>
