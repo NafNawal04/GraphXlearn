@@ -322,7 +322,7 @@
 
 
         highlightNode(currentNodeId, '#ff7207');
-        await delay(500);
+        await delay(1500);
 
 
         const neighbors = edges.filter(edge => edge.source === currentNodeId);
@@ -337,7 +337,7 @@
 
             highlightEdge(edge, '#ff7207');
             showShortestDistances(distances);
-            await delay(500);
+            await delay(1500);
           }
         }
       }
@@ -467,7 +467,7 @@
             previous[target] = source;
             console.log(`Updated distance of ${target} to ${distances[target]}`);
             showShortestDistances(distances);
-            await delay(1000);
+            await delay(1500);
           }
 
         }
@@ -549,7 +549,7 @@
 
         highlightNode(currentNodeId, 'orange');
         updateBFSVisualization(visited, queue, currentNodeId);
-        await delay(1000);
+        await delay(1500);
 
 
         const neighbors = edges.filter(edge => edge.source === currentNodeId);
@@ -655,7 +655,7 @@
           traversalOrder.push(currentNodeId);
 
           highlightNode(currentNodeId, 'purple');
-          await delay(500);
+          await delay(1500);
 
           const neighbors = getNeighbors(currentNodeId);
 
@@ -697,7 +697,7 @@
 
       highlightNode(nodeId, 'purple');
       updateDFSVisualization(visited, stack, nodeId);
-      await delay(2000);
+      await delay(1500);
 
 
       const neighbors = edges.reduce((acc, edge) => {
@@ -717,7 +717,7 @@
         if (!visited.has(neighborId)) {
           console.log(`Traversing to Neighbor: ${neighborId}`);
           highlightEdge({ source: nodeId, target: neighborId }, 'purple');
-          await delay(2500);
+          await delay(1500);
           await dfsVisit(neighborId, visited, stack, traversalOrder);
         }
       }
@@ -844,7 +844,7 @@
 
         
 
-          await delay(1000);
+          await delay(1500);
 
         
           updateKruskalVisualization(mst, totalWeight);
@@ -853,7 +853,7 @@
           highlightEdge(edge, 'red'); 
 
 
-          await delay(1000); 
+          await delay(1500); 
         }
       }
       finalizeKruskalVisualization(mst, totalWeight);
@@ -991,7 +991,7 @@
     }
 
     
-    function delay(ms = 1000) {
+    function delay(ms = 1500) {
       return new Promise(resolve => setTimeout(resolve, ms));
     }
 
@@ -1050,7 +1050,7 @@
           
           highlightEdge(currentEdge, 'red');
           addEdgeToConsidered(currentEdge, false);
-          await delay(1000); 
+          await delay(1500); 
           continue;
         }
 
@@ -1063,7 +1063,7 @@
         addEdgeToConsidered(currentEdge, true); 
         
         updatePrimVisualization(mst, totalWeight);
-        await delay(1000); 
+        await delay(1500); 
 
        
         edges.forEach(edge => {
@@ -1075,7 +1075,7 @@
           }
         });
 
-        await delay(1000); 
+        await delay(1500); 
       }
 
    

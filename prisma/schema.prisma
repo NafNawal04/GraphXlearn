@@ -16,6 +16,8 @@ model User {
   password String?
   hasGoogle Boolean  @default(false)
   history  Question[] @relation("UserQuestions")
+  resetToken  String?  
+  resetTokenExpiration DateTime? 
 }
 
 model Question {

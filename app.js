@@ -4,7 +4,7 @@ const LocalStrategy = require('passport-local').Strategy;
 const GitHubStrategy = require("passport-github2").Strategy;
 const bcrypt = require('bcrypt'); 
 const db = require('./db');
-
+const flash = require('connect-flash');
 const express = require('express');
 const app = express();
 const path = require('path');
@@ -44,7 +44,7 @@ app.use(session({
     saveUninitialized: false, 
     cookie: { secure: false, httpOnly: true },
 }));
-
+app.use(flash());
 app.use(passport.initialize());
 app.use(passport.session());
 
@@ -243,13 +243,17 @@ app.get("/api/exercise/:id", async (req, res) => {
     }
   });
 
-function ensureAuthenticated(req, res, next) {
-    const publicPaths = ['/', '/login', '/signup', '/auth/google', '/auth/google/callback','/auth/github','/auth/github/callback'];
-    if (publicPaths.includes(req.path) || req.isAuthenticated()) {
+  function ensureAuthenticated(req, res, next) {
+    const publicPaths = [
+        '/', '/login', '/signup', '/auth/google', '/auth/google/callback',
+        '/auth/github', '/auth/github/callback', '/reset-password', '/forgot-password','/reset-password/:token'
+    ];
+    if (publicPaths.includes(req.path) || req.isAuthenticated()|| req.session.userId) {
         return next();
     }
     res.redirect('/login');
 }
+
 
 app.use(ensureAuthenticated);
 
