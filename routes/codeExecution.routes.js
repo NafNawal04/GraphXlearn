@@ -7,6 +7,8 @@ router.get('/codeExecution', codeExecutionController.getCodeExecutionPage);
 
 router.post('/code-execute', codeExecutionController.executeCode);
 
+router.post('/ai-analyze', codeExecutionController.analyzeCode);
+
 router.get('/graph.png', (req, res) => {
     const filePath = path.join(__dirname, '../graph.png');
     console.log('Serving graph.png from:', filePath); 
