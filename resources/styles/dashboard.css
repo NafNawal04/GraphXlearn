@@ -253,3 +253,50 @@ footer a:hover {
         margin-right: 0;
     }
 }
+#chatbotIcon {
+    position: fixed;
+    bottom: 30px;
+    right: 30px;
+    z-index: 1000;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    width: 60px;
+    height: 60px;
+    background-color: white;
+    border-radius: 60%;
+    box-shadow: 0 4px 10px rgba(0, 0, 0, 0.2);
+    transition: transform 0.3s ease;
+    text-decoration: none;
+  
+}
+
+#chatbotIcon i {
+    font-size: 2rem;
+    color: #1f1f2e;
+    cursor: pointer;
+    text-align: center;
+    margin-left: 35%; 
+}
+
+.tooltip {
+    visibility: hidden;
+    background-color: black;
+    color: #fff;
+    text-align: center;
+    padding: 5px 10px;
+    border-radius: 5px;
+    position: absolute;
+    bottom: 70px; 
+    right: 230%;
+    transform: translateX(50%);
+    white-space: nowrap;
+    font-size: 0.85rem;
+    opacity: 0;
+    transition: opacity 0.3s ease-in-out;
+}
+
+#chatbotIcon:hover .tooltip {
+    visibility: visible;
+    opacity: 1;
+}
