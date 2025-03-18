@@ -74,11 +74,19 @@ passport.use(new GoogleStrategy({
           name: profile.displayName,
           email: profile.emails[0].value,
           password: null, 
+          hasGoogle: true,
         }
       });
 
       newUser.isNewUser = true; 
       return done(null, newUser);
+    }
+
+    if (!user.hasGoogle) {
+      const user = await db.user.update({
+        where: { email: profile.emails[0].value },
+        data: { hasGoogle: true }
+      });
     }
 
     return done(null, user);
@@ -101,7 +109,7 @@ passport.use(new LocalStrategy({
         return done(null, false, { message: 'Incorrect email.' });
       }
 
-      if (!user.password) {
+      if (user.hasGoogle && !user.password) {
         return done(null, false, { message: 'No password set. Please log in with Google.' });
       }
 

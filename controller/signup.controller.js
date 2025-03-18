@@ -22,7 +22,7 @@ const handleSignup = async(req, res) => {
         const hashedPassword = await bcrypt.hash(password, saltRounds);
 
         await db.user.create({
-            data: { name, email, password: hashedPassword },
+            data: { name, email, password: hashedPassword ,hasGoogle: false},
         });
 
         res.redirect('/login');
