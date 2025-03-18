@@ -36,7 +36,7 @@
             </div>
             
         <div id="aiAnalysisContainer" style="display: none;">
-            <h3>AI Analysis on the Code</h3>
+            <h3>AI Suggestions:</h3>
             <div id="aiAnalysisResults"></div>
         </div>
             
@@ -48,6 +48,29 @@
             <div id="output" style="height: 90%; overflow-y: auto;"></div>
         </div>
 
+        <button id="infoButton">
+            <i class="fas fa-info-circle"></i>
+        </button>
+
+        <div id="infoPopup">
+            <div class="popup-content">
+                <h3>What libraries can be used?</h3>
+                <p>This code editor supports the following Python libraries:</p>
+                <ul>
+                    <li>matplotlib</li>
+                    <li>networkx</li>
+                    <li>numpy</li>
+                    <li>pandas</li>
+                    <li>scipy</li>
+                    <li>sklearn</li>
+                    <li>requests</li>
+                    <li>json</li>
+                    <li>and more...</li>
+                </ul>
+                <p>You can use these libraries within the editor to build, analyze, and visualize your Python code.</p>
+            </div>
+        </div>
+
 
 
     </main>
@@ -56,7 +79,7 @@
     <script>
         let editor; 
 
-document.addEventListener('DOMContentLoaded', function () {
+    document.addEventListener('DOMContentLoaded', function () {
 
     require.config({ paths: { vs: 'https://cdn.jsdelivr.net/npm/monaco-editor@0.40.0/min/vs' } });
 
@@ -168,6 +191,16 @@ plt.savefig("graph.png")`,
 });
 
 
+        document.getElementById('infoButton').addEventListener('click', function () {
+            const popup = document.getElementById('infoPopup');
+            if (popup.style.right === "-190px") {
+                popup.style.right = "-550px"; 
+            } else {
+                popup.style.right = "-190px";
+            }
+        });
+
+        
     </script>
 
 </body>

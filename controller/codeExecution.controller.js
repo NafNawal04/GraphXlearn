@@ -42,5 +42,52 @@ async function analyzeCode(req, res) {
     }
 }
 
+async function executeCode(req, res) {
+    console.log('Received code:', req.body.code);
+    const code = req.body.code;
+
+    if (!code) {
+        console.error('No code provided.');
+        return res.status(400).json({ error: 'No code provided in the request.' });
+    }
+
+    const tempFile = path.join(__dirname, 'python.py');
+
+    fs.writeFile(tempFile, code, (err) => {
+        if (err) {
+            console.error('Failed to save code:', err.message);
+            return res.status(500).json({ error: 'Failed to save code to file.' });
+        }
+
+        console.log('Executing Python script...');
+
+        let outputData = [];
+        let errorData = [];
+
+        const shell = new PythonShell(tempFile, { pythonOptions: ['-u'] });
+
+        shell.on('message', (message) => {
+            outputData.push(message);
+        });
+
+        shell.on('stderr', (stderr) => {
+            errorData.push(stderr);
+        });
+
+        shell.end((err) => {
+            let response = {
+                output: outputData.join('\n'),
+                error: errorData.length > 0 ? errorData.join('\n') : null,
+                showGraph: false
+            };
+
+            if (code.includes("plt.show()") || code.includes("plt.savefig")) {
+                response.showGraph = true;  
+            }
+
+            res.json(response);
+        });
+    });
+}
 
 module.exports = { analyzeCode,executeCode, getCodeExecutionPage };
