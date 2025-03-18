@@ -1,7 +1,6 @@
 const passport = require('passport');
 const GoogleStrategy = require('passport-google-oauth20').Strategy;
 const LocalStrategy = require('passport-local').Strategy; 
-const GitHubStrategy = require("passport-github2").Strategy;
 const bcrypt = require('bcrypt'); 
 const db = require('./db');
 const flash = require('connect-flash');
@@ -125,40 +124,6 @@ passport.use(new LocalStrategy({
   }
 ));
 
-passport.use(new GitHubStrategy({
-  clientID: process.env.GITHUB_CLIENT_ID,
-  clientSecret: process.env.GITHUB_CLIENT_SECRET,
-  callbackURL: "http://localhost:3000/auth/github/callback"
-}, async (accessToken, refreshToken, profile, done) => {
-  try {
-
-    if (!profile.emails || profile.emails.length === 0) {
-      return done(new Error("GitHub profile doesn't have an email."));
-    }
-   
-    const user = await db.user.findUnique({
-      where: { email: profile.emails[0].value }
-    });
-
-    if (!user) {
-  
-      const newUser = await db.user.create({
-        data: {
-          name: profile.displayName,
-          email: profile.emails[0].value,
-          password: null,  
-        }
-      });
-
-      newUser.isNewUser = true; 
-      return done(null, newUser);
-    }
-
-    return done(null, user);
-  } catch (err) {
-    return done(err, null);
-  }
-}));
 
 passport.serializeUser((user, done) => {
   console.log("Serializing user:", user); 
@@ -198,26 +163,6 @@ app.get('/auth/google/callback',
   }
 );
 
-app.get('/auth/github',
-  passport.authenticate('github', { scope: ['user:email'] })
-);
-
-app.get('/auth/github/callback',
-  passport.authenticate('github', { failureRedirect: '/login' }),
-  (req, res) => {
-    if (req.user) {
-      req.session.isAuthenticated = true;
-
-      if (req.user.isNewUser) {
-        res.redirect('/signup'); 
-      } else {
-        res.redirect('/dashboard');
-      }
-    } else {
-      res.redirect('/login');
-    }
-  }
-);
 
 
 
@@ -246,7 +191,7 @@ app.get("/api/exercise/:id", async (req, res) => {
   function ensureAuthenticated(req, res, next) {
     const publicPaths = [
         '/', '/login', '/signup', '/auth/google', '/auth/google/callback',
-        '/auth/github', '/auth/github/callback', '/reset-password', '/forgot-password','/reset-password/:token'
+         '/reset-password', '/forgot-password','/reset-password/:token',
     ];
     if (publicPaths.includes(req.path) || req.isAuthenticated()|| req.session.userId) {
         return next();
