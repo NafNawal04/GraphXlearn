@@ -1,7 +1,6 @@
 const db = require('../db');
 
 const viewProfile = async (req, res) => {
-    // Access the authenticated user via req.user
     const user = req.user;
 
     console.log("Authenticated user:", user);
@@ -11,7 +10,7 @@ const viewProfile = async (req, res) => {
     }
 
     try {
-        // Optionally, you can fetch fresh user data from the database
+
         const freshUser = await db.user.findUnique({
             where: { email: user.email },
         });
@@ -33,9 +32,9 @@ const updateProfile = async (req, res) => {
     console.log("Updating profile...");
 
     const { name, email } = req.body;
-    const sessionEmail = req.session?.passport?.user; 
+    const sessionId = req.session?.passport?.user; // The session stores the user ID
 
-    if (!sessionEmail) {
+    if (!sessionId) {
         console.error("Error: User not logged in.");
         return res.status(403).json({ error: "User not logged in" });
     }
@@ -51,12 +50,23 @@ const updateProfile = async (req, res) => {
     }
 
     try {
-        console.log("Updating user with session email:", sessionEmail);
+        console.log("Updating user with session ID:", sessionId);
+
+        const existingUser = await db.user.findUnique({
+            where: { id: sessionId }, 
+        });
+
+
+        if (!existingUser) {
+            console.error("Error: User not found in the database.");
+            return res.status(404).json({ error: "User not found" });
+        }
+
 
         const updatedUser = await db.user.update({
-            where: { email: sessionEmail },
+            where: { id: sessionId }, 
             data: { 
-                name: name.trim(), 
+                name: name.trim(),
                 email: email.trim(),
             },
         });
