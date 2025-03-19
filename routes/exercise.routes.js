@@ -3,6 +3,7 @@ const router = express.Router();
 const path = require('path');
 
 
+
 router.get('/exercise/bellman-exercise1', (req, res) => {
     res.sendFile(path.join(__dirname, '../resources/exercise_html_files/bellman-exercise1.html'));
 });

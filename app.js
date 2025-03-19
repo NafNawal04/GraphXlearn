@@ -164,12 +164,6 @@ app.get('/auth/google/callback',
 );
 
 
-
-
-app.get("/", (req, res) => {
-    res.sendFile(path.join(__dirname, './resources/html_files', 'landing.html'));
-});
-
 app.get("/api/exercise/:id", async (req, res) => {
     const { id } = req.params;
   
@@ -188,14 +182,24 @@ app.get("/api/exercise/:id", async (req, res) => {
     }
   });
 
+app.get("/", (req, res) => {
+    res.sendFile(path.join(__dirname, './resources/html_files', 'landing.html'));
+});
+
+
+
   function ensureAuthenticated(req, res, next) {
     const publicPaths = [
         '/', '/login', '/signup', '/auth/google', '/auth/google/callback',
-         '/reset-password', '/forgot-password','/reset-password/:token',
+         '/reset-password', '/forgot-password',
     ];
-    if (publicPaths.includes(req.path) || req.isAuthenticated()|| req.session.userId) {
+
+    const isResetPassword = /^\/reset-password\/[^/]+$/.test(req.path);  
+
+    if (publicPaths.includes(req.path) || isResetPassword || req.isAuthenticated() || req.session.userId) {
         return next();
     }
+
     res.redirect('/login');
 }
 

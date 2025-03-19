@@ -59,18 +59,27 @@ const handleForgotPassword = async (req, res) => {
         subject: 'Password Reset Request',
         html: `<p>You requested a password reset. Click <a href="${resetUrl}">here</a> to reset your password.</p>`,
     });
-console.log(resetUrl);
+    console.log(resetUrl);
     req.flash('info', 'Check your email for the password reset link.');
-    //res.redirect('/login');
+    res.redirect('/login');
 };
 
 // Handle reset password
 const handleResetPassword = async (req, res) => {
+    console.log("Password reset initiated");
     const { token } = req.params;
     const { password, confirmPassword } = req.body;
+    
+    console.log("Token is:", token);
+    console.log("Password is:", password);
+    console.log("Confirm Password is:",confirmPassword);
 
-    const user = await db.user.findUnique({
-        where: { resetToken: token },
+
+    const user = await db.user.findFirst({
+        where: {
+            resetToken: token,
+
+        },
     });
 
     if (!user || user.resetTokenExpiration < Date.now()) {
@@ -86,16 +95,16 @@ const handleResetPassword = async (req, res) => {
     const hashedPassword = await bcrypt.hash(password, 10);
 
     await db.user.update({
-        where: { resetToken: token },
+        where: { id: user.id },
         data: {
             password: hashedPassword,
-            resetToken: null, // Clear the reset token
-            resetTokenExpiration: null, // Clear the expiration
+            resetToken: null, 
+            resetTokenExpiration: null,
         },
     });
 
     req.flash('info', 'Password successfully reset. You can now log in.');
-    res.redirect('/login');
+    res.redirect(`/reset-password/${token}?resetSuccess=true`);
 };
 
 module.exports = { handleLogin, handleForgotPassword, handleResetPassword };

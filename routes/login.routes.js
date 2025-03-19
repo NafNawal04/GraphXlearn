@@ -10,6 +10,7 @@ router.get('/login', (req, res) => {
 });
 
 router.post('/login', loginController.handleLogin);
+
 router.get('/forgot-password', (req, res) => {
     res.sendFile(path.join(__dirname, '../resources/html_files/forgotpassword.html'));
 });
@@ -18,7 +19,7 @@ router.post('/forgot-password', loginController.handleForgotPassword);
 
 router.get('/reset-password/:token', (req, res) => {
     const token = req.params.token;
-    res.render('resetpassword', { token }); // Pass token to the template
+    res.sendFile(path.join(__dirname, '../resources/html_files/resetpassword.html'));
 });
 
 router.post('/reset-password/:token', loginController.handleResetPassword);
